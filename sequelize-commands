@@ -1,0 +1,41 @@
+User Model
+yarn model:generate --name User --attributes first_name:string,last_name:string,email:string
+
+Category model 
+yarn model:generate --name Category --attributes name:string,slug:string
+
+Testimonials model 
+yarn model:generate --name Testimonial --attributes image_url:string,name:string,designation:string,description:string
+
+Partner model 
+yarn model:generate --name Partner --attributes name:string,partner_image:string
+
+Course model 
+yarn model:generate --name Course --attributes title:string
+
+Video model 
+yarn model:generate --name Video --attributes group_name:string
+
+Course_Assets model 
+yarn model:generate --name Course_Asset --attributes lecture_name:string
+
+Favourite model 
+yarn model:generate --name Favourite --attributes userId:string
+
+Enrolment model 
+yarn model:generate --name Enrolment --attributes bought_price:float
+
+Instructor_Earning model 
+yarn model:generate --name Instructor_Earning --attributes earnings:float
+
+Course_Progress model 
+yarn model:generate --name Course_Progress --attributes finished:boolean
+
+Subscription model 
+yarn model:generate --name Subscription --attributes email:string,active:boolean
+
+Coupon model 
+yarn model:generate --name Coupon --attributes code:string,discount:float
+
+
+yarn migrate
