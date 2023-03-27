@@ -32,9 +32,9 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Edmy - LMS & Education System with React + Nextjs</title>
+        <title>SmartKid Games</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <link rel='icon' href='https://res.cloudinary.com/dev-empty/image/upload/v1662278490/edmy/favicon.png' />
+        <link rel='icon' href='/favicon.png' />
       </Head>
 
       {children}

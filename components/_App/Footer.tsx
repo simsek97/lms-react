@@ -15,7 +15,8 @@ const Footer = () => {
                   <img src='/images/logo.png' className='main-logo' alt='logo' />
                   <img src='/images/white-logo.png' className='white-logo' alt='logo' />
                 </a>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis mi suscipit bibendum sit amet, consectetur.</p>
+                <p>SmartKid Games is an educatinal technology platform for kids, serving hundreds of thousands around the world.</p>
+                <p>We provide the industry’s most creative online content using cutting-edge machine learning technologies.</p>
               </div>
             </div>
 
@@ -24,6 +25,16 @@ const Footer = () => {
                 <h3>Quick Link</h3>
 
                 <ul className='import-link'>
+                  <motion.li
+                    whileHover={{
+                      scale: 1.1,
+                      originX: 0,
+                      transition: { duration: 0.5 }
+                    }}>
+                    <Link href='/about-us'>
+                      <a>About Us</a>
+                    </Link>
+                  </motion.li>{' '}
                   <motion.li
                     whileHover={{
                       scale: 1.1,
@@ -40,8 +51,8 @@ const Footer = () => {
                       originX: 0,
                       transition: { duration: 0.5 }
                     }}>
-                    <Link href='/about-us'>
-                      <a>About Us</a>
+                    <Link href='/terms-conditions'>
+                      <a>Terms & Conditions</a>
                     </Link>
                   </motion.li>
                   <motion.li
@@ -50,8 +61,8 @@ const Footer = () => {
                       originX: 0,
                       transition: { duration: 0.5 }
                     }}>
-                    <Link href='/terms-conditions'>
-                      <a>Terms & Conditions</a>
+                    <Link href='/privacy-policy'>
+                      <a>Privacy Policy</a>
                     </Link>
                   </motion.li>
                 </ul>
@@ -83,16 +94,6 @@ const Footer = () => {
                       <a>Get Help</a>
                     </Link>
                   </motion.li>
-                  <motion.li
-                    whileHover={{
-                      scale: 1.1,
-                      originX: 0,
-                      transition: { duration: 0.5 }
-                    }}>
-                    <Link href='/privacy-policy'>
-                      <a>Privacy Policy</a>
-                    </Link>
-                  </motion.li>
                 </ul>
               </div>
             </div>
@@ -102,14 +103,9 @@ const Footer = () => {
                 <h3>Contact Info</h3>
 
                 <ul className='info'>
+                  <li>4237 Red Maple Ct, Burtonsville, MD 20866</li>
                   <li>
-                    <span>Call Us:</span> <a href='tel:1-885-665-2022'>1-885-665-2022</a>
-                  </li>
-                  <li>
-                    <span>Address:</span> +7011 Vermont Ave, Los Angeles, CA 90044
-                  </li>
-                  <li>
-                    <span>Mail Us:</span> <a href='mailto:hello@edmy.com'>hello@edmy.com</a>
+                    <a href='mailto:info@smartkid.games'>info@smartkid.games</a>
                   </li>
                 </ul>
               </div>
@@ -124,9 +120,9 @@ const Footer = () => {
       <div className='copy-right-area bg-color-f6fafb'>
         <div className='container'>
           <p>
-            &copy; Edmy {currentYear} is Proudly Owned by{' '}
-            <a href='https://hibootstrap.com/' target='_blank'>
-              HiBootstrap
+            &copy; SmartKid.Games {currentYear} is Proudly Powered by{' '}
+            <a href='http://smartclass.biz/' target='_blank'>
+              SmartClass
             </a>
           </p>
         </div>
