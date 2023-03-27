@@ -59,6 +59,7 @@
 		"env-cmd": "^10.1.0",
 		"eslint": "8.20.0",
 		"eslint-config-next": "12.2.3",
-		"sequelize-cli": "^6.4.1"
+		"sequelize-cli": "^6.4.1",
+		"typescript": "5.0.2"
 	}
 }
