@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
   return (
     <>
       <div className='footer-area bg-color-f6fafb pt-100 pb-70'>
