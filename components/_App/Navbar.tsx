@@ -15,7 +15,11 @@ Router.onRouteChangeComplete = () => NProgress.done();
 //@ts-ignore
 Router.onRouteChangeError = () => NProgress.done();
 
-const Navbar = ({ user }) => {
+interface INavbar {
+  user?: any;
+}
+
+const Navbar = ({ user }: INavbar) => {
   const [menu, setMenu] = React.useState(true);
 
   const toggleNavbar = () => {

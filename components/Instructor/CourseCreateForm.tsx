@@ -28,7 +28,12 @@ const INITIAL_VALUE = {
   catId: ''
 };
 
-const CourseCreateForm = ({ btnText, is_class }) => {
+interface ICourseCreateForm {
+  btnText?: string;
+  is_class?: boolean;
+}
+
+const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   const { edmy_users_token } = parseCookies();
   const [course, setCourse] = useState(INITIAL_VALUE);
   const [disabled, setDisabled] = React.useState(true);

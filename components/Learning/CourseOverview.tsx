@@ -1,6 +1,10 @@
 import React from 'react';
 
-const CourseOverview = ({ overview }) => {
+interface ICourseOverview {
+  overview?: string;
+}
+
+const CourseOverview = ({ overview }: ICourseOverview) => {
   return (
     <div className='tab-pane fade show active'>
       <div className='course-contents'>

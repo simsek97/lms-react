@@ -2,7 +2,11 @@ import baseUrl from '@/utils/baseUrl';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-const CourseAsset = ({ id: courseId }) => {
+interface ICourseAsset {
+  id?: number;
+}
+
+const CourseAsset = ({ id: courseId }: ICourseAsset) => {
   const [assets, setAssets] = useState([]);
 
   useEffect(() => {
