@@ -15,7 +15,10 @@
 		"migrate:rollback:all": "env-cmd sequelize-cli db:migrate:undo:all"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.10.6",
 		"@etchteam/next-pagination": "^3.5.4",
+		"@mantine/core": "^6.0.4",
+		"@mantine/hooks": "^6.0.4",
 		"@mantine/rte": "^5.1.1",
 		"axios": "^0.27.2",
 		"bcrypt": "^5.0.1",
