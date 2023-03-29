@@ -23,7 +23,7 @@ const Footer = () => {
 
             <div className='col-lg-3 col-sm-6'>
               <div className='single-footer-widget pl-40'>
-                <h3>Quick Link</h3>
+                <h3>Quick Links</h3>
 
                 <ul className='import-link'>
                   <motion.li
