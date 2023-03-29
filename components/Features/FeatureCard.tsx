@@ -11,29 +11,11 @@ const FeatureCard = ({ feature }) => {
   const { title, image, explanation } = feature;
 
   return (
-    <div className='col-lg-3 col-md-6 text-center'>
-      <div className='single-courses'>
-        <div className='courses-main-img'>
-          <img src={image} alt='Image' />
-        </div>
-        <div className='courses-content'>
-          <div className='admin'>
-            <p>{explanation}</p>
-          </div>
-        </div>
-
-        {/* <div className='courses-hover-content'>
-          <div className='sk'>
-            <div>
-              <h3>
-                <Link href={`/course/${slug}`}>
-                  <a>{title}</a>
-                </Link>
-              </h3>
-              <p>{short_desc.slice(0, 108)}</p>
-            </div>
-          </div>
-        </div> */}
+    <div className='col-lg-3 col-sm-6'>
+      <div className='single-features'>
+        <img src={image} alt={title} />
+        {/* <h3>{title}</h3> */}
+        <p>{explanation}</p>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import PageBanner from '@/components/Common/PageBanner';
 import Navbar from '@/components/_App/Navbar';
 import Footer from '@/components/_App/Footer';
-import Features from '@/components/Index/Features';
+import Features from '@/components/Features/Features';
 import Testimonials from '@/components/Index/Testimonials';
 import Business from '@/components/Index/Business';
 import Link from 'next/link';

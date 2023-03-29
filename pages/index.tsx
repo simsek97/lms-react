@@ -5,7 +5,7 @@ import Banner from '@/components/Index/Banner';
 import Navbar from '@/components/_App/Navbar';
 import Categories from '@/components/Index/Categories';
 import Transform from '@/components/Index/Transform';
-import Features from '@/components/Index/Features';
+import Features from '@/components/Features/Features';
 import Testimonials from '@/components/Index/Testimonials';
 import Partners from '@/components/Index/Partners';
 import Teaching from '@/components/Index/Teaching';
@@ -13,7 +13,6 @@ import Business from '@/components/Index/Business';
 import Footer from '@/components/_App/Footer';
 import baseUrl from '@/utils/baseUrl';
 import { motion } from 'framer-motion';
-import FeaturesList from '@/components/Features/FeaturesList';
 
 const Index = ({ courses, categories, user }) => {
   const variants = {
@@ -28,15 +27,7 @@ const Index = ({ courses, categories, user }) => {
     <>
       <Navbar user={user} />
       <Banner />
-      <div className='courses-area pt-100 pb-70'>
-        <div className='container'>
-          <motion.div className='section-title' initial='hidden' whileInView='visible' variants={variants}>
-            <span className='top-title'>What is Expected?</span>
-            <h2>SmartKid will help create future scientists. Step up now and let your kid grow into future with fun games.</h2>
-          </motion.div>
-          <FeaturesList />
-        </div>
-      </div>
+      <Features />
 
       <div className='feature-dcourses-area bg-color-f6fafb pt-100 pb-70'>
         <div className='container'>
@@ -52,30 +43,14 @@ const Index = ({ courses, categories, user }) => {
           <CoursesList courses={courses} user={user} />
         </div>
 
-        <img src='/images/courses-shape.png' className='courses-shape' alt='Image' />
-      </div>
-
-      <div className='feature-dcourses-area bg-color-f6fafb pb-70'>
-        <div className='container'>
-          <div className='title-btn d-flex justify-content-between align-items-center wow animate__animated animate__fadeInUp delay-0-2s'>
-            <motion.div className='section-title left-title' initial='hidden' whileInView='visible' variants={variants}>
-              <span className='top-title'>Most Viewed Courses</span>
-              <h2>Students Are Also Viewing</h2>
-            </motion.div>
-            <Link href='/courses'>
-              <a className='default-btn'>View All</a>
-            </Link>
-          </div>
-          <CoursesList courses={courses} user={user} />
-        </div>
+        {/* <img src='/images/courses-shape.png' className='courses-shape' alt='Image' /> */}
       </div>
 
       <Categories categories={categories} />
       <Transform />
-      <Features />
       <Testimonials />
-      <Partners />
-      <Teaching />
+      {/* <Partners /> */}
+      {/* <Teaching /> */}
       <Business />
       <Footer />
     </>

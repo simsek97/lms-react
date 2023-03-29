@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
-import baseUrl from '@/utils/baseUrl';
-import CourseCard from './FeatureCard';
+import React from 'react';
+import FeatureCard from './FeatureCard';
 
 interface IFeature {
   id: number;
@@ -64,26 +59,26 @@ const features: IFeature[] = [
   }
 ];
 
-const FeaturesList = () => {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
+const Features = () => {
   return (
-    <div className='row justify-content-center'>
-      {loading ? (
-        <CourseSkeletonLoader />
-      ) : (
-        <>{features.length > 0 ? features.map((feature) => <CourseCard key={feature.id} feature={feature} />) : <h3>Empty</h3>}</>
-      )}
+    <div className='our-features-area bg-color-f1efee pt-100 pb-70'>
+      <div className='container'>
+        <div className='section-title'>
+          <span className='top-title'>What is Expected?</span>
+          <h2>SmartKid will help create future scientists. Step up now and let your kid grow into future with fun games.</h2>
+        </div>
+
+        <div className='row justify-content-center'>
+          {features.map((feature) => (
+            <FeatureCard key={feature.id} feature={feature} />
+          ))}
+        </div>
+      </div>
+
+      <img src='/images/features/features-banner.svg' alt='Features Banner' />
+      <img src='/images/features/feature-shape-1.svg' className='shape shape-1' alt='feature' />
     </div>
   );
 };
 
-export default FeaturesList;
+export default Features;
