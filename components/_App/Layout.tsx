@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 import Script from 'next/script';
+import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
+
 import GoTop from '@/components/_App/GoTop';
-import { AnimatePresence } from 'framer-motion';
-import Modal from '../Modal';
-import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
+import Modal from '../Modal';
 
 const Layout = ({ children }) => {
   const [modalOpen, setModalOpen] = useState<boolean>();
