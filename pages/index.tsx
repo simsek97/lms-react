@@ -13,6 +13,7 @@ import Business from '@/components/Index/Business';
 import Footer from '@/components/_App/Footer';
 import baseUrl from '@/utils/baseUrl';
 import { motion } from 'framer-motion';
+import FeaturesList from '@/components/Features/FeaturesList';
 
 const Index = ({ courses, categories, user }) => {
   const variants = {
@@ -30,10 +31,10 @@ const Index = ({ courses, categories, user }) => {
       <div className='courses-area pt-100 pb-70'>
         <div className='container'>
           <motion.div className='section-title' initial='hidden' whileInView='visible' variants={variants}>
-            <span className='top-title'>Popular Courses</span>
-            <h2>Expand Your Career Opportunity With Our Courses</h2>
+            <span className='top-title'>What is Expected?</span>
+            <h2>SmartKid will help create future scientists. Step up now and let your kid grow into future with fun games.</h2>
           </motion.div>
-          <CoursesList courses={courses} user={user} />
+          <FeaturesList />
         </div>
       </div>
 

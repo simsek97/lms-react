@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 const TopHeader = ({ user }) => {
   return (
     <motion.div
-      className='top-header-area bg-color-0f6c76'
+      className='top-header-area bg-color-a7c724'
       initial={{ y: -25 }}
       animate={{ y: 0 }}
       transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}>
       <div className='container-fluid'>
         <div className='row align-items-center'>
           <div className='col-lg-8'>
-            <div className='header-left-content'>
+            {/* <div className='header-left-content'>
               <p>
                 Keep learning with free resources during COVID-19.{' '}
                 <Link href='/about-us'>
@@ -22,14 +22,14 @@ const TopHeader = ({ user }) => {
                   </a>
                 </Link>
               </p>
-            </div>
+            </div> */}
           </div>
 
           <div className='col-lg-4'>
             <ul className='header-right-content'>
               <li>
-                <Link href='/become-an-instructor'>
-                  <a>Become An Instructor</a>
+                <Link href='/auth'>
+                  <a>Register</a>
                 </Link>
               </li>
               <li className='auth-link'>

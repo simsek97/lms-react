@@ -93,7 +93,7 @@ const Navbar = ({ user }: INavbar) => {
                     </Link>
                   </motion.li>
 
-                  {user ? (
+                  {/* {user ? (
                     !user.instructor_request && (
                       <motion.li
                         className='nav-item'
@@ -125,26 +125,17 @@ const Navbar = ({ user }: INavbar) => {
                         </a>
                       </Link>
                     </motion.li>
-                  )}
+                  )} */}
                 </ul>
               </div>
 
               <div className='others-options'>
                 <ul className='d-flex align-items-center'>
                   <Cart />
-                  {user ? (
+                  {user && (
                     <li className='profile_li'>
                       <ProfileDropdown {...user} />
                     </li>
-                  ) : (
-                    <motion.li whileTap={{ scale: 0.9 }}>
-                      <Link href='/auth'>
-                        <a className='default-btn'>
-                          <i className='ri-registered-line'></i>
-                          <span>Register Now</span>
-                        </a>
-                      </Link>
-                    </motion.li>
                   )}
                 </ul>
               </div>

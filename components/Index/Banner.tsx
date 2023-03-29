@@ -8,7 +8,7 @@ const Banner = () => {
   const headingText = [
     {
       type: 'heading',
-      text: 'Improve Your Online Learning Experience Better Instantly'
+      text: 'What is SmartKid?'
     }
   ];
 
@@ -40,7 +40,7 @@ const Banner = () => {
         <div className='row align-items-center'>
           <div className='col-lg-6'>
             <div className='banner-img'>
-              <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src='/images/banner/banner-img-1.png' alt='banner' />
+              <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src='/images/home/kid.png' alt='banner' />
             </div>
           </div>
 
@@ -49,12 +49,35 @@ const Banner = () => {
               {headingText.map((item, index) => {
                 return <AnimatedCharacters {...item} key={index} />;
               })}
+
               <motion.p initial='hidden' animate='visible' variants={pVariants}>
-                We have <span>40k+</span> Online courses & <span>500K+</span> Online registered student. Find your desired Courses from
-                them.
+                <span>SmartKid.Games</span> is where kids can learn at <span>any time</span>, in <span>any place</span> and at an{' '}
+                <span>individual pace</span> with having <span>fun</span>
               </motion.p>
 
-              <SearchForm formClass='search-form' btnClass='default-btn' banner={true} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignContent: 'space-between',
+                  justifyContent: 'space-between',
+                  marginBottom: '36px'
+                }}>
+                <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
+                  <img src='/images/home/best.png' width={64} alt='best' />
+                  <br />
+                  <span>Best Choice</span>
+                </motion.div>
+                <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
+                  <img src='/images/home/voice.png' width={64} alt='best' />
+                  <br />
+                  <span>Voice Interaction</span>
+                </motion.div>
+                <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
+                  <img src='/images/home/everywhere.png' width={64} alt='best' />
+                  <br />
+                  <span>Use Everywhere</span>
+                </motion.div>
+              </div>
 
               <ul className='client-list'>
                 <li>
@@ -64,15 +87,17 @@ const Banner = () => {
                 </li>
                 <li>
                   <p>
-                    500K+ People already trusted us.{' '}
-                    <Link href='/courses'>
-                      <a className='read-more'>
-                        View Courses <i className='ri-arrow-right-line'></i>
-                      </a>
-                    </Link>
+                    50K+ kids already trusted on <span>SmartKid.Games</span>
                   </p>
                 </li>
               </ul>
+
+              <div
+                style={{
+                  marginTop: '48px'
+                }}>
+                <SearchForm formClass='search-form' btnClass='default-btn' banner={true} />
+              </div>
             </motion.div>
           </div>
         </div>
