@@ -34,3 +34,6 @@ yarn-error.log*
 
 # next
 next.config.js
+
+# settings
+public/settings.json
