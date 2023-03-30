@@ -333,7 +333,7 @@ export const confirmEmailAddress = async (user) => {
                             <tr>
                               <td style="text-align: center; padding-right: 0;">
                               <p style="text-align: center; margin-bottom: 0; margin-top: 5px">
-                                  <a href="http://edmy.com/" target="_blank" style="color: #3056de">www.edmy.com</a>
+                                  <a href="http://edmy.com/" target="_blank" rel="noreferrer" style="color: #3056de">www.edmy.com</a>
                               </p>
                               </td>
                             </tr>

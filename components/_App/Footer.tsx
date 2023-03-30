@@ -122,7 +122,7 @@ const Footer = () => {
         <div className='container'>
           <p>
             &copy; SmartKid.Games {currentYear} is Proudly Powered by{' '}
-            <a href='http://smartclass.biz/' target='_blank'>
+            <a href='http://smartclass.biz/' target='_blank' rel='noreferrer'>
               SmartClass
             </a>
           </p>

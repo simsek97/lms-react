@@ -335,7 +335,7 @@ export const contactFormEmail = async (name, email, phone, subject, message) => 
                             <tr>
                               <td style="text-align: center; padding-right: 0;">
                               <p style="text-align: center; margin-bottom: 0; margin-top: 5px">
-                                  <a href="http://Edmy.com/" target="_blank" style="color: #3056de">www.Edmy.com</a>
+                                  <a href="http://Edmy.com/" target="_blank" rel="noreferrer" style="color: #3056de">www.Edmy.com</a>
                               </p>
                               </td>
                             </tr>
