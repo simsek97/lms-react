@@ -8,3 +8,4 @@ yum update -y
 pm2 update
 curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
 yum -y install nodejs
+npm install yarn -g
