@@ -3,6 +3,7 @@ os: linux
 files:
   - source: /
     destination: /usr/share/nginx/html
+    overwrite: true
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies.sh
