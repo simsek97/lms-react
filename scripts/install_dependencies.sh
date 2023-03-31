@@ -10,3 +10,5 @@ curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
 yum -y install nodejs
 npm install pm2 -g
 npm install yarn -g
+
+# pm2 start yarn --name edmy -- start -p 3000
