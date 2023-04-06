@@ -43,7 +43,7 @@ const Navbar = ({ user }: INavbar) => {
 
   return (
     <>
-      <TopHeader user={user} />
+      {/* <TopHeader user={user} /> */}
       <div id='navbar' className='navbar-area'>
         <div className='desktop-nav'>
           <div className='container-fluid'>

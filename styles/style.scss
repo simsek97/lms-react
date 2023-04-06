@@ -44,7 +44,7 @@ $body-font-family: 'Viga', sans-serif;
 $body-color: #555555;
 $main-color: #a4c521;
 $heading-color: #0d0c0c;
-$optional-color: #fec400;
+$optional-color: #ee3f6c;
 $white-color: #ffffff;
 $black-color: #000000;
 $font-size: 14px;
@@ -286,8 +286,10 @@ Section Title Area Style*/
   text-align: center;
   position: relative;
   color: #333333;
+
   .top-title {
-    font-size: 16px;
+    font-size: 32px;
+    line-height: 32px;
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
@@ -299,9 +301,10 @@ Section Title Area Style*/
     text-fill-color: transparent;
   }
   h2 {
-    font-size: 40px;
-    margin-bottom: 15px;
-    line-height: 60px;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    line-height: 24px;
     span {
       color: $main-color;
     }
@@ -1914,13 +1917,13 @@ Features Area Style
 }
 .single-features {
   background-color: $white-color;
-  padding: 38px;
-  border-radius: 20px;
+  padding: 10px;
+  border-radius: 10px;
   text-align: center;
   transition: $transition;
   margin-bottom: 30px;
   img {
-    margin-bottom: 33px;
+    margin-bottom: 30px;
   }
   h3 {
     font-size: 22px;

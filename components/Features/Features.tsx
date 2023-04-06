@@ -61,7 +61,7 @@ const features: IFeature[] = [
 
 const Features = () => {
   return (
-    <div className='our-features-area bg-color-f1efee pt-100 pb-70'>
+    <div className='our-features-area  pt-100 pb-70'>
       <div className='container'>
         <div className='section-title'>
           <span className='top-title'>What is Expected?</span>
