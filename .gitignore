@@ -37,3 +37,6 @@ next.config.js
 
 # settings
 /public/settings.json
+
+# data
+/data

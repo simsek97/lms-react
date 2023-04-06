@@ -65,7 +65,9 @@ const Features = () => {
       <div className='container'>
         <div className='section-title'>
           <span className='top-title'>What is Expected?</span>
+          <hr />
           <h2>SmartKid will help create future scientists. Step up now and let your kid grow into future with fun games.</h2>
+          <hr />
         </div>
 
         <div className='row justify-content-center'>
@@ -75,8 +77,10 @@ const Features = () => {
         </div>
       </div>
 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src='/images/features/features-banner.svg' alt='Features Banner' />
-      <img src='/images/features/feature-shape-1.svg' className='shape shape-1' alt='feature' />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* <img src='/images/features/feature-shape-1.svg' className='shape shape-1' alt='feature' /> */}
     </div>
   );
 };

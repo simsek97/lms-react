@@ -41,15 +41,15 @@ This files table contents are outlined below>>>>>
 Default Style
 ============================*/
 
-$body-font-family: 'Josefin Sans', sans-serif;
+$body-font-family: 'Viga', sans-serif;
 
-$body-color: #646464;
-$main-color: #098b99;
+$body-color: #555555;
+$main-color: #a4c521;
 $heading-color: #0d0c0c;
 $optional-color: #fec400;
 $white-color: #ffffff;
 $black-color: #000000;
-$font-size: 16px;
+$font-size: 14px;
 $transition: all ease 0.5s;
 $border-radius: 5px;
 $box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
@@ -287,13 +287,14 @@ Section Title Area Style*/
   margin: -5px auto 50px;
   text-align: center;
   position: relative;
+  color: #333333;
   .top-title {
     font-size: 16px;
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
-    text-transform: capitalize;
-    background: linear-gradient(315deg, #098b99 0%, #057fa8 100%);
+    text-transform: uppercase;
+    background: linear-gradient(315deg, #333333 0%, #333333 0%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -302,7 +303,6 @@ Section Title Area Style*/
   h2 {
     font-size: 40px;
     margin-bottom: 15px;
-    letter-spacing: -1px;
     line-height: 60px;
     span {
       color: $main-color;

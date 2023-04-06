@@ -41,9 +41,9 @@ This files table contents are outlined below>>>>>
 Default Style
 ============================*/
 body {
-  font-size: 16px;
-  font-family: 'Josefin Sans', sans-serif;
-  color: #646464;
+  font-size: 14px;
+  font-family: 'Viga', sans-serif;
+  color: #555555;
 }
 
 a {
@@ -342,8 +342,9 @@ Section Title Area Style*/
   margin-bottom: 10px;
   line-height: 32px;
   font-weight: 700;
-  text-transform: capitalize;
-  background: linear-gradient(315deg, #098b99 0%, #057fa8 100%);
+  text-transform: uppercase;
+  color: #333333;
+  background: linear-gradient(315deg, #333333 0%, #333333 0%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -351,11 +352,11 @@ Section Title Area Style*/
 }
 
 .section-title h2 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
+  color: #000;
   margin-bottom: 15px;
-  letter-spacing: -1px;
-  line-height: 20px;
+  line-height: 16px;
 }
 
 .section-title h2 span {
