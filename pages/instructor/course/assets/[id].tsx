@@ -14,7 +14,7 @@ import UploadAssetForm from '../../../../components/Instructor/UploadAssetForm';
 import PageNavigation from '../../../../components/Instructor/PageNavigation';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const router = useRouter();
   const { id: courseId } = router.query;
   const [assets, setAssets] = useState([]);
@@ -23,7 +23,7 @@ const Index = ({ user }) => {
   const fetchAssets = async () => {
     setLoading(true);
     const payload = {
-      headers: { Authorization: edmy_users_token }
+      headers: { Authorization: lms_react_users_token }
     };
 
     const url = `${baseUrl}/api/courses/course/assets/${courseId}`;
@@ -57,7 +57,7 @@ const Index = ({ user }) => {
     try {
       setLoading(true);
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const url = `${baseUrl}/api/courses/course/assets/${assetId}`;

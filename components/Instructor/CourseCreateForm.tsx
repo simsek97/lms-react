@@ -34,7 +34,7 @@ interface ICourseCreateForm {
 }
 
 const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [course, setCourse] = useState(INITIAL_VALUE);
   const [disabled, setDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -50,7 +50,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   useEffect(() => {
     const fetchData = async () => {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/categories`, payload);
       setCategories(response.data.categories);
@@ -146,7 +146,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
       };
 
       const payloadHeader = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const url = `${baseUrl}/api/courses/new`;

@@ -34,6 +34,7 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
         if (result && result.data.enroll === true) setAlreadyBuy(result.data.enroll);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems, course]);
 
   const addToCart = (courseCart) => {
@@ -104,6 +105,7 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
     <div className='col-lg-4'>
       <div className='course-details-sidebar'>
         <div className='course-preview'>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={course.image} alt={course.title} />
         </div>
 

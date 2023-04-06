@@ -11,7 +11,7 @@ import GeneralLoader from '@/utils/GeneralLoader';
 import InstructorRow from '@/components/Admin/InstructorRow';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const Index = ({ user }) => {
     setLoading(true);
     try {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/instructor/instructors`, payload);
       setInstructors(response.data.instructors);

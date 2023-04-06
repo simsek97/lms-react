@@ -38,6 +38,7 @@ const Modal = ({ handleClose, image_url }) => {
               <button type='button' className='btn-close' onClick={handleClose}>
                 <i className='bx bx-x'></i>
               </button>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={image_url} alt='modal-image' />
             </div>
           </div>

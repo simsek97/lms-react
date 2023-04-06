@@ -26,7 +26,7 @@ const Index = ({ courses, categories, user }) => {
   return (
     <>
       <Navbar user={user} />
-      <Banner />
+      <Banner user={user} />
       <Features />
 
       <div className='feature-dcourses-area bg-color-f6fafb pt-100 pb-70'>

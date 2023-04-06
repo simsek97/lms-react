@@ -7,6 +7,7 @@ import Cart from './Cart';
 import SearchForm from './SearchForm';
 import TopHeader from './TopHeader';
 import { motion } from 'framer-motion';
+import { handleLogout } from '@/utils/auth';
 
 //@ts-ignore
 Router.onRouteChangeStart = () => NProgress.start();
@@ -49,6 +50,7 @@ const Navbar = ({ user }: INavbar) => {
             <div className='navbar navbar-expand-lg navbar-light'>
               <Link href='/'>
                 <a onClick={toggleNavbar} className='navbar-brand'>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src='/images/logo.png' alt='logo' />
                 </a>
               </Link>
@@ -92,6 +94,40 @@ const Navbar = ({ user }: INavbar) => {
                       </a>
                     </Link>
                   </motion.li>
+
+                  {user ? (
+                    <motion.li
+                      className='nav-item'
+                      whileHover={{
+                        scale: 1.1,
+                        transition: {
+                          duration: 0.5
+                        }
+                      }}
+                      whileTap={{ scale: 0.9 }}>
+                      <Link href='#'>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
+                          }}>
+                          <i className='bx bx-log-out'></i> Sign out
+                        </a>
+                      </Link>
+                    </motion.li>
+                  ) : (
+                    <motion.li
+                      className='nav-item'
+                      whileHover={{
+                        scale: 1.1,
+                        transition: { duration: 0.5 }
+                      }}
+                      whileTap={{ scale: 0.9 }}>
+                      <Link href='/auth'>
+                        <a>Register / Signin</a>
+                      </Link>
+                    </motion.li>
+                  )}
 
                   {/* {user ? (
                     !user.instructor_request && (

@@ -10,7 +10,7 @@ import GeneralLoader from '@/utils/GeneralLoader';
 import CourseCard from '@/components/Learning/CourseCard';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [enrolments, setEnrolments] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,7 +18,7 @@ const Index = ({ user }) => {
     const fetchEnrols = async () => {
       setLoading(true);
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/learnings`, payload);
 

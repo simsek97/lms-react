@@ -2,7 +2,7 @@ import cookie from 'js-cookie';
 import Router from 'next/router';
 
 export const handleLogin = (t, routeNext) => {
-  cookie.set('edmy_users_token', t);
+  cookie.set('lms_react_users_token', t);
   if (routeNext.query && routeNext.query.next) {
     Router.push(routeNext.query.next);
   } else {
@@ -11,12 +11,12 @@ export const handleLogin = (t, routeNext) => {
 };
 
 export const handleLogout = () => {
-  cookie.remove('edmy_users_token');
+  cookie.remove('lms_react_users_token');
   Router.push('/');
 };
 
 export const destroyCookie = () => {
-  cookie.remove('edmy_users_token');
+  cookie.remove('lms_react_users_token');
   //@ts-ignore
   Router.reload('/');
 };

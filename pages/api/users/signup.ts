@@ -63,7 +63,7 @@ const userSignup = async (req, res) => {
 
     confirmEmailAddress(newUser);
 
-    const edmy_users_token = jwt.sign(
+    const lms_react_users_token = jwt.sign(
       {
         //@ts-ignore
         userId: newUser.id,
@@ -86,7 +86,7 @@ const userSignup = async (req, res) => {
 
     res.status(200).json({
       message: 'Registration Successful!',
-      edmy_users_token
+      lms_react_users_token
     });
   } catch (e) {
     res.status(400).json({

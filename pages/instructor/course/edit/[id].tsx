@@ -9,7 +9,7 @@ import baseUrl from '@/utils/baseUrl';
 import PageNavigation from '../../../../components/Instructor/PageNavigation';
 
 const Create = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const router = useRouter();
   const { id: courseId } = router.query;
   const [course, setCourse] = useState({});
@@ -17,7 +17,7 @@ const Create = ({ user }) => {
   useEffect(() => {
     const fetchCourse = async () => {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const url = `${baseUrl}/api/courses/course/${courseId}`;
       const response = await axios.get(url, payload);

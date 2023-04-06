@@ -12,7 +12,7 @@ const INITIAL_VALUE = {
 };
 
 const UploadAssetForm = ({ courseId, onFetchAssets }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [asset, setAsset] = useState(INITIAL_VALUE);
   const [disabled, setDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -20,6 +20,7 @@ const UploadAssetForm = ({ courseId, onFetchAssets }) => {
 
   useEffect(() => {
     setAsset((prevState) => ({ ...prevState, courseId }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const UploadAssetForm = ({ courseId, onFetchAssets }) => {
       };
       const url = `${baseUrl}/api/courses/course/assets/${courseId}`;
       const payloadHeader = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const response = await axios.post(url, payloadData, payloadHeader);

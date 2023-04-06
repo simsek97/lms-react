@@ -20,11 +20,11 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import '@etchteam/next-pagination/dist/index.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 // Global Styles
-import '../styles/style.css';
-import '../styles/responsive.css';
+import '../styles/style.scss';
+import '../styles/responsive.scss';
 
 // Dashboard
-import '../styles/dashboard.css';
+import '../styles/dashboard.scss';
 
 import Layout from '../components/_App/Layout';
 
@@ -42,14 +42,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const { edmy_users_token } = parseCookies(ctx);
+  const { lms_react_users_token } = parseCookies(ctx);
   let pageProps = {};
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  if (!edmy_users_token) {
+  if (!lms_react_users_token) {
     // if a user not logged in then user can't access those pages
     const isProtectedRoute =
       ctx.pathname === '/profile/basic-information' ||
@@ -78,19 +78,19 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     }
 
     try {
-      const payload = { headers: { Authorization: edmy_users_token } };
+      const payload = { headers: { Authorization: lms_react_users_token } };
       const url = `${baseUrl}/api/users/update`;
       const response = await axios.get(url, payload);
       const user = response && response.data.user;
 
       if (!user) {
-        destroyCookie(ctx, 'edmy_users_token');
+        destroyCookie(ctx, 'lms_react_users_token');
         redirectUser(ctx, '/auth');
       }
       //@ts-ignore
       pageProps.user = user;
     } catch (err) {
-      destroyCookie(ctx, 'edmy_users_token');
+      destroyCookie(ctx, 'lms_react_users_token');
       // redirectUser(ctx, "/");
     }
   }

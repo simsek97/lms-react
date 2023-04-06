@@ -47,7 +47,7 @@ const userSignin = async (req, res) => {
 
     const passwordsMatch = await bcrypt.compare(password, user.password);
     if (passwordsMatch) {
-      const edmy_users_token = jwt.sign(
+      const lms_react_users_token = jwt.sign(
         {
           userId: user.id,
           first_name: user.first_name,
@@ -61,7 +61,7 @@ const userSignin = async (req, res) => {
       );
       res.status(200).json({
         message: 'Login Successful!',
-        edmy_users_token
+        lms_react_users_token
       });
     } else {
       res.status(401).json({ message: 'Password is not correct' });

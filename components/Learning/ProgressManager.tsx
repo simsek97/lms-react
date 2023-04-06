@@ -24,6 +24,7 @@ const ProgressManager = ({ userId, courseId, videos_count, selectedVideo }) => {
 
       fetchProgrss();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseId, selectedVideo]);
   return (
     <div className='mb-3'>
@@ -65,6 +66,7 @@ const ProgressManager = ({ userId, courseId, videos_count, selectedVideo }) => {
           style={{
             width: `${progress(pro, videos_count)}%`
           }}
+          // eslint-disable-next-line jsx-a11y/aria-proptypes
           aria-valuenow={`${progress(pro, videos_count)}`}
           aria-valuemin='0'
           aria-valuemax='100'>

@@ -12,7 +12,7 @@ import Button from '@/utils/Button';
 
 const Create = ({ user }) => {
   const router = useRouter();
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [cat, setCat] = useState({ category: '' });
   const [loading, setLoading] = React.useState(false);
 
@@ -26,7 +26,7 @@ const Create = ({ user }) => {
       setLoading(true);
       const url = `${baseUrl}/api/categories/create`;
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const payloadData = { ...cat };
       const response = await axios.post(url, payloadData, payload);

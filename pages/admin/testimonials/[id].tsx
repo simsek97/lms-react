@@ -19,7 +19,7 @@ const INIT_TESTIMONIAL = {
 
 const Index = ({ user }) => {
   const router = useRouter();
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [testimonial, setTestimonial] = useState(INIT_TESTIMONIAL);
   const [loading, setLoading] = React.useState(false);
   const [disabled, setDisabled] = React.useState(true);
@@ -37,7 +37,7 @@ const Index = ({ user }) => {
         const url = `${baseUrl}/api/testimonials/create`;
         const payload = {
           params: { testId: id },
-          headers: { Authorization: edmy_users_token }
+          headers: { Authorization: lms_react_users_token }
         };
         const response = await axios.get(url, payload);
         // console.log(response.data.testimonial);
@@ -116,7 +116,7 @@ const Index = ({ user }) => {
       };
 
       const response = await axios.put(url, payload, {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       });
       setLoading(false);
 

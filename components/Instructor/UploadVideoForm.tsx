@@ -18,7 +18,7 @@ const INITIAL_VALUE = {
 };
 
 const UploadVideoForm = ({ courseId }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [video, setVideo] = useState(INITIAL_VALUE);
   const [disabled, setDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -27,6 +27,7 @@ const UploadVideoForm = ({ courseId }) => {
 
   useEffect(() => {
     setVideo((prevState) => ({ ...prevState, courseId }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -153,7 +154,7 @@ const UploadVideoForm = ({ courseId }) => {
       };
       const url = `${baseUrl}/api/courses/course/upload/new`;
       const payloadHeader = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const response = await axios.post(url, payloadData, payloadHeader);
@@ -232,6 +233,7 @@ const UploadVideoForm = ({ courseId }) => {
             <div className='form-text'>Upload image size 1280x720!</div>
 
             <div className='mt-2'>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={thumbPreview ? thumbPreview : '/images/courses/course-1.jpg'}
                 alt='image'

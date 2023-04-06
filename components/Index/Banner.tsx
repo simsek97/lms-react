@@ -4,7 +4,11 @@ import SearchForm from '@/components/_App/SearchForm';
 import AnimatedCharacters from './BannerText';
 import { motion } from 'framer-motion';
 
-const Banner = () => {
+interface IBanner {
+  user?: any;
+}
+
+const Banner = ({ user }: IBanner) => {
   const headingText = [
     {
       type: 'heading',

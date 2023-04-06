@@ -10,7 +10,7 @@ import baseUrl from '@/utils/baseUrl';
 import Button from '@/utils/Button';
 
 const Photo = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const router = useRouter();
   const [avatar, setAvatar] = useState(user);
   const [loading, setLoading] = React.useState(false);
@@ -72,7 +72,7 @@ const Photo = ({ user }) => {
         profile_photo: profile
       };
       const response = await axios.put(url, payload, {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       });
       setLoading(false);
       toast.success(response.data.message);

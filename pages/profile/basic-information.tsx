@@ -9,7 +9,7 @@ import baseUrl from '@/utils/baseUrl';
 import Button from '@/utils/Button';
 
 const BasicInformation = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [userUpdate, setUserUpdate] = useState(user);
   const [loading, setLoading] = React.useState(false);
 
@@ -25,7 +25,7 @@ const BasicInformation = ({ user }) => {
       const url = `${baseUrl}/api/users/update`;
       const data = { ...userUpdate };
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.put(url, data, payload);
 

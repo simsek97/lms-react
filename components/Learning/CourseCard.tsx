@@ -9,12 +9,14 @@ const CourseCard = ({ course: { user, image, title, slug, is_class } }) => {
           {is_class ? (
             <Link href={`/learning/course/class/${slug}`}>
               <a className='d-block image'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={image} alt={title} />
               </a>
             </Link>
           ) : (
             <Link href={`/learning/course/${slug}`}>
               <a className='d-block image'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={image} alt={title} />
               </a>
             </Link>

@@ -13,7 +13,9 @@ const Footer = () => {
             <div className='col-lg-3 col-sm-6'>
               <div className='single-footer-widget'>
                 <a href='index.html' className='logo'>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src='/images/logo.png' className='main-logo' alt='logo' />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src='/images/white-logo.png' className='white-logo' alt='logo' />
                 </a>
                 <p>SmartKid Games is an educatinal technology platform for kids, serving hundreds of thousands around the world.</p>
@@ -113,15 +115,16 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/footer-shape-1.png' className='shape shape-1' alt='footer' />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/footer-shape-2.png' className='shape shape-2' alt='footer' />
       </div>
 
       <div className='copy-right-area bg-color-f6fafb'>
         <div className='container'>
           <p>
-            &copy; SmartKid.Games {currentYear} is Proudly Powered by{' '}
+            &copy; SmartKid.Games {currentYear} is Proudly Powered by {/* eslint-disable-next-line @next/next/no-img-element */}
             <a href='http://smartclass.biz/' target='_blank' rel='noreferrer'>
               SmartClass
             </a>

@@ -4,6 +4,7 @@ const CourseVideos = ({ id: videoId, title, thumb, video, onDelete }) => {
   return (
     <div className='col-lg-3 col-md-6'>
       <div className='card' style={{ width: '18rem' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={thumb ? thumb : ''} className='card-img-top' alt='...' />
         <div className='card-body'>
           <h5 className='card-title'>{title}</h5>

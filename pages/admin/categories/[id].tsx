@@ -12,7 +12,7 @@ import Button from '@/utils/Button';
 
 const Create = ({ user }) => {
   const router = useRouter();
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [cat, setCat] = useState({ category: '' });
   const [loading, setLoading] = React.useState(false);
   const { id } = router.query;
@@ -23,7 +23,7 @@ const Create = ({ user }) => {
         const url = `${baseUrl}/api/categories/create`;
         const payload = {
           params: { catId: id },
-          headers: { Authorization: edmy_users_token }
+          headers: { Authorization: lms_react_users_token }
         };
         const response = await axios.get(url, payload);
         setCat({ category: response.data.category.name });
@@ -45,7 +45,7 @@ const Create = ({ user }) => {
       setLoading(true);
       const url = `${baseUrl}/api/categories/create`;
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const payloadData = { ...cat, catId: id };
       const response = await axios.put(url, payloadData, payload);

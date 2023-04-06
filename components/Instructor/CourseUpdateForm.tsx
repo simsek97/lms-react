@@ -30,7 +30,7 @@ const INITIAL_VALUE = {
 };
 
 const CourseUpdateForm = ({ courseData }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [course, setCourse] = useState(INITIAL_VALUE);
   const [disabled, setDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -80,12 +80,13 @@ const CourseUpdateForm = ({ courseData }) => {
   useEffect(() => {
     const fetchData = async () => {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/categories`, payload);
       setCategories(response.data.categories);
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
@@ -174,7 +175,7 @@ const CourseUpdateForm = ({ courseData }) => {
       };
 
       const payloadHeader = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const url = `${baseUrl}/api/courses/course/${courseData.id}`;
@@ -318,6 +319,7 @@ const CourseUpdateForm = ({ courseData }) => {
             <div className='form-text'>Upload image size 750x500!</div>
 
             <div className='mt-2'>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={imagePreview ? imagePreview : course.image} alt='image' className='img-thumbnail w-100px me-2' />
             </div>
           </div>

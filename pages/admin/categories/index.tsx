@@ -12,7 +12,7 @@ import GeneralLoader from '@/utils/GeneralLoader';
 import { confirmAlert } from 'react-confirm-alert';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const Index = ({ user }) => {
     setLoading(true);
     try {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/categories`, payload);
       setCategories(response.data.categories);
@@ -70,7 +70,7 @@ const Index = ({ user }) => {
   const handleDelete = async (catId) => {
     try {
       const payload = {
-        headers: { Authorization: edmy_users_token },
+        headers: { Authorization: lms_react_users_token },
         params: { catId }
       };
       const response = await axios.delete(`${baseUrl}/api/categories`, payload);

@@ -13,6 +13,7 @@ const AdminSideNav = ({ user }) => {
     if (!isAdmin) {
       router.replace('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // Sidebar Nav

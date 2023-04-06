@@ -11,7 +11,7 @@ import { parseCookies } from 'nookies';
 import GeneralLoader from '@/utils/GeneralLoader';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const Index = ({ user }) => {
     setLoading(true);
     try {
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
       const response = await axios.get(`${baseUrl}/api/testimonials`, payload);
       setTestimonials(response.data.testimonials);
@@ -53,7 +53,7 @@ const Index = ({ user }) => {
   const handleDelete = async (testId) => {
     try {
       const payload = {
-        headers: { Authorization: edmy_users_token },
+        headers: { Authorization: lms_react_users_token },
         params: { testId }
       };
       const response = await axios.delete(`${baseUrl}/api/testimonials/create`, payload);

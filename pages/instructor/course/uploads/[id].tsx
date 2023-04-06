@@ -12,7 +12,7 @@ import CourseVideos from '@/components/Instructor/CourseVideos';
 import GeneralLoader from '@/utils/GeneralLoader';
 
 const Index = ({ user }) => {
-  const { edmy_users_token } = parseCookies();
+  const { lms_react_users_token } = parseCookies();
   const router = useRouter();
   const { id: courseId } = router.query;
   const [videos, setVideos] = useState([]);
@@ -21,7 +21,7 @@ const Index = ({ user }) => {
   const fetchVideos = async () => {
     setLoading(true);
     const payload = {
-      headers: { Authorization: edmy_users_token }
+      headers: { Authorization: lms_react_users_token }
     };
 
     const url = `${baseUrl}/api/courses/course/upload/${courseId}`;
@@ -55,7 +55,7 @@ const Index = ({ user }) => {
     try {
       setLoading(true);
       const payload = {
-        headers: { Authorization: edmy_users_token }
+        headers: { Authorization: lms_react_users_token }
       };
 
       const url = `${baseUrl}/api/courses/course/upload/${videoId}`;
