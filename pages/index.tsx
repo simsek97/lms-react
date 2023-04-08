@@ -47,11 +47,11 @@ const Index = ({ courses, categories, user }) => {
       </div>
 
       <Categories categories={categories} />
-      <Transform />
+      {/* <Transform /> */}
       <Testimonials />
       {/* <Partners /> */}
       {/* <Teaching /> */}
-      <Business />
+      {/* <Business /> */}
       <Footer />
     </>
   );
