@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
 import baseUrl from '@/utils/baseUrl';
 import CourseCard from './CourseCard';
+import { ICourse } from 'pages/courses/course-types';
 
 const CoursesList = ({ courses, user }) => {
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ const CoursesList = ({ courses, user }) => {
     });
   };
 
-  const handleFav = async (courseId, fav) => {
+  const handleFav = async (courseId: string, fav) => {
     if (!user) {
       toast.error('Need to login first.', {
         style: {
@@ -83,7 +84,7 @@ const CoursesList = ({ courses, user }) => {
       ) : (
         <>
           {courses.length > 0 ? (
-            courses.map((course) => (
+            courses.map((course: ICourse) => (
               <CourseCard
                 key={course.id}
                 course={course}

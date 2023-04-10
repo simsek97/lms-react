@@ -41,6 +41,7 @@ export default function CoursesPage({ user }) {
   };
   useEffect(() => {
     fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, size, short, search]);
 
   return (
@@ -53,7 +54,7 @@ export default function CoursesPage({ user }) {
         <div className='container'>
           <div className='section-title wow animate__animated animate__fadeInUp delay-0-2s'>
             <span className='top-title'>Courses</span>
-            <h2>Expand Your Career Opportunity With Our Courses</h2>
+            <h2>Improve Your Skills With Our Courses</h2>
           </div>
 
           <div className='search-result'>

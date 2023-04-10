@@ -135,6 +135,20 @@ const AdminSideNav = ({ user }) => {
                   stiffness: 400,
                   damping: 10
                 }}>
+                <Link href='/admin/levels/'>
+                  <a className={currentRoute === '/admin/levels' ? 'active' : ''}>Levels</a>
+                </Link>
+              </motion.li>
+              <motion.li
+                whileHover={{
+                  scale: 1.05
+                }}
+                whileTap={{ scale: 0.9 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 400,
+                  damping: 10
+                }}>
                 <Link href='/admin/categories/'>
                   <a className={currentRoute === '/admin/categories' ? 'active' : ''}>Categories</a>
                 </Link>

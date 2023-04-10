@@ -31,6 +31,7 @@ const Index = ({ user }) => {
           data: { message }
         }
       } = err;
+
       toast.error(message, {
         style: {
           border: '1px solid #ff0033',
@@ -49,9 +50,10 @@ const Index = ({ user }) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCourseHome = async (courseId) => {
+  const handleCourseHome = async (courseId: string) => {
     try {
       const payload = {
         headers: { Authorization: lms_react_users_token }
@@ -70,6 +72,7 @@ const Index = ({ user }) => {
           secondary: '#FFFAEE'
         }
       });
+
       fetchData();
     } catch (err) {
       let {

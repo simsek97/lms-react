@@ -5,6 +5,7 @@ import { handleLogout } from '@/utils/auth';
 
 const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => {
   const [isMouse, toggleMouse] = useState(false);
+
   const toggleMouseMenu = () => {
     toggleMouse(!isMouse);
   };
@@ -82,23 +83,26 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
                 </a>
               </Link>
             </li>
+          </>
+        )}
+        {isAdmin && (
+          <>
             <li>
-              <Link href='/instructor/course/create'>
+              <Link href='/admin'>
                 <a className='dropdown-item'>
-                  <i className='bx bx-folder-plus'></i> Create New Course
+                  <i className='bx bxs-dashboard'></i> My Dashboard
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href='/instructor/courses'>
+                <a className='dropdown-item'>
+                  <i className='bx bx-book'></i>
+                  Courses
                 </a>
               </Link>
             </li>
           </>
-        )}
-        {isAdmin && (
-          <li>
-            <Link href='/admin'>
-              <a className='dropdown-item'>
-                <i className='bx bxs-dashboard'></i> My Dashboard
-              </a>
-            </Link>
-          </li>
         )}
 
         <li>
