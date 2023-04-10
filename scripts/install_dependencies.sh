@@ -4,11 +4,15 @@
 # sudo yum clean metadata
 # sudo yum install -y nginx
 set -e
-yum update -y
+# yum update -y
 # pm2 update
-curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
-yum -y install nodejs
-npm install pm2 -g
-npm install yarn -g
+# curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
+# yum -y install nodejs
+# npm install pm2 -g
+# npm install yarn -g
+# cd /usr/share/nginx/html
+# yarn install
+# yarn build
+# yarn start
 
 # pm2 start yarn --name edmy -- start -p 3000
