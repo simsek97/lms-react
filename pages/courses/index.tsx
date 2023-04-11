@@ -16,9 +16,11 @@ export default function CoursesPage({ user }) {
   const [pages, setPages] = useState(0);
   const [coursesCount, setCoursesCount] = useState(0);
   const router = useRouter();
+
   const page = router.query.page ? router.query.page : '1';
   const size = router.query.size ? router.query.size : '8';
   const short = router.query.short ? router.query.short : '';
+  const cat = router.query.cat ? router.query.cat : '';
   const search = router.query.search ? router.query.search : '';
 
   const fetchCourses = async () => {
@@ -29,20 +31,23 @@ export default function CoursesPage({ user }) {
         page,
         limit: size,
         short: short,
+        cat: cat,
         search: search
       }
     };
+
     const response = await axios.get(`${baseUrl}/api/all-courses`, payload);
+
     setCourses(response.data.courses);
     setPages(response.data.totalPages);
     setCoursesCount(response.data.coursesCount);
-    // console.log(response.data);
     setLoading(false);
   };
+
   useEffect(() => {
     fetchCourses();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, size, short, search]);
+  }, [page, size, short, cat, search]);
 
   return (
     <>

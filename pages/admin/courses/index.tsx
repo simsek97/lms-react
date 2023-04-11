@@ -15,8 +15,9 @@ const Index = ({ user }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchCourses = async () => {
     setLoading(true);
+
     try {
       const payload = {
         headers: { Authorization: lms_react_users_token }
@@ -49,7 +50,7 @@ const Index = ({ user }) => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchCourses();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +74,7 @@ const Index = ({ user }) => {
         }
       });
 
-      fetchData();
+      fetchCourses();
     } catch (err) {
       let {
         response: {
@@ -93,11 +94,11 @@ const Index = ({ user }) => {
       });
     } finally {
       setLoading(false);
-      fetchData();
+      fetchCourses();
     }
   };
 
-  const handleCourseRemoveHome = async (courseId) => {
+  const handleCourseRemoveHome = async (courseId: string) => {
     try {
       const payload = {
         headers: { Authorization: lms_react_users_token }
@@ -116,7 +117,8 @@ const Index = ({ user }) => {
           secondary: '#FFFAEE'
         }
       });
-      fetchData();
+
+      fetchCourses();
     } catch (err) {
       let {
         response: {
@@ -136,7 +138,7 @@ const Index = ({ user }) => {
       });
     } finally {
       setLoading(false);
-      fetchData();
+      fetchCourses();
     }
   };
 

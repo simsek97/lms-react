@@ -14,11 +14,12 @@ export default async function handler(req, res) {
 }
 
 const handleGetRequest = async (req, res) => {
-  const { page, limit, short, search } = req.query;
+  const { page, limit, short, cat, search } = req.query;
   const pageNumber = parseInt(page);
   const getRealNumber = isNaN(pageNumber) ? 0 : pageNumber;
   const coursesOffset = limit * (getRealNumber - 1);
   const LIMIT = parseInt(limit);
+
   try {
     let totalPages;
     totalPages = await Course.count({ where: { approved: true } });
@@ -26,6 +27,7 @@ const handleGetRequest = async (req, res) => {
     const courses = await Course.findAll({
       where: {
         [Op.or]: [{ title: { [Op.like]: `%${search}%` } }, { short_desc: { [Op.like]: `%${search}%` } }],
+        catId: cat ? cat : { [Op.ne]: '' },
         approved: true
       },
       // where: { approved: true },

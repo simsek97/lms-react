@@ -20,6 +20,7 @@
     "@mantine/core": "^6.0.4",
     "@mantine/hooks": "^6.0.4",
     "@mantine/rte": "^5.1.1",
+    "@types/node": "^18.15.11",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "framer-motion": "^7.3.4",

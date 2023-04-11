@@ -16,8 +16,9 @@ const Index = ({ user }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchCategories = async () => {
     setLoading(true);
+
     try {
       const payload = {
         headers: { Authorization: lms_react_users_token }
@@ -31,6 +32,7 @@ const Index = ({ user }) => {
           data: { message }
         }
       } = err;
+
       toast.error(message, {
         style: {
           border: '1px solid #ff0033',
@@ -48,7 +50,8 @@ const Index = ({ user }) => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const confirmDelete = (catId) => {
@@ -85,7 +88,7 @@ const Index = ({ user }) => {
           secondary: '#FFFAEE'
         }
       });
-      fetchData();
+      fetchCategories();
     } catch (err) {
       let {
         response: {
@@ -104,7 +107,7 @@ const Index = ({ user }) => {
         }
       });
     } finally {
-      fetchData();
+      fetchCategories();
     }
 
     // router.reload(`/admin/categories/`);
