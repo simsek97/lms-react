@@ -14,12 +14,12 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
   const [fav, setfavs] = useState(false);
   const [add, setAdd] = useState(false);
   const [buy, setBuy] = useState(false);
-
+  console.log(course);
   useEffect(() => {
     setAdd(cartItems.some((cart) => cart.id === id));
     if (userId && course && id) {
       const payload = {
-        params: { userId: userId, courseId: id }
+        params: { userId: userId, courseId: id },
       };
       const url = `${baseUrl}/api/courses/course/exist`;
       axios.get(url, payload).then((result) => {
@@ -33,8 +33,8 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
       const payload = {
         params: {
           userId: userId,
-          courseId: id
-        }
+          courseId: id,
+        },
       };
 
       const url = `${baseUrl}/api/favourites/new`;
@@ -47,34 +47,18 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
   }, [fav]);
 
   return (
-    <div className='col-lg-3 col-md-6'>
-      <div className='single-courses'>
-        <div className='courses-main-img'>
-          <img src={image} alt='Image' />
+    <div className="col-lg-3 col-md-6">
+      <div className="single-courses">
+        <div className="courses-main-img">
+          <img src={image} alt="Image" />
         </div>
-        <div className='courses-content'>
+        <div className="courses-content">
           <h3>{title}</h3>
-          <ul className='admin'>
-            <li>
-              <img
-                src={user.profile_photo ? user.profile_photo : '/images/admin-1.jpg'}
-                className='rounded-circle'
-                alt={user.first_name}
-                style={{ height: '25px', width: '25px' }}
-              />
-            </li>
-            <li>
-              <span>By</span>
-            </li>
-            <li>{`${user.first_name} ${user.last_name}`}</li>
-          </ul>
-          <h4>
-            {before_price > 0 && <del>${before_price}</del>} ${latest_price}
-          </h4>
+          <div className="courses-price">${latest_price}</div>
         </div>
 
-        <div className='courses-hover-content'>
-          <div className='sk'>
+        <div className="courses-hover-content">
+          <div className="sk">
             <div>
               <h3>
                 <Link href={`/course/${slug}`}>
@@ -83,19 +67,28 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
               </h3>
               <p>{short_desc.slice(0, 108)}</p>
 
-              <div className='courses-btn d-flex justify-content-between align-items-center'>
+              <div className="courses-btn d-flex justify-content-between align-items-center">
                 {buy ? (
-                  <button className='default-btn' onClick={() => router.push(`/learning/course/${slug}`)}>
+                  <button
+                    className="default-btn"
+                    onClick={() => router.push(`/learning/course/${slug}`)}
+                  >
                     View My Course
                   </button>
                 ) : (
                   <>
                     {add ? (
-                      <button className='default-btn' onClick={() => router.push('/checkout')}>
+                      <button
+                        className="default-btn"
+                        onClick={() => router.push("/checkout")}
+                      >
                         View Cart
                       </button>
                     ) : (
-                      <button className='default-btn' onClick={() => onAddCart(course)}>
+                      <button
+                        className="default-btn"
+                        onClick={() => onAddCart(course)}
+                      >
                         Add To Cart
                       </button>
                     )}
@@ -105,25 +98,27 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
                   <motion.button
                     whileTap={{ scale: 3 }}
                     transition={{ duration: 0.5 }}
-                    className='default-btn wish'
+                    className="default-btn wish"
                     onClick={() => {
                       onUnFav(id);
                       setfavs(!fav);
-                    }}>
-                    <i className='ri-heart-fill'></i>
-                    <i className='ri-heart-fill hover'></i>
+                    }}
+                  >
+                    <i className="ri-heart-fill"></i>
+                    <i className="ri-heart-fill hover"></i>
                   </motion.button>
                 ) : (
                   <motion.button
                     whileTap={{ scale: 3 }}
                     transition={{ duration: 0.5 }}
-                    className='default-btn wish'
+                    className="default-btn wish"
                     onClick={() => {
                       onFav(id);
                       setfavs(!fav);
-                    }}>
-                    <i className='ri-heart-line'></i>
-                    <i className='ri-heart-fill hover'></i>
+                    }}
+                  >
+                    <i className="ri-heart-line"></i>
+                    <i className="ri-heart-fill hover"></i>
                   </motion.button>
                 )}
               </div>
