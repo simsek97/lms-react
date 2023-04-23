@@ -64,12 +64,7 @@ export default function CoursesPage({ user }) {
 
           <div className='search-result'>
             <div className='row align-items-center'>
-              <div className='col-lg-6 col-md-5'>
-                <p>
-                  We found <span>{coursesCount}</span> courses available for you
-                </p>
-              </div>
-              <div className='col-lg-6 col-md-7'>
+              <div className='col-md-12'>
                 <ul>
                   <li>
                     <SearchForm formClass='src-form' btnClass='src-btn' />
