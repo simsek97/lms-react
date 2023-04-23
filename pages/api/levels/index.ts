@@ -35,11 +35,11 @@ const handleGet = async (req, res) => {
 };
 
 const handleDelete = async (req, res) => {
-  const { catId } = req.query;
-  // console.log(catId);
+  const { levelId } = req.query;
+  // console.log(levelId);
   try {
     const cat = await Level.findOne({
-      where: { id: catId }
+      where: { id: levelId }
     });
 
     cat.destroy();

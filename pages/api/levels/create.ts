@@ -23,11 +23,11 @@ export default async function handler(req, res) {
 }
 
 const levelById = async (req, res) => {
-  const { catId } = req.query;
-  // console.log("####", catId);
+  const { levelId } = req.query;
+  // console.log("####", levelId);
   try {
     const level = await Level.findOne({
-      where: { id: catId }
+      where: { id: levelId }
     });
 
     res.status(200).json({ level });
@@ -71,7 +71,7 @@ const createLevel = async (req, res) => {
 
 const updateLevel = async (req, res) => {
   try {
-    const { level, catId } = req.body;
+    const { level, levelId } = req.body;
 
     let slug = slugify(level);
     const levelExist = await Level.findOne({
@@ -88,7 +88,7 @@ const updateLevel = async (req, res) => {
         slug: slug
       },
       {
-        where: { id: catId }
+        where: { id: levelId }
       }
     );
 
