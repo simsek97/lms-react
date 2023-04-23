@@ -50,8 +50,11 @@ const PageBanner = ({ pageTitle, homePageUrl, homePageText, activePageText }) =>
           </div>
         </div>
 
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/page-banner-shape-1.svg' className='shape shape-1' alt='courses' />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/page-banner-shape-2.svg' className='shape shape-2' alt='courses' />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/page-banner-shape-3.svg' className='shape shape-3' alt='courses' />
       </div>
     </>
