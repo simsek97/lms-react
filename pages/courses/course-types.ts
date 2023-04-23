@@ -1,4 +1,4 @@
-export interface ICourse {
+interface ICourse {
   id?: string;
   title: string;
   slug: string;
@@ -22,3 +22,5 @@ export interface ICourse {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export default ICourse;
