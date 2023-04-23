@@ -38,6 +38,7 @@ export default function CoursesPage({ user }) {
 
     const response = await axios.get(`${baseUrl}/api/all-courses`, payload);
 
+    console.log('courses', response.data.courses);
     setCourses(response.data.courses);
     setPages(response.data.totalPages);
     setCoursesCount(response.data.coursesCount);

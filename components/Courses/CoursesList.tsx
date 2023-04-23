@@ -52,6 +52,7 @@ const CoursesList = ({ courses, user }) => {
       });
       return;
     }
+
     try {
       const payload = {
         userId: user.id,

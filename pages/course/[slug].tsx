@@ -8,7 +8,7 @@ import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
 import toast from 'react-hot-toast';
 
-const courseDeatails = ({ user }) => {
+const CourseDeatails = ({ user }) => {
   const [course, setCourse] = useState({});
   const router = useRouter();
   const { slug } = router.query;
@@ -56,10 +56,12 @@ const courseDeatails = ({ user }) => {
         //@ts-ignore
         activePageText={course && course.title}
       />
+
       {course && <CoursesDetailsContent user={user} course={course} />}
+
       <Footer />
     </>
   );
 };
 
-export default courseDeatails;
+export default CourseDeatails;

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Course, User, Enrolment } from 'database/models';
+import { Course, User, Enrolment, Category, Level } from 'database/models';
 
 export default async function handler(req, res) {
   if (!('authorization' in req.headers)) {
@@ -27,6 +27,16 @@ const handleGetRequest = async (req, res) => {
           model: User,
           as: 'user',
           attributes: ['first_name', 'last_name', 'profile_photo']
+        },
+        {
+          model: Category,
+          as: 'category',
+          attributes: ['name', 'slug']
+        },
+        {
+          model: Level,
+          as: 'level',
+          attributes: ['name', 'slug']
         },
         {
           model: Enrolment,

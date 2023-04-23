@@ -1,4 +1,4 @@
-import { Course, User, Category, Enrolment, Course_Asset } from 'database/models';
+import { Course, User, Category, Enrolment, Course_Asset, Level } from 'database/models';
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -25,6 +25,11 @@ const handleGetRequest = async (req, res) => {
         {
           model: Category,
           as: 'category',
+          attributes: ['name', 'slug']
+        },
+        {
+          model: Level,
+          as: 'level',
           attributes: ['name', 'slug']
         },
         {

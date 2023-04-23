@@ -8,7 +8,6 @@ import BuyCourseBtn from './BuyCourseBtn';
 import { calculateDiscount } from '@/utils/helper';
 
 const CoursesDetailsSidebar = ({ current_user, course }) => {
-  // console.log(course);
   //@ts-ignore
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
@@ -119,16 +118,13 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
 
           <ul>
             <li>
-              <div className='d-flex justify-content-between align-items-center'>
-                <span>
-                  <i className='ri-tv-line'></i> Live Class
-                </span>
-                {course.is_class ? <div className='live-class-icon'></div> : 'No'}
-              </div>
+              <i className='ri-bar-chart-fill'></i>
+              Category
+              <span>{course.category && course.category.name}</span>
             </li>
             <li>
               <i className='ri-bar-chart-fill'></i>
-              Category
+              Grade
               <span>{course.category && course.category.name}</span>
             </li>
             <li>
