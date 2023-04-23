@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
 import baseUrl from '@/utils/baseUrl';
 import CourseCard from './CourseCard';
-import ICourse from 'pages/courses/course-types';
+import ICourse from 'types/course-types';
 
 const CoursesList = ({ courses, user }) => {
   const [loading, setLoading] = useState(true);
