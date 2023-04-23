@@ -33,6 +33,7 @@ const initLevel = (sequelize, Types) => {
       updatedAt: 'updated_at'
     }
   );
+
   return Level;
 };
 

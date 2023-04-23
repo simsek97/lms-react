@@ -15,8 +15,8 @@ Course.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 Category.hasMany(Course, { foreignKey: 'catId', as: 'courses' });
 Course.belongsTo(Category, { foreignKey: 'catId', as: 'category' });
 
-Level.hasMany(Course, { foreignKey: 'catId', as: 'courses' });
-Course.belongsTo(Level, { foreignKey: 'catId', as: 'level' });
+Level.hasMany(Course, { foreignKey: 'levelId', as: 'courses' });
+Course.belongsTo(Level, { foreignKey: 'levelId', as: 'level' });
 
 Course.hasMany(Video, { foreignKey: 'courseId', as: 'videos' });
 Video.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
