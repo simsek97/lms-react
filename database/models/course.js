@@ -56,6 +56,16 @@ const initCourse = (sequelize, Types) => {
           as: 'catId'
         }
       },
+      levelId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'levels',
+          key: 'id',
+          as: 'levelId'
+        }
+      },
       approved: DataTypes.BOOLEAN,
       in_home_page: DataTypes.BOOLEAN,
       in_home_page_set_at: DataTypes.DATE,
