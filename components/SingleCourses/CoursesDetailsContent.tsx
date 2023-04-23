@@ -46,7 +46,7 @@ const CoursesDetailsContent = ({ user: current_user, course }) => {
 
               <div className='gap-mb-30'></div>
 
-              {user && <InstructorProfile instructor={user} />}
+              {/* {user && <InstructorProfile instructor={user} />} */}
 
               <div className='gap-mb-30'></div>
 
