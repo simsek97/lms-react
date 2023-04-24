@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="jxBJcRgj" version="1.0" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="test">
+    <organization identifier="test" structure="hierarchical">
+      <title>Untitled1</title>
+      <item identifier="test-HTML5_test_html" identifierref="HTML5_test_html" isvisible="true">
+        <title>Untitled1</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="HTML5_test_html" type="webcontent" adlcp:scormtype="sco" href="HTML5/test.html">
+      <file href="HTML5/test.html"/>
+      <dependency identifierref="HTML5_player_APIWrapper_js"/>
+      <dependency identifierref="HTML5_resources_res_10261_png"/>
+      <dependency identifierref="HTML5_resources_res_10487_png"/>
+      <dependency identifierref="HTML5_resources_res_10474_png"/>
+      <dependency identifierref="HTML5_resources_res_10489_png"/>
+      <dependency identifierref="HTML5_resources_res_10208_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10515_png"/>
+      <dependency identifierref="HTML5_resources_res_10550_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10209_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10494_png"/>
+      <dependency identifierref="HTML5_resources_res_10492_png"/>
+      <dependency identifierref="HTML5_resources_res_10495_png"/>
+      <dependency identifierref="HTML5_resources_res_10496_png"/>
+      <dependency identifierref="HTML5_resources_res_10490_png"/>
+      <dependency identifierref="HTML5_resources_res_10545_png"/>
+      <dependency identifierref="HTML5_resources_thumb_112_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10504_png"/>
+      <dependency identifierref="HTML5_resources_res_10670_png"/>
+      <dependency identifierref="HTML5_resources_res_10672_png"/>
+      <dependency identifierref="HTML5_resources_res_10673_png"/>
+      <dependency identifierref="HTML5_resources_res_10674_png"/>
+      <dependency identifierref="HTML5_resources_res_10502_png"/>
+      <dependency identifierref="HTML5_resources_thumb_280_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10503_png"/>
+      <dependency identifierref="HTML5_resources_res_10424_png"/>
+      <dependency identifierref="HTML5_resources_res_10686_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10667_png"/>
+      <dependency identifierref="HTML5_resources_res_10259_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10260_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10683_png"/>
+      <dependency identifierref="HTML5_resources_res_10685_png"/>
+      <dependency identifierref="HTML5_resources_res_10684_png"/>
+      <dependency identifierref="HTML5_resources_res_10682_png"/>
+      <dependency identifierref="HTML5_resources_res_10681_png"/>
+      <dependency identifierref="HTML5_resources_thumb_338_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10692_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10689_png"/>
+      <dependency identifierref="HTML5_resources_res_10691_png"/>
+      <dependency identifierref="HTML5_resources_res_10690_png"/>
+      <dependency identifierref="HTML5_resources_res_10688_png"/>
+      <dependency identifierref="HTML5_resources_res_10687_png"/>
+      <dependency identifierref="HTML5_resources_thumb_359_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10693_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10696_png"/>
+      <dependency identifierref="HTML5_resources_res_10698_png"/>
+      <dependency identifierref="HTML5_resources_res_10697_png"/>
+      <dependency identifierref="HTML5_resources_res_10695_png"/>
+      <dependency identifierref="HTML5_resources_res_10694_png"/>
+      <dependency identifierref="HTML5_resources_thumb_518_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10704_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10701_png"/>
+      <dependency identifierref="HTML5_resources_res_10703_png"/>
+      <dependency identifierref="HTML5_resources_res_10702_png"/>
+      <dependency identifierref="HTML5_resources_res_10700_png"/>
+      <dependency identifierref="HTML5_resources_res_10699_png"/>
+      <dependency identifierref="HTML5_resources_thumb_519_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10710_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10707_png"/>
+      <dependency identifierref="HTML5_resources_res_10709_png"/>
+      <dependency identifierref="HTML5_resources_res_10708_png"/>
+      <dependency identifierref="HTML5_resources_res_10706_png"/>
+      <dependency identifierref="HTML5_resources_res_10705_png"/>
+      <dependency identifierref="HTML5_resources_thumb_520_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10716_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10713_png"/>
+      <dependency identifierref="HTML5_resources_res_10715_png"/>
+      <dependency identifierref="HTML5_resources_res_10714_png"/>
+      <dependency identifierref="HTML5_resources_res_10712_png"/>
+      <dependency identifierref="HTML5_resources_res_10711_png"/>
+      <dependency identifierref="HTML5_resources_thumb_521_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10722_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10719_png"/>
+      <dependency identifierref="HTML5_resources_res_10721_png"/>
+      <dependency identifierref="HTML5_resources_res_10720_png"/>
+      <dependency identifierref="HTML5_resources_res_10718_png"/>
+      <dependency identifierref="HTML5_resources_res_10717_png"/>
+      <dependency identifierref="HTML5_resources_thumb_522_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10728_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10725_png"/>
+      <dependency identifierref="HTML5_resources_res_10727_png"/>
+      <dependency identifierref="HTML5_resources_res_10726_png"/>
+      <dependency identifierref="HTML5_resources_res_10724_png"/>
+      <dependency identifierref="HTML5_resources_res_10723_png"/>
+      <dependency identifierref="HTML5_resources_thumb_523_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10737_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10733_png"/>
+      <dependency identifierref="HTML5_resources_res_10736_png"/>
+      <dependency identifierref="HTML5_resources_res_10735_png"/>
+      <dependency identifierref="HTML5_resources_res_10732_png"/>
+      <dependency identifierref="HTML5_resources_res_10729_png"/>
+      <dependency identifierref="HTML5_resources_thumb_517_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10738_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10741_png"/>
+      <dependency identifierref="HTML5_resources_res_10743_png"/>
+      <dependency identifierref="HTML5_resources_res_10742_png"/>
+      <dependency identifierref="HTML5_resources_res_10740_png"/>
+      <dependency identifierref="HTML5_resources_res_10739_png"/>
+      <dependency identifierref="HTML5_resources_thumb_524_jpg"/>
+      <dependency identifierref="HTML5_resources_thumb_376_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10753_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10746_png"/>
+      <dependency identifierref="HTML5_resources_res_10748_png"/>
+      <dependency identifierref="HTML5_resources_res_10747_png"/>
+      <dependency identifierref="HTML5_resources_res_10752_png"/>
+      <dependency identifierref="HTML5_resources_res_10744_png"/>
+      <dependency identifierref="HTML5_resources_thumb_387_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10760_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10757_png"/>
+      <dependency identifierref="HTML5_resources_res_10759_png"/>
+      <dependency identifierref="HTML5_resources_res_10758_png"/>
+      <dependency identifierref="HTML5_resources_res_10756_png"/>
+      <dependency identifierref="HTML5_resources_res_10754_png"/>
+      <dependency identifierref="HTML5_resources_thumb_525_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10766_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10763_png"/>
+      <dependency identifierref="HTML5_resources_res_10765_png"/>
+      <dependency identifierref="HTML5_resources_res_10764_png"/>
+      <dependency identifierref="HTML5_resources_res_10762_png"/>
+      <dependency identifierref="HTML5_resources_res_10761_png"/>
+      <dependency identifierref="HTML5_resources_thumb_526_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10772_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10769_png"/>
+      <dependency identifierref="HTML5_resources_res_10771_png"/>
+      <dependency identifierref="HTML5_resources_res_10770_png"/>
+      <dependency identifierref="HTML5_resources_res_10768_png"/>
+      <dependency identifierref="HTML5_resources_res_10767_png"/>
+      <dependency identifierref="HTML5_resources_thumb_527_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10779_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10775_png"/>
+      <dependency identifierref="HTML5_resources_res_10778_png"/>
+      <dependency identifierref="HTML5_resources_res_10776_png"/>
+      <dependency identifierref="HTML5_resources_res_10774_png"/>
+      <dependency identifierref="HTML5_resources_res_10773_png"/>
+      <dependency identifierref="HTML5_resources_thumb_528_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10785_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10782_png"/>
+      <dependency identifierref="HTML5_resources_res_10784_png"/>
+      <dependency identifierref="HTML5_resources_res_10783_png"/>
+      <dependency identifierref="HTML5_resources_res_10781_png"/>
+      <dependency identifierref="HTML5_resources_res_10780_png"/>
+      <dependency identifierref="HTML5_resources_thumb_529_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10791_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10788_png"/>
+      <dependency identifierref="HTML5_resources_res_10790_png"/>
+      <dependency identifierref="HTML5_resources_res_10789_png"/>
+      <dependency identifierref="HTML5_resources_res_10787_png"/>
+      <dependency identifierref="HTML5_resources_res_10786_png"/>
+      <dependency identifierref="HTML5_resources_thumb_530_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10798_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10795_png"/>
+      <dependency identifierref="HTML5_resources_res_10797_png"/>
+      <dependency identifierref="HTML5_resources_res_10796_png"/>
+      <dependency identifierref="HTML5_resources_res_10794_png"/>
+      <dependency identifierref="HTML5_resources_res_10793_png"/>
+      <dependency identifierref="HTML5_resources_res_10792_png"/>
+      <dependency identifierref="HTML5_resources_thumb_531_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10805_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10801_png"/>
+      <dependency identifierref="HTML5_resources_res_10804_png"/>
+      <dependency identifierref="HTML5_resources_res_10803_png"/>
+      <dependency identifierref="HTML5_resources_res_10800_png"/>
+      <dependency identifierref="HTML5_resources_res_10799_png"/>
+      <dependency identifierref="HTML5_resources_thumb_532_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10811_m4a"/>
+      <dependency identifierref="HTML5_resources_res_10808_png"/>
+      <dependency identifierref="HTML5_resources_res_10810_png"/>
+      <dependency identifierref="HTML5_resources_res_10809_png"/>
+      <dependency identifierref="HTML5_resources_res_10807_png"/>
+      <dependency identifierref="HTML5_resources_res_10806_png"/>
+      <dependency identifierref="HTML5_resources_thumb_533_jpg"/>
+      <dependency identifierref="HTML5_resources_thumb_397_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10563_png"/>
+      <dependency identifierref="HTML5_resources_res_10613_png"/>
+      <dependency identifierref="HTML5_resources_res_10564_png"/>
+      <dependency identifierref="HTML5_resources_res_10565_png"/>
+      <dependency identifierref="HTML5_resources_res_10566_png"/>
+      <dependency identifierref="HTML5_resources_res_10258_png"/>
+      <dependency identifierref="HTML5_resources_res_10257_png"/>
+      <dependency identifierref="HTML5_resources_res_10572_png"/>
+      <dependency identifierref="HTML5_resources_res_10615_png"/>
+      <dependency identifierref="HTML5_resources_res_10675_m4a"/>
+      <dependency identifierref="HTML5_resources_thumb_512_jpg"/>
+      <dependency identifierref="HTML5_resources_res_10187_png"/>
+      <dependency identifierref="HTML5_resources_res_10596_png"/>
+      <dependency identifierref="HTML5_resources_res_10597_png"/>
+      <dependency identifierref="HTML5_resources_res_10600_png"/>
+      <dependency identifierref="HTML5_resources_res_10601_png"/>
+      <dependency identifierref="HTML5_resources_res_10606_png"/>
+      <dependency identifierref="HTML5_resources_res_10607_png"/>
+      <dependency identifierref="HTML5_resources_res_10608_png"/>
+      <dependency identifierref="HTML5_resources_res_10609_png"/>
+      <dependency identifierref="HTML5_resources_res_10610_png"/>
+      <dependency identifierref="HTML5_resources_res_10611_png"/>
+      <dependency identifierref="HTML5_resources_res_10668_png"/>
+      <dependency identifierref="HTML5_resources_res_10188_png"/>
+      <dependency identifierref="HTML5_resources_res_10558_png"/>
+      <dependency identifierref="HTML5_resources_res_10205_png"/>
+      <dependency identifierref="HTML5_resources_res_10206_png"/>
+      <dependency identifierref="HTML5_resources_res_10207_png"/>
+      <dependency identifierref="HTML5_resources_res_10559_png"/>
+      <dependency identifierref="HTML5_resources_res_10560_png"/>
+      <dependency identifierref="HTML5_resources_res_10222_png"/>
+      <dependency identifierref="HTML5_resources_res_10193_png"/>
+      <dependency identifierref="HTML5_resources_res_10198_png"/>
+      <dependency identifierref="HTML5_resources_res_10556_png"/>
+      <dependency identifierref="HTML5_resources_res_10557_png"/>
+      <dependency identifierref="HTML5_resources_res_10562_png"/>
+      <dependency identifierref="HTML5_resources_res_10196_png"/>
+      <dependency identifierref="HTML5_resources_font_2_woff"/>
+      <dependency identifierref="HTML5_resources_font_3_woff"/>
+      <dependency identifierref="HTML5_resources_font_4_woff"/>
+      <dependency identifierref="HTML5_resources_font_5_woff"/>
+      <dependency identifierref="HTML5_resources_font_6_woff"/>
+      <dependency identifierref="HTML5_resources_font_7_woff"/>
+      <dependency identifierref="HTML5_resources_font_8_woff"/>
+      <dependency identifierref="HTML5_resources_font_9_woff"/>
+      <dependency identifierref="HTML5_resources_font_10_woff"/>
+      <dependency identifierref="HTML5_resources_font_11_woff"/>
+      <dependency identifierref="HTML5_resources_font_12_woff"/>
+      <dependency identifierref="HTML5_rlprez_js"/>
+      <dependency identifierref="HTML5_player_rlplayer_js"/>
+      <dependency identifierref="HTML5_player_rlplayer_lang_en-US_js"/>
+      <dependency identifierref="HTML5_player_rlplayer_css"/>
+      <dependency identifierref="HTML5_rlprez_css"/>
+      <dependency identifierref="HTML5_player_rlsco_functions_js"/>
+    </resource>
+    <resource identifier="HTML5_player_APIWrapper_js" type="webcontent" adlcp:scormtype="asset" href="HTML5/player/APIWrapper.js">
+      <file href="HTML5/player/APIWrapper.js"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10261_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10261.png">
+      <file href="HTML5/resources/res_10261.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10487_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10487.png">
+      <file href="HTML5/resources/res_10487.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10474_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10474.png">
+      <file href="HTML5/resources/res_10474.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10489_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10489.png">
+      <file href="HTML5/resources/res_10489.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10208_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10208.m4a">
+      <file href="HTML5/resources/res_10208.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10515_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10515.png">
+      <file href="HTML5/resources/res_10515.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10550_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10550.m4a">
+      <file href="HTML5/resources/res_10550.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10209_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10209.m4a">
+      <file href="HTML5/resources/res_10209.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10494_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10494.png">
+      <file href="HTML5/resources/res_10494.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10492_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10492.png">
+      <file href="HTML5/resources/res_10492.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10495_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10495.png">
+      <file href="HTML5/resources/res_10495.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10496_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10496.png">
+      <file href="HTML5/resources/res_10496.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10490_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10490.png">
+      <file href="HTML5/resources/res_10490.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10545_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10545.png">
+      <file href="HTML5/resources/res_10545.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_112_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_112.jpg">
+      <file href="HTML5/resources/thumb_112.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10504_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10504.png">
+      <file href="HTML5/resources/res_10504.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10670_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10670.png">
+      <file href="HTML5/resources/res_10670.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10672_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10672.png">
+      <file href="HTML5/resources/res_10672.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10673_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10673.png">
+      <file href="HTML5/resources/res_10673.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10674_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10674.png">
+      <file href="HTML5/resources/res_10674.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10502_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10502.png">
+      <file href="HTML5/resources/res_10502.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_280_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_280.jpg">
+      <file href="HTML5/resources/thumb_280.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10503_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10503.png">
+      <file href="HTML5/resources/res_10503.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10424_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10424.png">
+      <file href="HTML5/resources/res_10424.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10686_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10686.m4a">
+      <file href="HTML5/resources/res_10686.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10667_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10667.png">
+      <file href="HTML5/resources/res_10667.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10259_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10259.m4a">
+      <file href="HTML5/resources/res_10259.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10260_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10260.m4a">
+      <file href="HTML5/resources/res_10260.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10683_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10683.png">
+      <file href="HTML5/resources/res_10683.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10685_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10685.png">
+      <file href="HTML5/resources/res_10685.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10684_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10684.png">
+      <file href="HTML5/resources/res_10684.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10682_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10682.png">
+      <file href="HTML5/resources/res_10682.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10681_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10681.png">
+      <file href="HTML5/resources/res_10681.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_338_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_338.jpg">
+      <file href="HTML5/resources/thumb_338.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10692_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10692.m4a">
+      <file href="HTML5/resources/res_10692.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10689_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10689.png">
+      <file href="HTML5/resources/res_10689.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10691_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10691.png">
+      <file href="HTML5/resources/res_10691.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10690_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10690.png">
+      <file href="HTML5/resources/res_10690.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10688_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10688.png">
+      <file href="HTML5/resources/res_10688.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10687_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10687.png">
+      <file href="HTML5/resources/res_10687.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_359_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_359.jpg">
+      <file href="HTML5/resources/thumb_359.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10693_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10693.m4a">
+      <file href="HTML5/resources/res_10693.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10696_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10696.png">
+      <file href="HTML5/resources/res_10696.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10698_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10698.png">
+      <file href="HTML5/resources/res_10698.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10697_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10697.png">
+      <file href="HTML5/resources/res_10697.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10695_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10695.png">
+      <file href="HTML5/resources/res_10695.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10694_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10694.png">
+      <file href="HTML5/resources/res_10694.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_518_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_518.jpg">
+      <file href="HTML5/resources/thumb_518.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10704_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10704.m4a">
+      <file href="HTML5/resources/res_10704.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10701_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10701.png">
+      <file href="HTML5/resources/res_10701.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10703_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10703.png">
+      <file href="HTML5/resources/res_10703.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10702_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10702.png">
+      <file href="HTML5/resources/res_10702.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10700_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10700.png">
+      <file href="HTML5/resources/res_10700.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10699_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10699.png">
+      <file href="HTML5/resources/res_10699.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_519_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_519.jpg">
+      <file href="HTML5/resources/thumb_519.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10710_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10710.m4a">
+      <file href="HTML5/resources/res_10710.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10707_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10707.png">
+      <file href="HTML5/resources/res_10707.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10709_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10709.png">
+      <file href="HTML5/resources/res_10709.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10708_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10708.png">
+      <file href="HTML5/resources/res_10708.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10706_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10706.png">
+      <file href="HTML5/resources/res_10706.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10705_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10705.png">
+      <file href="HTML5/resources/res_10705.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_520_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_520.jpg">
+      <file href="HTML5/resources/thumb_520.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10716_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10716.m4a">
+      <file href="HTML5/resources/res_10716.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10713_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10713.png">
+      <file href="HTML5/resources/res_10713.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10715_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10715.png">
+      <file href="HTML5/resources/res_10715.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10714_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10714.png">
+      <file href="HTML5/resources/res_10714.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10712_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10712.png">
+      <file href="HTML5/resources/res_10712.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10711_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10711.png">
+      <file href="HTML5/resources/res_10711.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_521_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_521.jpg">
+      <file href="HTML5/resources/thumb_521.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10722_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10722.m4a">
+      <file href="HTML5/resources/res_10722.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10719_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10719.png">
+      <file href="HTML5/resources/res_10719.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10721_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10721.png">
+      <file href="HTML5/resources/res_10721.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10720_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10720.png">
+      <file href="HTML5/resources/res_10720.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10718_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10718.png">
+      <file href="HTML5/resources/res_10718.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10717_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10717.png">
+      <file href="HTML5/resources/res_10717.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_522_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_522.jpg">
+      <file href="HTML5/resources/thumb_522.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10728_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10728.m4a">
+      <file href="HTML5/resources/res_10728.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10725_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10725.png">
+      <file href="HTML5/resources/res_10725.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10727_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10727.png">
+      <file href="HTML5/resources/res_10727.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10726_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10726.png">
+      <file href="HTML5/resources/res_10726.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10724_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10724.png">
+      <file href="HTML5/resources/res_10724.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10723_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10723.png">
+      <file href="HTML5/resources/res_10723.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_523_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_523.jpg">
+      <file href="HTML5/resources/thumb_523.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10737_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10737.m4a">
+      <file href="HTML5/resources/res_10737.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10733_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10733.png">
+      <file href="HTML5/resources/res_10733.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10736_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10736.png">
+      <file href="HTML5/resources/res_10736.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10735_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10735.png">
+      <file href="HTML5/resources/res_10735.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10732_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10732.png">
+      <file href="HTML5/resources/res_10732.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10729_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10729.png">
+      <file href="HTML5/resources/res_10729.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_517_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_517.jpg">
+      <file href="HTML5/resources/thumb_517.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10738_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10738.m4a">
+      <file href="HTML5/resources/res_10738.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10741_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10741.png">
+      <file href="HTML5/resources/res_10741.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10743_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10743.png">
+      <file href="HTML5/resources/res_10743.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10742_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10742.png">
+      <file href="HTML5/resources/res_10742.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10740_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10740.png">
+      <file href="HTML5/resources/res_10740.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10739_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10739.png">
+      <file href="HTML5/resources/res_10739.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_524_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_524.jpg">
+      <file href="HTML5/resources/thumb_524.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_376_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_376.jpg">
+      <file href="HTML5/resources/thumb_376.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10753_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10753.m4a">
+      <file href="HTML5/resources/res_10753.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10746_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10746.png">
+      <file href="HTML5/resources/res_10746.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10748_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10748.png">
+      <file href="HTML5/resources/res_10748.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10747_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10747.png">
+      <file href="HTML5/resources/res_10747.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10752_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10752.png">
+      <file href="HTML5/resources/res_10752.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10744_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10744.png">
+      <file href="HTML5/resources/res_10744.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_387_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_387.jpg">
+      <file href="HTML5/resources/thumb_387.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10760_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10760.m4a">
+      <file href="HTML5/resources/res_10760.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10757_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10757.png">
+      <file href="HTML5/resources/res_10757.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10759_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10759.png">
+      <file href="HTML5/resources/res_10759.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10758_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10758.png">
+      <file href="HTML5/resources/res_10758.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10756_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10756.png">
+      <file href="HTML5/resources/res_10756.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10754_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10754.png">
+      <file href="HTML5/resources/res_10754.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_525_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_525.jpg">
+      <file href="HTML5/resources/thumb_525.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10766_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10766.m4a">
+      <file href="HTML5/resources/res_10766.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10763_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10763.png">
+      <file href="HTML5/resources/res_10763.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10765_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10765.png">
+      <file href="HTML5/resources/res_10765.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10764_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10764.png">
+      <file href="HTML5/resources/res_10764.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10762_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10762.png">
+      <file href="HTML5/resources/res_10762.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10761_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10761.png">
+      <file href="HTML5/resources/res_10761.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_526_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_526.jpg">
+      <file href="HTML5/resources/thumb_526.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10772_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10772.m4a">
+      <file href="HTML5/resources/res_10772.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10769_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10769.png">
+      <file href="HTML5/resources/res_10769.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10771_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10771.png">
+      <file href="HTML5/resources/res_10771.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10770_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10770.png">
+      <file href="HTML5/resources/res_10770.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10768_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10768.png">
+      <file href="HTML5/resources/res_10768.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10767_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10767.png">
+      <file href="HTML5/resources/res_10767.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_527_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_527.jpg">
+      <file href="HTML5/resources/thumb_527.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10779_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10779.m4a">
+      <file href="HTML5/resources/res_10779.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10775_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10775.png">
+      <file href="HTML5/resources/res_10775.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10778_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10778.png">
+      <file href="HTML5/resources/res_10778.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10776_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10776.png">
+      <file href="HTML5/resources/res_10776.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10774_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10774.png">
+      <file href="HTML5/resources/res_10774.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10773_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10773.png">
+      <file href="HTML5/resources/res_10773.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_528_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_528.jpg">
+      <file href="HTML5/resources/thumb_528.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10785_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10785.m4a">
+      <file href="HTML5/resources/res_10785.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10782_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10782.png">
+      <file href="HTML5/resources/res_10782.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10784_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10784.png">
+      <file href="HTML5/resources/res_10784.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10783_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10783.png">
+      <file href="HTML5/resources/res_10783.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10781_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10781.png">
+      <file href="HTML5/resources/res_10781.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10780_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10780.png">
+      <file href="HTML5/resources/res_10780.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_529_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_529.jpg">
+      <file href="HTML5/resources/thumb_529.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10791_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10791.m4a">
+      <file href="HTML5/resources/res_10791.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10788_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10788.png">
+      <file href="HTML5/resources/res_10788.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10790_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10790.png">
+      <file href="HTML5/resources/res_10790.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10789_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10789.png">
+      <file href="HTML5/resources/res_10789.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10787_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10787.png">
+      <file href="HTML5/resources/res_10787.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10786_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10786.png">
+      <file href="HTML5/resources/res_10786.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_530_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_530.jpg">
+      <file href="HTML5/resources/thumb_530.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10798_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10798.m4a">
+      <file href="HTML5/resources/res_10798.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10795_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10795.png">
+      <file href="HTML5/resources/res_10795.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10797_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10797.png">
+      <file href="HTML5/resources/res_10797.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10796_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10796.png">
+      <file href="HTML5/resources/res_10796.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10794_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10794.png">
+      <file href="HTML5/resources/res_10794.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10793_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10793.png">
+      <file href="HTML5/resources/res_10793.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10792_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10792.png">
+      <file href="HTML5/resources/res_10792.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_531_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_531.jpg">
+      <file href="HTML5/resources/thumb_531.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10805_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10805.m4a">
+      <file href="HTML5/resources/res_10805.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10801_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10801.png">
+      <file href="HTML5/resources/res_10801.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10804_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10804.png">
+      <file href="HTML5/resources/res_10804.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10803_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10803.png">
+      <file href="HTML5/resources/res_10803.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10800_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10800.png">
+      <file href="HTML5/resources/res_10800.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10799_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10799.png">
+      <file href="HTML5/resources/res_10799.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_532_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_532.jpg">
+      <file href="HTML5/resources/thumb_532.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10811_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10811.m4a">
+      <file href="HTML5/resources/res_10811.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10808_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10808.png">
+      <file href="HTML5/resources/res_10808.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10810_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10810.png">
+      <file href="HTML5/resources/res_10810.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10809_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10809.png">
+      <file href="HTML5/resources/res_10809.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10807_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10807.png">
+      <file href="HTML5/resources/res_10807.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10806_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10806.png">
+      <file href="HTML5/resources/res_10806.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_533_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_533.jpg">
+      <file href="HTML5/resources/thumb_533.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_397_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_397.jpg">
+      <file href="HTML5/resources/thumb_397.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10563_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10563.png">
+      <file href="HTML5/resources/res_10563.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10613_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10613.png">
+      <file href="HTML5/resources/res_10613.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10564_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10564.png">
+      <file href="HTML5/resources/res_10564.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10565_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10565.png">
+      <file href="HTML5/resources/res_10565.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10566_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10566.png">
+      <file href="HTML5/resources/res_10566.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10258_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10258.png">
+      <file href="HTML5/resources/res_10258.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10257_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10257.png">
+      <file href="HTML5/resources/res_10257.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10572_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10572.png">
+      <file href="HTML5/resources/res_10572.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10615_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10615.png">
+      <file href="HTML5/resources/res_10615.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10675_m4a" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10675.m4a">
+      <file href="HTML5/resources/res_10675.m4a"/>
+    </resource>
+    <resource identifier="HTML5_resources_thumb_512_jpg" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/thumb_512.jpg">
+      <file href="HTML5/resources/thumb_512.jpg"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10187_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10187.png">
+      <file href="HTML5/resources/res_10187.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10596_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10596.png">
+      <file href="HTML5/resources/res_10596.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10597_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10597.png">
+      <file href="HTML5/resources/res_10597.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10600_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10600.png">
+      <file href="HTML5/resources/res_10600.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10601_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10601.png">
+      <file href="HTML5/resources/res_10601.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10606_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10606.png">
+      <file href="HTML5/resources/res_10606.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10607_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10607.png">
+      <file href="HTML5/resources/res_10607.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10608_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10608.png">
+      <file href="HTML5/resources/res_10608.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10609_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10609.png">
+      <file href="HTML5/resources/res_10609.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10610_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10610.png">
+      <file href="HTML5/resources/res_10610.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10611_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10611.png">
+      <file href="HTML5/resources/res_10611.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10668_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10668.png">
+      <file href="HTML5/resources/res_10668.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10188_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10188.png">
+      <file href="HTML5/resources/res_10188.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10558_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10558.png">
+      <file href="HTML5/resources/res_10558.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10205_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10205.png">
+      <file href="HTML5/resources/res_10205.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10206_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10206.png">
+      <file href="HTML5/resources/res_10206.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10207_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10207.png">
+      <file href="HTML5/resources/res_10207.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10559_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10559.png">
+      <file href="HTML5/resources/res_10559.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10560_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10560.png">
+      <file href="HTML5/resources/res_10560.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10222_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10222.png">
+      <file href="HTML5/resources/res_10222.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10193_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10193.png">
+      <file href="HTML5/resources/res_10193.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10198_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10198.png">
+      <file href="HTML5/resources/res_10198.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10556_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10556.png">
+      <file href="HTML5/resources/res_10556.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10557_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10557.png">
+      <file href="HTML5/resources/res_10557.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10562_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10562.png">
+      <file href="HTML5/resources/res_10562.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_res_10196_png" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/res_10196.png">
+      <file href="HTML5/resources/res_10196.png"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_2_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_2.woff">
+      <file href="HTML5/resources/font_2.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_3_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_3.woff">
+      <file href="HTML5/resources/font_3.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_4_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_4.woff">
+      <file href="HTML5/resources/font_4.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_5_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_5.woff">
+      <file href="HTML5/resources/font_5.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_6_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_6.woff">
+      <file href="HTML5/resources/font_6.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_7_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_7.woff">
+      <file href="HTML5/resources/font_7.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_8_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_8.woff">
+      <file href="HTML5/resources/font_8.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_9_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_9.woff">
+      <file href="HTML5/resources/font_9.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_10_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_10.woff">
+      <file href="HTML5/resources/font_10.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_11_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_11.woff">
+      <file href="HTML5/resources/font_11.woff"/>
+    </resource>
+    <resource identifier="HTML5_resources_font_12_woff" type="webcontent" adlcp:scormtype="asset" href="HTML5/resources/font_12.woff">
+      <file href="HTML5/resources/font_12.woff"/>
+    </resource>
+    <resource identifier="HTML5_rlprez_js" type="webcontent" adlcp:scormtype="asset" href="HTML5/rlprez.js">
+      <file href="HTML5/rlprez.js"/>
+    </resource>
+    <resource identifier="HTML5_player_rlplayer_js" type="webcontent" adlcp:scormtype="asset" href="HTML5/player/rlplayer.js">
+      <file href="HTML5/player/rlplayer.js"/>
+    </resource>
+    <resource identifier="HTML5_player_rlplayer_lang_en-US_js" type="webcontent" adlcp:scormtype="asset" href="HTML5/player/rlplayer.lang.en-US.js">
+      <file href="HTML5/player/rlplayer.lang.en-US.js"/>
+    </resource>
+    <resource identifier="HTML5_player_rlplayer_css" type="webcontent" adlcp:scormtype="asset" href="HTML5/player/rlplayer.css">
+      <file href="HTML5/player/rlplayer.css"/>
+    </resource>
+    <resource identifier="HTML5_rlprez_css" type="webcontent" adlcp:scormtype="asset" href="HTML5/rlprez.css">
+      <file href="HTML5/rlprez.css"/>
+    </resource>
+    <resource identifier="HTML5_player_rlsco_functions_js" type="webcontent" adlcp:scormtype="asset" href="HTML5/player/rlsco_functions.js">
+      <file href="HTML5/player/rlsco_functions.js"/>
+    </resource>
+  </resources>
+</manifest>
