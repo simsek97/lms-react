@@ -1,0 +1,1 @@
+ALTER TABLE courses ADD COLUMN levelId varchar(36) AFTER catId;
