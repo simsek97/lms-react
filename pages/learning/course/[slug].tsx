@@ -28,6 +28,8 @@ const Index = ({ user }) => {
   const fetchVideos = async () => {
     const url = `${baseUrl}/api/learnings/videos/${slug}`;
     const response = await axios.get(url);
+
+    // console.log(response.data.videos);
     setVideos(response.data.videos);
     setSelectedVideo(response.data.videos[0].video);
     setActive(response.data.videos[0].id);
@@ -36,10 +38,10 @@ const Index = ({ user }) => {
 
   useEffect(() => {
     fetchVideos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
-  const selectVideo = async (videoId) => {
-    // console.log(videoId);
+  const selectVideo = async (videoId: string) => {
     try {
       const payload = {
         //@ts-ignore
@@ -53,8 +55,6 @@ const Index = ({ user }) => {
 
       setSelectedVideo(video.video);
       setActive(video.id);
-
-      // console.log(video);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -97,7 +97,7 @@ const Index = ({ user }) => {
                       </a>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href={`/learning/course/${slug}`}>
                       <a
                         onClick={(e) => {
@@ -108,8 +108,8 @@ const Index = ({ user }) => {
                         Discussion
                       </a>
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Link href={`/learning/course/${slug}`}>
                       <a
                         onClick={(e) => {
@@ -120,8 +120,8 @@ const Index = ({ user }) => {
                         Leave a rating
                       </a>
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Link href={`/learning/course/${slug}`}>
                       <a
                         onClick={(e) => {
@@ -132,7 +132,7 @@ const Index = ({ user }) => {
                         Leave a feedback
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
 
                 {course && tab == 'asset' ? (

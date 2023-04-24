@@ -86,6 +86,7 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
           data: { message }
         }
       } = err;
+
       toast.error(message, {
         style: {
           border: '1px solid #ff0033',
@@ -137,21 +138,21 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
               Lectures
               <span>{course.lessons}</span>
             </li>
-            <li>
+            {/* <li>
               <i className='ri-store-line'></i>
               Resources
               <span>{course.assets && course.assets.length} downloadable</span>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <i className='ri-group-line'></i>
               Enrolled
               <span>{course.enrolments && course.enrolments.length} Students</span>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <i className='ri-key-2-fill'></i>
               Access
               <span>{course.access_time}</span>
-            </li>
+            </li> */}
           </ul>
 
           <div className='coupon'>
@@ -173,6 +174,14 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
               </form>
             )}
           </div>
+
+          {current_user.role === 'admin' && (
+            <div className='cart-wish d-flex justify-content-between'>
+              <button onClick={() => router.push(`/learning/course/${course.slug}`)} className='default-btn'>
+                View Course
+              </button>
+            </div>
+          )}
 
           <div className='cart-wish d-flex justify-content-between'>
             {alreadyBuy ? (

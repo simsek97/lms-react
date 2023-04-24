@@ -36,9 +36,9 @@ const CoursesDetailsContent = ({ user: current_user, course }) => {
                     </Link>
                   </li>
                 )}
-                <li>
+                {/* <li>
                   <span>{enrolments && enrolments.length}</span> Students
-                </li>
+                </li> */}
                 <li>
                   Last Updated <span>{formatDate(updated_at)}</span>
                 </li>
