@@ -175,7 +175,7 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
             )}
           </div>
 
-          {current_user.role === 'admin' && (
+          {current_user?.role === 'admin' && (
             <div className='cart-wish d-flex justify-content-between'>
               <button onClick={() => router.push(`/learning/course/${course.slug}`)} className='default-btn'>
                 View Course
