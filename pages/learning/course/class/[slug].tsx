@@ -25,6 +25,7 @@ const Index = ({ user }) => {
 
   useEffect(() => {
     fetchVideos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   return (
