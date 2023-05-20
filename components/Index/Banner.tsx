@@ -3,6 +3,7 @@ import React from 'react';
 import SearchForm from '@/components/_App/SearchForm';
 import AnimatedCharacters from './BannerText';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface IBanner {
   user?: any;
@@ -67,17 +68,17 @@ const Banner = ({ user }: IBanner) => {
                   marginBottom: '36px'
                 }}>
                 <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
-                  <img src='/images/home/best.png' width={64} alt='best' />
+                  <Image src='/images/home/best.png' width={64} height={64} alt='Best Choice' />
                   <br />
                   <span>Best Choice</span>
                 </motion.div>
                 <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
-                  <img src='/images/home/voice.png' width={64} alt='best' />
+                  <Image src='/images/home/voice.png' width={64} height={64} alt='Voice Interaction' />
                   <br />
                   <span>Voice Interaction</span>
                 </motion.div>
                 <motion.div initial='hidden' animate='visible' variants={pVariants} style={{ textAlign: 'center' }}>
-                  <img src='/images/home/everywhere.png' width={64} alt='best' />
+                  <Image src='/images/home/everywhere.png' width={64} height={64} alt='Use Everywhere' />
                   <br />
                   <span>Use Everywhere</span>
                 </motion.div>
@@ -85,9 +86,12 @@ const Banner = ({ user }: IBanner) => {
 
               <ul className='client-list'>
                 <li>
-                  <img src='/images/banner/client-1.jpg' alt='banner' />
-                  <img src='/images/banner/client-2.jpg' className='client' alt='banner' />
-                  <img src='/images/banner/client-3.jpg' className='client' alt='banner' />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src='/images/banner/client-1.jpg' className='client' alt='Client - 1' />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src='/images/banner/client-2.jpg' className='client' alt='Client - 2' />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src='/images/banner/client-3.jpg' className='client' alt='Client - 3' />
                 </li>
                 <li>
                   <p>
@@ -96,10 +100,7 @@ const Banner = ({ user }: IBanner) => {
                 </li>
               </ul>
 
-              <div
-                style={{
-                  marginTop: '48px'
-                }}>
+              <div style={{ marginTop: '48px' }}>
                 <SearchForm formClass='search-form' btnClass='default-btn' banner={true} />
               </div>
             </motion.div>
@@ -107,8 +108,11 @@ const Banner = ({ user }: IBanner) => {
         </div>
       </div>
 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src='/images/banner/shape-1.svg' className='shape shape-1' alt='banner' />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src='/images/banner/shape-2.svg' className='shape shape-2' alt='banner' />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src='/images/banner/shape-3.svg' className='shape shape-3' alt='banner' />
     </div>
   );

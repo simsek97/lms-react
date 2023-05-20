@@ -9,12 +9,10 @@ import TopHeader from './TopHeader';
 import { motion } from 'framer-motion';
 import { handleLogout } from '@/utils/auth';
 
-//@ts-ignore
-Router.onRouteChangeStart = () => NProgress.start();
-//@ts-ignore
-Router.onRouteChangeComplete = () => NProgress.done();
-//@ts-ignore
-Router.onRouteChangeError = () => NProgress.done();
+// Router events
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 interface INavbar {
   user?: any;
@@ -116,17 +114,30 @@ const Navbar = ({ user }: INavbar) => {
                       </Link>
                     </motion.li>
                   ) : (
-                    <motion.li
-                      className='nav-item'
-                      whileHover={{
-                        scale: 1.1,
-                        transition: { duration: 0.5 }
-                      }}
-                      whileTap={{ scale: 0.9 }}>
-                      <Link href='/auth'>
-                        <a>Register / Signin</a>
-                      </Link>
-                    </motion.li>
+                    <>
+                      <motion.li
+                        className='nav-item'
+                        whileHover={{
+                          scale: 1.1,
+                          transition: { duration: 0.5 }
+                        }}
+                        whileTap={{ scale: 0.9 }}>
+                        <Link href='/auth/register'>
+                          <a>Register</a>
+                        </Link>
+                      </motion.li>
+                      <motion.li
+                        className='nav-item'
+                        whileHover={{
+                          scale: 1.1,
+                          transition: { duration: 0.5 }
+                        }}
+                        whileTap={{ scale: 0.9 }}>
+                        <Link href='/auth/login'>
+                          <a>Login</a>
+                        </Link>
+                      </motion.li>
+                    </>
                   )}
 
                   {/* {user ? (
