@@ -9,15 +9,23 @@
       "UnauthRoleName": "amplify-lmsreact-dev-204208-unauthRole",
       "StackName": "amplify-lmsreact-dev-204208",
       "StackId": "arn:aws:cloudformation:us-west-1:427629858192:stack/amplify-lmsreact-dev-204208/295a0490-f6a7-11ed-b51b-022a00776dbd",
-      "AmplifyAppId": "d6pz6aici38mf"
+      "AmplifyAppId": "d6pz6aici38mf",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-lmsreact-dev-204208-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "lmsauth": {}
+        "lmsauth": {},
+        "userPoolGroups": {}
       },
       "function": {
-        "lmsauthPostAuthentication": {},
-        "lmsauthPostConfirmation": {}
+        "lmsauthPostAuthentication": {
+          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-66326b6f466d34754f41-build.zip"
+        },
+        "lmsauthPostConfirmation": {
+          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
+          "s3Key": "amplify-builds/lmsauthPostConfirmation-4b75496a6765456e4d51-build.zip"
+        }
       }
     }
   }
