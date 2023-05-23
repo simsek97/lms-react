@@ -32,12 +32,16 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setLoading(true);
       const url = `${baseUrl}/api/users/signup`;
       const payload = { ...user };
+
       const response = await axios.post(url, payload);
+
       handleLogin(response.data.lms_react_users_token, router);
+
       toast.success(response.data.message, {
         style: {
           border: '1px solid #4BB543',

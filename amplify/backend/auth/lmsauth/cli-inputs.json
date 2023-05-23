@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "lmsidentitypool",
-    "allowUnauthenticatedIdentities": true,
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "lmsrea80e74bd0",
     "userPoolName": "lms_user_pool",
     "autoVerifiedAttributes": [
@@ -26,37 +26,15 @@
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-      "address",
-      "birthdate",
       "family_name",
-      "middle_name",
-      "gender",
-      "locale",
-      "given_name",
       "name",
-      "phone_number",
-      "picture",
-      "profile",
-      "zoneinfo",
       "email"
     ],
     "userpoolClientReadAttributes": [
-      "address",
-      "birthdate",
       "email",
       "family_name",
-      "middle_name",
-      "gender",
-      "locale",
-      "given_name",
       "name",
-      "phone_number",
-      "preferred_username",
-      "picture",
-      "profile",
-      "zoneinfo",
-      "email_verified",
-      "phone_number_verified"
+      "email_verified"
     ],
     "userpoolClientLambdaRole": "lmsaut80e74bd0_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
@@ -72,9 +50,6 @@
     "adminQueries": false,
     "triggers": {
       "PostAuthentication": [
-        "custom"
-      ],
-      "PostConfirmation": [
         "custom"
       ]
     },
@@ -107,21 +82,13 @@
           "Arn",
           "Name"
         ]
-      },
-      {
-        "category": "function",
-        "resourceName": "lmsauthPostConfirmation",
-        "triggerProvider": "Cognito",
-        "attributes": [
-          "Arn",
-          "Name"
-        ]
       }
     ],
     "permissions": [],
-    "authTriggerConnections": [
-      "{\"triggerType\":\"PostAuthentication\",\"lambdaFunctionName\":\"lmsauthPostAuthentication\"}",
-      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"lmsauthPostConfirmation\"}"
-    ]
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"lmsauthPostAuthentication\"\n  }\n]",
+    "authProviders": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    }
   }
 }

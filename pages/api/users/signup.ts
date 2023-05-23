@@ -7,6 +7,7 @@ import isLength from 'validator/lib/isLength';
 import User from 'database/models/user';
 
 import { confirmEmailAddress } from 'email-templates/account-confirmation';
+import { Auth } from 'aws-amplify';
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -23,6 +24,7 @@ export default async function handler(req, res) {
 const userSignup = async (req, res) => {
   const confirmToken = uuidv4();
   let { first_name, last_name, email, password } = req.body;
+
   try {
     if (!isLength(first_name, { min: 3 })) {
       return res.status(422).json({
@@ -47,6 +49,23 @@ const userSignup = async (req, res) => {
 
     if (user) {
       return res.status(422).json({ message: `User already exist with email ${email}` });
+    }
+
+    try {
+      const { user: cognitoUser } = await Auth.signUp({
+        username: email,
+        password: password,
+        attributes: {
+          email: email,
+          name: first_name,
+          family_name: last_name
+        }
+      });
+    } catch (e) {
+      res.status(400).json({
+        error_code: 'cognito_create_user',
+        message: e.message
+      });
     }
 
     // Encrypt password with bcrypt

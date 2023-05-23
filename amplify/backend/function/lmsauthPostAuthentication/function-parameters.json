@@ -7,7 +7,7 @@
   "functionName": "lmsauthPostAuthentication",
   "resourceName": "lmsauthPostAuthentication",
   "parentStack": "auth",
-  "triggerEnvs": [],
+  "triggerEnvs": "[]",
   "triggerDir": "/snapshot/repo/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostAuthentication",
   "triggerTemplate": "PostAuthentication.json.ejs",
   "triggerEventPath": "PostAuthentication.event.json",

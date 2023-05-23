@@ -1,7 +1,7 @@
 import cookie from 'js-cookie';
 import Router from 'next/router';
 
-export const handleLogin = (t, routeNext) => {
+export const handleLogin = (t: string, routeNext: any) => {
   cookie.set('lms_react_users_token', t);
   if (routeNext.query && routeNext.query.next) {
     Router.push(routeNext.query.next);

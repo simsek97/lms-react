@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 import Button from '@/utils/Button';
 import baseUrl from '@/utils/baseUrl';
-import { genId } from '@/utils/genid';
+import { genId } from '@/utils/genId';
 
 const CourseRteEditor = dynamic(() => import('@/utils/CourseRteEditor'), {
   loading: () => null,
