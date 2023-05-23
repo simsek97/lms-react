@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import PageBanner from '@/components/Common/PageBanner';
 import Footer from '@/components/_App/Footer';
 import Navbar from '@/components/_App/Navbar';
-import RegisterForm from '@/components/Authentication/RegisterForm';
+import LoginForm from '@/components/Authentication/LoginForm';
 
-const Register = () => {
+const Login = () => {
   return (
     <>
       <Navbar />
@@ -23,10 +23,10 @@ const Register = () => {
             <div className='col-lg-6'>
               <div className='register-form'>
                 <motion.h2 initial={{ scale: 0 }} animate={{ scale: 1, x: 0 }} exit={{ scale: 0 }}>
-                  Create your account
+                  Login
                 </motion.h2>
 
-                <RegisterForm />
+                <LoginForm />
               </div>
             </div>
           </div>
@@ -38,4 +38,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

@@ -28,7 +28,7 @@ const TopHeader = ({ user }) => {
           <div className='col-lg-4'>
             <ul className='header-right-content'>
               <li>
-                <Link href='/auth'>
+                <Link href='/auth/register'>
                   <a>Register</a>
                 </Link>
               </li>
@@ -40,13 +40,13 @@ const TopHeader = ({ user }) => {
                         e.preventDefault();
                         handleLogout();
                       }}>
-                      <i className='bx bx-log-out'></i> Sign out
+                      <i className='bx bx-log-out'></i> Logout
                     </a>
                   </Link>
                 ) : (
-                  <Link href='/auth'>
+                  <Link href='/auth/login'>
                     <a>
-                      <i className='ri-arrow-right-line'></i> Signin
+                      <i className='ri-arrow-right-line'></i> Login
                     </a>
                   </Link>
                 )}

@@ -34,9 +34,12 @@ const handlePostRequest = async (req, res) => {
     requirements,
     what_you_will_learn,
     who_is_this_course_for,
+    levelId,
     catId,
     is_class
   } = req.body;
+
+  console.log('request body:', req.body);
   try {
     const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
 
@@ -65,6 +68,7 @@ const handlePostRequest = async (req, res) => {
       who_is_this_course_for,
       userId,
       catId,
+      levelId,
       is_class: is_class && true
     });
 

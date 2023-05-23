@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import controls from '@/utils/RTEControl';
+import controls from '@/utils/CourseRteEditor';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { parseCookies } from 'nookies';

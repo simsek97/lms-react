@@ -25,7 +25,14 @@
         "lmsauthPostConfirmation": {
           "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
           "s3Key": "amplify-builds/lmsauthPostConfirmation-4b75496a6765456e4d51-build.zip"
+        },
+        "S3Trigger5064c2f7": {
+          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
+          "s3Key": "amplify-builds/S3Trigger5064c2f7-43796165676a2f38342f-build.zip"
         }
+      },
+      "storage": {
+        "lms": {}
       }
     }
   }

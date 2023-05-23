@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import controls from '@/utils/RTEControl';
-import dynamic from 'next/dynamic';
-const RichTextEditor = dynamic(() => import('@mantine/rte'), {
-  ssr: false,
-  loading: () => null
-});
+import { Storage } from 'aws-amplify';
 import axios from 'axios';
-import { parseCookies } from 'nookies';
-import baseUrl from '@/utils/baseUrl';
-import toast from 'react-hot-toast';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+
 import Button from '@/utils/Button';
+import baseUrl from '@/utils/baseUrl';
+import { genId } from '@/utils/genid';
+
+const CourseRteEditor = dynamic(() => import('@/utils/CourseRteEditor'), {
+  loading: () => null,
+  ssr: false
+});
 
 const INITIAL_VALUE = {
-  title: '',
-  short_desc: '',
-  overview: '',
-  latest_price: 0.0,
-  before_price: 0.0,
-  lessons: '',
-  duration: '',
+  title: process.env.NEXT_PUBLIC_COURSE_TITLE || '',
+  short_desc: process.env.NEXT_PUBLIC_SHORT_DESC || '',
+  latest_price: process.env.NEXT_PUBLIC_LATEST_PRICE || 0.0,
+  before_price: process.env.NEXT_PUBLIC_BEFORE_PRICE || 0.0,
+  lessons: '1',
+  duration: '20 minutes',
   image: '',
-  access_time: '',
-  requirements: '',
-  what_you_will_learn: '',
-  who_is_this_course_for: '',
-  catId: ''
+  overview: process.env.NEXT_PUBLIC_OVERVIEW || '',
+  requirements: process.env.NEXT_PUBLIC_REQUIREMENTS || '',
+  what_you_will_learn: process.env.NEXT_PUBLIC_REQUIREMENTS || '',
+  who_is_this_course_for: process.env.NEXT_PUBLIC_REQUIREMENTS || '',
+  catId: process.env.NEXT_PUBLIC_CAT_ID || '',
+  levelId: process.env.NEXT_PUBLIC_LEVEL_ID || '',
+  access_time: 'Lifetime'
 };
 
 interface ICourseCreateForm {
@@ -36,17 +40,21 @@ interface ICourseCreateForm {
 const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   const { lms_react_users_token } = parseCookies();
   const [course, setCourse] = useState(INITIAL_VALUE);
-  const [disabled, setDisabled] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  const [disabled, setDisabled] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [categories, setCategories] = useState([]);
-  const [imagePreview, setImagePreview] = React.useState('');
+  const [levels, setLevels] = useState([]);
+  const [imagePreview, setImagePreview] = React.useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
     const isCourse = Object.values(course).every((el) => Boolean(el));
     isCourse ? setDisabled(false) : setDisabled(true);
+
+    console.log(isCourse);
   }, [course]);
 
+  // Get categories
   useEffect(() => {
     const fetchData = async () => {
       const payload = {
@@ -57,9 +65,24 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChange = (e) => {
+  // Get levels
+  useEffect(() => {
+    const fetchData = async () => {
+      const payload = {
+        headers: { Authorization: lms_react_users_token }
+      };
+      const response = await axios.get(`${baseUrl}/api/levels`, payload);
+      setLevels(response.data.levels);
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleChange = (e: any) => {
     const { name, value, files } = e.target;
 
     if (name === 'image') {
@@ -79,10 +102,12 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         e.target.value = null;
         return;
       }
+
       setCourse((prevState) => ({
         ...prevState,
         image: files[0]
       }));
+
       setImagePreview(window.URL.createObjectURL(files[0]));
     } else {
       setCourse((prevState) => ({ ...prevState, [name]: value }));
@@ -90,24 +115,33 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   };
 
   const handleImageUpload = async () => {
-    const data = new FormData();
-    data.append('file', course.image);
-    data.append('upload_preset', process.env.UPLOAD_PRESETS);
-    data.append('cloud_name', process.env.CLOUD_NAME);
-    let response;
-    if (course.image) {
-      response = await axios.post(process.env.CLOUDINARY_URL, data);
+    let imageUrl: string = '';
+
+    try {
+      const courseImage = course.image;
+      const randomSuffix = genId();
+      // response = await axios.post(process.env.CLOUDINARY_URL, data);
+      const uploadedImage = await Storage.put(`${randomSuffix}_${courseImage['name']}`, courseImage, {
+        level: 'public',
+        contentType: courseImage['type']
+      });
+
+      imageUrl = uploadedImage.key;
+    } catch (error) {
+      console.log('Error uploading file: ', error);
     }
-    const imageUrl = response.data.url;
 
     return imageUrl;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    console.log(e);
     try {
       setLoading(true);
       let photo;
+
       if (course.image) {
         photo = await handleImageUpload();
 
@@ -126,6 +160,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         requirements,
         what_you_will_learn,
         who_is_this_course_for,
+        levelId,
         catId
       } = course;
       const payloadData = {
@@ -141,6 +176,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         requirements,
         what_you_will_learn,
         who_is_this_course_for,
+        levelId,
         catId,
         is_class
       };
@@ -193,6 +229,8 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
     }
   };
 
+  console.log(course);
+
   return (
     <form onSubmit={handleSubmit}>
       <div className='row'>
@@ -216,7 +254,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
             <input
               type='number'
               className='form-control'
-              placeholder='5'
+              placeholder='1'
               name='lessons'
               value={course.lessons}
               onChange={handleChange}
@@ -266,7 +304,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
             <input
               type='text'
               className='form-control'
-              placeholder='4 Hours or 2 Weeks'
+              placeholder='20 minutes'
               name='duration'
               value={course.duration}
               onChange={handleChange}
@@ -274,7 +312,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
           </div>
         </div>
 
-        <div className='col-md-6'>
+        {/* <div className='col-md-6'>
           <div className='form-group'>
             <label className='form-label fw-semibold'>Access Time</label>
             <select className='form-select' name='access_time' value={course.access_time} onChange={handleChange}>
@@ -283,6 +321,21 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
               <option value='Three Months'>Three Months</option>
               <option value='Six Months'>Six Months</option>
               <option value='1 Year'>1 Year</option>
+            </select>
+          </div>
+        </div> */}
+
+        <div className='col-md-6'>
+          <div className='form-group'>
+            <label className='form-label fw-semibold'>Level</label>
+            <select className='form-select' name='levelId' value={course.levelId} onChange={handleChange}>
+              <option value=''>Select</option>
+              {levels.length > 0 &&
+                levels.map((level) => (
+                  <option key={level.id} value={level.id}>
+                    {level.name}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
@@ -294,6 +347,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
             <div className='form-text'>Upload image size 750x500!</div>
 
             <div className='mt-2'>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imagePreview ? imagePreview : '/images/courses/course-1.jpg'}
                 alt='image'
@@ -329,14 +383,12 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         <div className='col-md-6'>
           <div className='form-group'>
             <label className='form-label fw-semibold'>Overview</label>
-            <RichTextEditor
-              //@ts-ignore
-              controls={controls}
-              value={course.overview}
-              onChange={(e) =>
+            <CourseRteEditor
+              content={course.overview}
+              onChange={(value: string) =>
                 setCourse((prevState) => ({
                   ...prevState,
-                  overview: e
+                  overview: value
                 }))
               }
             />
@@ -345,14 +397,12 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         <div className='col-md-6'>
           <div className='form-group'>
             <label className='form-label fw-semibold'>Requirements</label>
-            <RichTextEditor
-              //@ts-ignore
-              controls={controls}
-              value={course.requirements}
-              onChange={(e) =>
+            <CourseRteEditor
+              content={course.requirements}
+              onChange={(value: string) =>
                 setCourse((prevState) => ({
                   ...prevState,
-                  requirements: e
+                  requirements: value
                 }))
               }
             />
@@ -361,14 +411,12 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         <div className='col-md-6'>
           <div className='form-group'>
             <label className='form-label fw-semibold'>What You Will Learn</label>
-            <RichTextEditor
-              //@ts-ignore
-              controls={controls}
-              value={course.what_you_will_learn}
-              onChange={(e) =>
+            <CourseRteEditor
+              content={course.what_you_will_learn}
+              onChange={(value: string) =>
                 setCourse((prevState) => ({
                   ...prevState,
-                  what_you_will_learn: e
+                  what_you_will_learn: value
                 }))
               }
             />
@@ -377,14 +425,12 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         <div className='col-md-6'>
           <div className='form-group'>
             <label className='form-label fw-semibold'>Who Is This Course For?</label>
-            <RichTextEditor
-              //@ts-ignore
-              controls={controls}
-              value={course.who_is_this_course_for}
-              onChange={(e) =>
+            <CourseRteEditor
+              content={course.who_is_this_course_for}
+              onChange={(value: string) =>
                 setCourse((prevState) => ({
                   ...prevState,
-                  who_is_this_course_for: e
+                  who_is_this_course_for: value
                 }))
               }
             />

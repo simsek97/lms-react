@@ -1,4 +1,5 @@
 import React from 'react';
+import { Amplify } from 'aws-amplify';
 import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { useStore } from '../store';
@@ -27,6 +28,9 @@ import '../styles/responsive.scss';
 import '../styles/dashboard.scss';
 
 import Layout from '../components/_App/Layout';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 function MyApp({ Component, pageProps }: AppProps) {
   //@ts-ignore
@@ -68,11 +72,11 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
       ctx.pathname === '/learning/wishlist';
 
     if (isProtectedRoute) {
-      redirectUser(ctx, '/auth');
+      redirectUser(ctx, '/auth/login');
     }
   } else {
     // if a user logged in then user can't access those pages
-    const ifLoggedIn = ctx.pathname === '/auth' || ctx.pathname === '/reset-password';
+    const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register' || ctx.pathname === '/auth/reset-password';
     if (ifLoggedIn) {
       redirectUser(ctx, '/');
     }
@@ -85,7 +89,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 
       if (!user) {
         destroyCookie(ctx, 'lms_react_users_token');
-        redirectUser(ctx, '/auth');
+        redirectUser(ctx, '/auth/login');
       }
       //@ts-ignore
       pageProps.user = user;

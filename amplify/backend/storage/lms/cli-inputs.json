@@ -1,0 +1,22 @@
+{
+  "resourceName": "lms",
+  "policyUUID": "d3a723b8",
+  "bucketName": "lms-bucket",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "S3Trigger5064c2f7",
+  "groupAccess": {
+    "Admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}

@@ -5,13 +5,11 @@
   "javascript": {
     "framework": "react",
     "config": {
-      "SourceDir": "src",
+      "SourceDir": "pages",
       "DistributionDir": "build",
       "BuildCommand": "yarn build",
       "StartCommand": "yarn start"
     }
   },
-  "providers": [
-    "awscloudformation"
-  ]
+  "providers": ["awscloudformation"]
 }
