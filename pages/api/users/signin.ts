@@ -1,4 +1,5 @@
 //@ts-nocheck
+import { Auth } from 'aws-amplify';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import isEmail from 'validator/lib/isEmail';
@@ -33,11 +34,11 @@ const userSignin = async (req, res) => {
       return res.status(404).json({ message: 'User account does not exist' });
     }
 
-    if (!user.email_confirmed) {
-      return res.status(404).json({
-        message: 'Email is not confirmed yet, please confirm your email.'
-      });
-    }
+    // if (!user.email_confirmed) {
+    //   return res.status(404).json({
+    //     message: 'Email is not confirmed yet, please confirm your email.'
+    //   });
+    // }
 
     if (!user.status) {
       return res.status(404).json({
@@ -47,22 +48,35 @@ const userSignin = async (req, res) => {
 
     const passwordsMatch = await bcrypt.compare(password, user.password);
     if (passwordsMatch) {
-      const lms_react_users_token = jwt.sign(
-        {
-          userId: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          role: user.role,
-          profile_photo: user.profile_photo
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '7d' }
-      );
-      res.status(200).json({
-        message: 'Login Successful!',
-        lms_react_users_token
-      });
+      try {
+        // Auth with Amplify
+        try {
+          const { user: cognitoUser } = await Auth.signIn(email, password);
+          console.log('cognitoUser:', cognitoUser);
+
+          const lms_react_users_token = jwt.sign(
+            {
+              userId: user.id,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              email: user.email,
+              role: user.role,
+              profile_photo: user.profile_photo
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+          );
+
+          res.status(200).json({
+            message: 'Login Successful!',
+            lms_react_users_token
+          });
+        } catch (error) {
+          res.status(401).json({ message: error.message });
+        }
+      } catch (error) {
+        res.status(401).json({ message: error.message });
+      }
     } else {
       res.status(401).json({ message: 'Password is not correct' });
     }

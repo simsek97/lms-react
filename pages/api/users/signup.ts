@@ -1,13 +1,12 @@
+import { Auth } from 'aws-amplify';
 import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
 import User from 'database/models/user';
-
 import { confirmEmailAddress } from 'email-templates/account-confirmation';
-import { Auth } from 'aws-amplify';
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -59,7 +58,52 @@ const userSignup = async (req, res) => {
           email: email,
           name: first_name,
           family_name: last_name
+        },
+        autoSignIn: {
+          enabled: true
         }
+      });
+
+      // Encrypt password with bcrypt
+      const passwordHash = await bcrypt.hash(password, 10);
+
+      const newUser = await User.create({
+        first_name,
+        last_name,
+        email,
+        password: passwordHash,
+        reset_password_token: confirmToken,
+        reset_password_send_at: Date.now(),
+        email_confirmed: 1,
+        email_confirmed_at: Date.now()
+      });
+
+      confirmEmailAddress(newUser);
+
+      const lms_react_users_token = jwt.sign(
+        {
+          //@ts-ignore
+          userId: newUser.id,
+          //@ts-ignore
+          first_name: newUser.first_name,
+          //@ts-ignore
+          last_name: newUser.last_name,
+          //@ts-ignore
+          email: newUser.email,
+          //@ts-ignore
+          role: newUser.role,
+          //@ts-ignore
+          profile_photo: newUser.profile_photo
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '7d'
+        }
+      );
+
+      res.status(200).json({
+        message: 'Registration Successful!',
+        lms_react_users_token
       });
     } catch (e) {
       res.status(400).json({
@@ -67,46 +111,6 @@ const userSignup = async (req, res) => {
         message: e.message
       });
     }
-
-    // Encrypt password with bcrypt
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    const newUser = await User.create({
-      first_name,
-      last_name,
-      email,
-      password: passwordHash,
-      reset_password_token: confirmToken,
-      reset_password_send_at: Date.now()
-    });
-
-    confirmEmailAddress(newUser);
-
-    const lms_react_users_token = jwt.sign(
-      {
-        //@ts-ignore
-        userId: newUser.id,
-        //@ts-ignore
-        first_name: newUser.first_name,
-        //@ts-ignore
-        last_name: newUser.last_name,
-        //@ts-ignore
-        email: newUser.email,
-        //@ts-ignore
-        role: newUser.role,
-        //@ts-ignore
-        profile_photo: newUser.profile_photo
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '7d'
-      }
-    );
-
-    res.status(200).json({
-      message: 'Registration Successful!',
-      lms_react_users_token
-    });
   } catch (e) {
     res.status(400).json({
       error_code: 'create_user',

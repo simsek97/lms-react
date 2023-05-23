@@ -20,11 +20,15 @@
       "function": {
         "lmsauthPostAuthentication": {
           "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
-          "s3Key": "amplify-builds/lmsauthPostAuthentication-66326b6f466d34754f41-build.zip"
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-444d326f517a4a66472b-build.zip"
         },
         "S3Trigger5064c2f7": {
           "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
           "s3Key": "amplify-builds/S3Trigger5064c2f7-43796165676a2f38342f-build.zip"
+        },
+        "lmsauthPreSignup": {
+          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
+          "s3Key": "amplify-builds/lmsauthPreSignup-5a2b3275416b324d674a-build.zip"
         }
       },
       "storage": {

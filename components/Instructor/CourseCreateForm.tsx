@@ -1,4 +1,4 @@
-import { Storage } from 'aws-amplify';
+import { Auth, Storage } from 'aws-amplify';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -115,23 +115,26 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   };
 
   const handleImageUpload = async () => {
-    let imageUrl: string = '';
-
     try {
+      const user = await Auth.currentAuthenticatedUser();
+      console.log(user);
+      let imageUrl: string = '';
       const courseImage = course.image;
       const randomSuffix = genId();
+      console.log('courseImage:', courseImage);
+      console.log('courseImageType:', courseImage['type']);
       // response = await axios.post(process.env.CLOUDINARY_URL, data);
       const uploadedImage = await Storage.put(`${randomSuffix}_${courseImage['name']}`, courseImage, {
-        level: 'public',
         contentType: courseImage['type']
       });
+      console.log('uploadedImage:', uploadedImage);
 
       imageUrl = uploadedImage.key;
+
+      return imageUrl;
     } catch (error) {
       console.log('Error uploading file: ', error);
     }
-
-    return imageUrl;
   };
 
   const handleSubmit = async (e: any) => {
@@ -143,9 +146,13 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
       let photo;
 
       if (course.image) {
-        photo = await handleImageUpload();
+        const uploadedPhoto = await handleImageUpload();
 
-        photo = photo.replace(/^http:\/\//i, 'https://');
+        if (!uploadedPhoto) {
+          new Error('File could not be uploaded!');
+        }
+
+        photo = uploadedPhoto.replace(/^http:\/\//i, 'https://');
       }
 
       const {
@@ -163,6 +170,7 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
         levelId,
         catId
       } = course;
+
       const payloadData = {
         title,
         short_desc,
@@ -208,11 +216,8 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
       }
     } catch (err) {
       // console.log(err);
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
+      const message = err?.response?.data?.message || err;
+
       toast.error(message, {
         style: {
           border: '1px solid #ff0033',

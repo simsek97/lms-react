@@ -51,6 +51,9 @@
     "triggers": {
       "PostAuthentication": [
         "custom"
+      ],
+      "PreSignup": [
+        "custom"
       ]
     },
     "hostedUI": false,
@@ -82,10 +85,19 @@
           "Arn",
           "Name"
         ]
+      },
+      {
+        "category": "function",
+        "resourceName": "lmsauthPreSignup",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
       }
     ],
     "permissions": [],
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"lmsauthPostAuthentication\"\n  }\n]",
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"lmsauthPostAuthentication\"\n  },\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"lmsauthPreSignup\"\n  }\n]",
     "authProviders": [],
     "parentStack": {
       "Ref": "AWS::StackId"
