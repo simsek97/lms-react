@@ -1,10 +1,11 @@
-import RegisterForm from '@/components/Authentication/RegisterForm';
-import PageContent from '@/components/_App/PageContent';
 import { motion } from 'framer-motion';
 
-const Register = () => {
+import PageContent from '@/components/_App/PageContent';
+import LoginForm from '@/components/Authentication/LoginForm';
+
+const Login = () => {
   return (
-    <PageContent pageTitle='Register'>
+    <PageContent pageTitle='Login'>
       <div className='register-area ptb-100'>
         <div className='container'>
           <div className='row align-items-center'>
@@ -17,11 +18,11 @@ const Register = () => {
             <div className='col-lg-6'>
               <div className='register-form'>
                 <motion.h2 initial={{ scale: 0 }} animate={{ scale: 1, x: 0 }} exit={{ scale: 0 }}>
-                  Create your account
+                  Login to your account
                 </motion.h2>
 
                 <div className='tab-content'>
-                  <RegisterForm />
+                  <LoginForm />
                 </div>
               </div>
             </div>
@@ -32,4 +33,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

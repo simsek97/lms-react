@@ -9,7 +9,7 @@ import { IBannerStore } from '@/store/reducers/bannerReducer';
 import { IImportStore } from '@/store/reducers/importReducer';
 
 export const appConfig = {
-  appName: 'ProMed2.0'
+  appName: 'SmartKid Games'
 };
 
 export interface IReduxStore {

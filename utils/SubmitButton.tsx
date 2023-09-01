@@ -15,6 +15,7 @@ interface ISubmitButton {
 const SubmitButton = ({ loading, disabled, btnText, btnClass, btnOnClick, buttonType }: ISubmitButton) => {
   return (
     <Button
+      sx={{ p: 2, fontSize: 16, color: 'white' }}
       variant='contained'
       type={buttonType || 'submit'}
       className={btnClass || 'default-btn'}

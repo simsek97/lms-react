@@ -4,9 +4,8 @@ input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
 type S3Object {
-  bucket: String!
   key: String!
-  region: String!
+  url: String!
 }
 type UserSubscription {
   tier: String!
@@ -48,6 +47,26 @@ type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: pu
   institution: String
   stripeCustomerId: String @index(name: "byCustomerId", queryField: "userByCustomerId")
   subscription: UserSubscription
+}
+type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
+  id: ID!
+  title: String
+  slug: String
+  shortDesc: String
+  overview: String
+  latestPrice: Int
+  beforePrice: Int
+  lessons: String
+  duration: String
+  image: S3Object
+  requirements: String
+  whatYouWillLearn: String
+  whoIsThisCourseFor: String
+  catId: String
+  levelId: String
+  inHomePage: String
+  inHomePageSetAt: Date
+  isClass: String
 }
 type WelcomeMessage @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
   id: ID!

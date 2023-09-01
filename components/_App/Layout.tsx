@@ -7,7 +7,10 @@ import { Toaster } from 'react-hot-toast';
 
 import GoTop from '@/components/_App/GoTop';
 import baseUrl from '@/utils/baseUrl';
-import Modal from '../Modal';
+import Modal from '@/components/Modal';
+import { appConfig } from '@/store/index';
+import Navbar from '@/components/_App/Navbar';
+import Footer from '@/components/_App/Footer';
 
 const Layout = ({ children }) => {
   const [modalOpen, setModalOpen] = useState<boolean>();
@@ -33,14 +36,18 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>SmartKid Games</title>
+        <title>{appConfig.appName}</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         <link rel='icon' href='/favicon.png' />
       </Head>
 
+      <Navbar />
+
       {children}
 
       <Script src='https://meet.jit.si/external_api.js' />
+
+      <Footer />
 
       <Toaster />
 

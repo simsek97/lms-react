@@ -1,17 +1,12 @@
+import { Amplify, Auth } from 'aws-amplify';
 import React from 'react';
 import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { useStore } from '../store-old';
 import { parseCookies, destroyCookie } from 'nookies';
 import axios from 'axios';
-import { redirectUser } from '@/utils/auth';
-import baseUrl from '@/utils/baseUrl';
-import '../styles/bootstrap.min.css';
-import '../styles/animate.min.css';
-import '../styles/boxicons.min.css';
-import '../styles/flaticon.css';
-import '../styles/remixicon.css';
-import '../styles/nprogress.css';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ThemeProvider } from '@mui/material';
+
 import 'react-accessible-accordion/dist/fancy-example.css';
 import 'react-tabs/style/react-tabs.css';
 import 'swiper/css';
@@ -19,84 +14,105 @@ import 'swiper/css/bundle';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import '@etchteam/next-pagination/dist/index.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+
 // Global Styles
-import '../styles/style.scss';
-import '../styles/responsive.scss';
+import '@/styles/bootstrap.min.css';
+import '@/styles/animate.min.css';
+import '@/styles/boxicons.min.css';
+import '@/styles/flaticon.css';
+import '@/styles/remixicon.css';
+import '@/styles/nprogress.css';
+import '@/styles/style.scss';
+import '@/styles/responsive.scss';
 
 // Dashboard
-import '../styles/dashboard.scss';
+import '@/styles/dashboard.scss';
 
-import Layout from '../components/_App/Layout';
+import { redirectUser } from '@/utils/auth';
+import baseUrl from '@/utils/baseUrl';
+import store, { persistor } from '@/store/index';
+import Layout from '@/components/_App/Layout';
+import awsExports from '@/src/aws-exports';
+import { theme } from '@/styles/theme';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  //@ts-ignore
-  const store = useStore(pageProps.initialReduxState);
+const userRoutes = ['/profile', '/profile/userinfo', '/profile/subscription', '/profile/photo', '/checkout'];
+const adminRoutes = [
+  '/admin',
+  '/admin/admins',
+  '/admin/banner-ads',
+  '/admin/dashboard',
+  '/admin/faqs',
+  '/admin/subscription-tiers',
+  '/admin/subscriptions',
+  '/admin/users',
+  '/admin/welcome-message'
+];
 
+Amplify.configure({ ...awsExports, ssr: true });
+
+function LmsApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <PersistGate persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const { lms_react_users_token } = parseCookies(ctx);
+LmsApp.getInitialProps = async ({ Component, ctx }) => {
+  const { isid_user_token } = parseCookies(ctx);
   let pageProps = {};
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  if (!lms_react_users_token) {
-    // if a user not logged in then user can't access those pages
-    const isProtectedRoute =
-      ctx.pathname === '/profile/basic-information' ||
-      ctx.pathname === '/profile/photo' ||
-      ctx.pathname === '/checkout' ||
-      ctx.pathname === '/become-an-instructor' ||
-      ctx.pathname === '/learning/my-courses' ||
-      ctx.pathname === '/instructor/courses' ||
-      ctx.pathname === '/admin' ||
-      ctx.pathname === '/admin/instructor' ||
-      ctx.pathname === '/admin/students' ||
-      ctx.pathname === '/admin/partners' ||
-      ctx.pathname === '/admin/testimonials' ||
-      ctx.pathname === '/admin/categories' ||
-      ctx.pathname === '/checkout' ||
-      ctx.pathname === '/learning/wishlist';
+  // if a user not logged in then user can't access those pages
+  const isUserRoute = userRoutes.includes(ctx.pathname);
+  const isAdminRoute = adminRoutes.includes(ctx.pathname) || ctx?.pathname.includes('/admin/');
+  const isApiRoute = ctx?.pathname.includes('/api/');
 
-    if (isProtectedRoute) {
-      redirectUser(ctx, '/auth');
-    }
+  if (isApiRoute) {
+    return {
+      pageProps
+    };
   } else {
-    // if a user logged in then user can't access those pages
-    const ifLoggedIn = ctx.pathname === '/auth' || ctx.pathname === '/reset-password';
-    if (ifLoggedIn) {
-      redirectUser(ctx, '/');
-    }
-
-    try {
-      const payload = { headers: { Authorization: lms_react_users_token } };
-      const url = `${baseUrl}/api/users/update`;
-      const response = await axios.get(url, payload);
-      const user = response && response.data.user;
-
-      if (!user) {
-        destroyCookie(ctx, 'lms_react_users_token');
-        redirectUser(ctx, '/auth');
+    if (!isid_user_token) {
+      if (isUserRoute || isAdminRoute) {
+        redirectUser(ctx, '/login');
       }
-      //@ts-ignore
-      pageProps.user = user;
-    } catch (err) {
-      destroyCookie(ctx, 'lms_react_users_token');
-      // redirectUser(ctx, "/");
+    } else {
+      // if a user logged in then user can't access those pages
+      const ifLoggedIn = ctx.pathname === '/login' || ctx.pathname === '/reset-password';
+      if (ifLoggedIn) {
+        redirectUser(ctx, '/');
+      }
+
+      try {
+        const payload = { headers: { Authorization: isid_user_token } };
+        const response = await axios.get('/api/users/getuser', payload);
+        const user = response && response.data.user;
+
+        if (!user) {
+          destroyCookie(ctx, 'isid_user_token');
+          redirectUser(ctx, '/auth/login');
+        }
+      } catch (err) {
+        console.log('error', err);
+        destroyCookie(ctx, 'isid_user_token');
+        // redirectUser(ctx, "/");
+      }
     }
   }
+
   return {
     pageProps
   };
 };
 
-export default MyApp;
+export default LmsApp;

@@ -1,9 +1,14 @@
+// delete this
 import React from 'react';
 import Link from 'next/link';
 import AnimatedCharacters from '@/components/Index/BannerText';
 import { motion } from 'framer-motion';
 
-const PageBanner = ({ pageTitle, homePageUrl, homePageText, activePageText }) => {
+interface IPageBanner {
+  pageTitle: string;
+}
+
+const PageBanner = ({ pageTitle }: IPageBanner) => {
   const variants = {
     hidden: {
       scale: 0.8,
@@ -37,12 +42,12 @@ const PageBanner = ({ pageTitle, homePageUrl, homePageText, activePageText }) =>
         <div className='container'>
           <div className='pages-banner-content'>
             <motion.h2 initial='hidden' animate='visible' variants={variants}>
-              {activePageText}
+              {pageTitle}
             </motion.h2>
             <motion.ul initial='hidden' animate='visible' variants={pVariants}>
               <li>
-                <Link href={homePageUrl}>
-                  <a>{homePageText}</a>
+                <Link href='/'>
+                  <a>Home</a>
                 </Link>
               </li>
               <li>{pageTitle}</li>

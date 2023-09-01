@@ -13,6 +13,7 @@ import Business from '@/components/Index/Business';
 import Footer from '@/components/_App/Footer';
 import baseUrl from '@/utils/baseUrl';
 import { motion } from 'framer-motion';
+import PageContent from '@/components/_App/PageContent';
 
 const Index = ({ courses, categories, user }) => {
   const variants = {
@@ -24,8 +25,7 @@ const Index = ({ courses, categories, user }) => {
     hidden: { opacity: 0, scale: 0 }
   };
   return (
-    <>
-      <Navbar user={user} />
+    <PageContent>
       <Banner user={user} />
       <Features />
 
@@ -52,8 +52,7 @@ const Index = ({ courses, categories, user }) => {
       {/* <Partners /> */}
       {/* <Teaching /> */}
       {/* <Business /> */}
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 
