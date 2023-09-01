@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { useStore } from '../store';
+import { useStore } from '../store-old';
 import { parseCookies, destroyCookie } from 'nookies';
 import axios from 'axios';
 import { redirectUser } from '@/utils/auth';

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { calculateCartTotal } from '@/utils/calculateCartTotal';
 import Button from '@/utils/Button';
-import { appConfig } from '@/store/index';
+import { appConfig } from 'store-old/index';
 
 const PlaceOrderBtn = ({ user, cartItems }) => {
   const [stripeAmount, setStripeAmount] = React.useState(0);

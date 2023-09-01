@@ -1,0 +1,67 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
+type UserSubscription {
+  tier: String!
+  title: String!
+  price: Int!
+  canceled: String
+  subscribedAt: String
+  expiresAt: String
+  montlyPriceId: String
+  yearlyPriceId: String
+}
+
+type SubscriptionTier @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
+  id: ID!
+  tier: String!
+  title: String!
+  price: Int!
+  description: [String]
+  montlyPriceId: String
+  yearlyPriceId: String
+}
+
+type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
+  id: ID!
+  sub: String
+  firstname: String!
+  lastname: String!
+  email: String! @index(name: "byEmail", queryField: "userByEmail")
+  role: String
+  owner: String!
+  avatarUrl: String
+  avatarKey: String
+  address: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  occupation: String
+  institution: String
+  stripeCustomerId: String @index(name: "byCustomerId", queryField: "userByCustomerId")
+  subscription: UserSubscription
+}
+type WelcomeMessage @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
+  id: ID!
+  title: String
+  content: String!
+  footer: String
+}
+type AdBanner @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
+  id: ID!
+  bannerKey: String!
+}
+type Faq @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
+  id: ID!
+  category: String!
+  question: String!
+  answer: String!
+}

@@ -39,7 +39,8 @@
       "UnauthRoleName": "amplify-lmsreact-qa-210214-unauthRole",
       "StackName": "amplify-lmsreact-qa-210214",
       "StackId": "arn:aws:cloudformation:eu-central-1:650977715375:stack/amplify-lmsreact-qa-210214/31b287d0-4863-11ee-a797-0a7f3ae5ab80",
-      "AmplifyAppId": "d273a7e5stgy46"
+      "AmplifyAppId": "d273a7e5stgy46",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-lmsreact-qa-210214-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
@@ -47,8 +48,30 @@
         "userPoolGroups": {}
       },
       "function": {
-        "lmsauthPostAuthentication": {},
-        "lmsauthPostConfirmation": {}
+        "lmsauthPostAuthentication": {
+          "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-66326b6f466d34754f41-build.zip"
+        },
+        "lmsauthPostConfirmation": {
+          "GROUP": "User",
+          "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
+          "s3Key": "amplify-builds/lmsauthPostConfirmation-6d2b6f7a664c4677555a-build.zip"
+        },
+        "AdminQueries22dea091": {
+          "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
+          "s3Key": "amplify-builds/AdminQueries22dea091-6950624b4f556f504c2b-build.zip"
+        },
+        "S3Triggerb4233f8f": {
+          "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
+          "s3Key": "amplify-builds/S3Triggerb4233f8f-53797a487456792b696d-build.zip"
+        }
+      },
+      "api": {
+        "lmsreact": {},
+        "AdminQueries": {}
+      },
+      "storage": {
+        "lmscontent": {}
       }
     }
   }

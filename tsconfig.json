@@ -20,7 +20,7 @@
       "@/public/*": ["public/*"],
       "@/utils/*": ["utils/*"],
       "@/database/*": ["database/*"],
-      "@/store/*": ["store/*"]
+      "@/store/*": ["store-old/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],

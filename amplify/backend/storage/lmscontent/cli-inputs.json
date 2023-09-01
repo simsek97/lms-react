@@ -1,0 +1,20 @@
+{
+  "resourceName": "lmscontent",
+  "policyUUID": "f71edaad",
+  "bucketName": "lmsreact9e705898871d4d838f1a8624cdf4a0ac",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "S3Triggerb4233f8f",
+  "groupAccess": {
+    "Admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}

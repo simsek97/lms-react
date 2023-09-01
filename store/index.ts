@@ -1,43 +1,49 @@
-import { useMemo } from 'react';
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunkMiddleware from 'redux-thunk';
-import reducers from './reducers';
+import { Action, Store, configureStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
+
+import reducers, { rootSaga } from 'store-old/reducers';
+import { ICartStore } from '@/store/reducers/cartReducer';
+import { IUserStore } from '@/store/reducers/userReducer';
+import { IBannerStore } from '@/store/reducers/bannerReducer';
+import { IImportStore } from '@/store/reducers/importReducer';
 
 export const appConfig = {
-  appName: 'SmartKid'
+  appName: 'ProMed2.0'
 };
 
-let store;
-
-function initStore(initialState) {
-  return createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+export interface IReduxStore {
+  user: IUserStore;
+  banner: IBannerStore;
+  cart: ICartStore;
+  import: IImportStore;
 }
 
-export const initializeStore = (preloadedState) => {
-  let initialStore = store ?? initStore(preloadedState);
+const sagaMiddleware = createSagaMiddleware();
 
-  // After navigating to a page with an initial Redux state, merge that state
-  // with the current state in the store, and create a new store
-  if (preloadedState && store) {
-    initialStore = initStore({
-      ...store.getState(),
-      ...preloadedState
-    });
-    // Reset the current store
-    store = undefined;
-  }
+const store: Store = configureStore({
+  reducer: reducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+      thunk: true
+    }).concat(sagaMiddleware),
+  devTools: process.env.NODE_ENV !== 'production'
+});
 
-  // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') {
-    return initialStore;
-  }
-  // Create the store once in the client
-  if (!store) store = initialStore;
+export const persistor = persistStore(store);
 
-  return initialStore;
-};
+// Run sagas
+sagaMiddleware.run(rootSaga);
 
-export function useStore(initialState) {
-  return useMemo(() => initializeStore(initialState), [initialState]);
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export interface IAction<T> extends Action<string> {
+  type: string;
+  data?: T;
 }
+
+export default store;
