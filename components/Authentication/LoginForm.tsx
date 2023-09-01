@@ -6,10 +6,11 @@ import baseUrl from '@/utils/baseUrl';
 import { useRouter } from 'next/router';
 import Button from '../../utils/Button';
 import { motion } from 'framer-motion';
+import { Auth } from 'aws-amplify';
 
 const INITIAL_USER = {
-  email: '',
-  password: ''
+  email: process?.env?.NEXT_PUBLIC_USERNAME || '',
+  password: process?.env?.NEXT_PUBLIC_PASSWORD || ''
 };
 
 const LoginForm = () => {
@@ -30,12 +31,20 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setLoading(true);
-      const url = `${baseUrl}/api/users/signin`;
-      const payload = { ...user };
-      const response = await axios.post(url, payload);
+
+      // Auth with Amplify
+      const myUser = { ...user };
+      const cognitoUser = await Auth.signIn(myUser.email, myUser.password);
+      console.log('cognitoUser:', cognitoUser);
+
+      // Auth with db
+      const response = await axios.post(`${baseUrl}/api/users/signin`, myUser);
+
       handleLogin(response.data.lms_react_users_token, router);
+
       toast.success(response.data.message, {
         style: {
           border: '1px solid #4BB543',
@@ -53,6 +62,7 @@ const LoginForm = () => {
           data: { message }
         }
       } = err;
+
       toast.error(message, {
         style: {
           border: '1px solid #ff0033',

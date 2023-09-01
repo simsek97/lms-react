@@ -23,14 +23,14 @@ const CoursesCard = ({
             <Link href={`/learning/course/class/${slug}`}>
               <a className='d-block image'>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image ? image : '/images/courses/courses1.jpg'} alt='image' />
+                <img src={image ? image : '/images/courses/course-1.jpg'} alt='image' />
               </a>
             </Link>
           ) : (
             <Link href={`/course/${slug}`}>
               <a className='d-block image'>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image ? image : '/images/courses/courses1.jpg'} alt='image' />
+                <img src={image ? image : '/images/courses/course-1.jpg'} alt='image' />
               </a>
             </Link>
           )}
@@ -89,7 +89,7 @@ const CoursesCard = ({
         <div className='courses-content'>
           <div className='course-author d-flex align-items-center'>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={profile_photo ? profile_photo : '/images/user1.jpg'} className='rounded-circle' alt={first_name} />
+            <img src={profile_photo ? profile_photo : '/images/avatar.jpg'} className='rounded-circle' alt={first_name} />
             <span>{`${first_name} ${last_name}`}</span>
           </div>
 

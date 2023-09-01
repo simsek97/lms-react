@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify';
 import cookie from 'js-cookie';
 import Router from 'next/router';
 
@@ -10,7 +11,12 @@ export const handleLogin = (t: string, routeNext: any) => {
   }
 };
 
-export const handleLogout = () => {
+export const handleLogout = async () => {
+  try {
+    await Auth.signOut();
+  } catch (error) {
+    console.log('error signing out: ', error);
+  }
   cookie.remove('lms_react_users_token');
   Router.push('/');
 };

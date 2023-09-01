@@ -1,36 +1,31 @@
-import React from 'react';
-import { Amplify } from 'aws-amplify';
-import { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import { useStore } from '../store';
-import { parseCookies, destroyCookie } from 'nookies';
-import axios from 'axios';
 import { redirectUser } from '@/utils/auth';
 import baseUrl from '@/utils/baseUrl';
-import '../styles/bootstrap.min.css';
-import '../styles/animate.min.css';
-import '../styles/boxicons.min.css';
-import '../styles/flaticon.css';
-import '../styles/remixicon.css';
-import '../styles/nprogress.css';
+import '@etchteam/next-pagination/dist/index.css';
+import axios from 'axios';
+import { AppProps } from 'next/app';
+import { destroyCookie, parseCookies } from 'nookies';
 import 'react-accessible-accordion/dist/fancy-example.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { Provider } from 'react-redux';
 import 'react-tabs/style/react-tabs.css';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import '@etchteam/next-pagination/dist/index.css';
-import 'react-loading-skeleton/dist/skeleton.css';
+import { useStore } from '../store';
+import '../styles/animate.min.css';
+import '../styles/bootstrap.min.css';
+import '../styles/boxicons.min.css';
+import '../styles/flaticon.css';
+import '../styles/nprogress.css';
+import '../styles/remixicon.css';
 // Global Styles
-import '../styles/style.scss';
 import '../styles/responsive.scss';
+import '../styles/style.scss';
 
 // Dashboard
 import '../styles/dashboard.scss';
 
 import Layout from '../components/_App/Layout';
-import awsconfig from './aws-exports';
-
-Amplify.configure(awsconfig);
 
 function MyApp({ Component, pageProps }: AppProps) {
   //@ts-ignore

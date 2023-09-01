@@ -1,18 +1,19 @@
-import React from 'react';
-import Link from 'next/link';
-import CoursesList from '@/components/Courses/CoursesList';
-import Banner from '@/components/Index/Banner';
-import Navbar from '@/components/_App/Navbar';
-import Categories from '@/components/Index/Categories';
-import Transform from '@/components/Index/Transform';
-import Features from '@/components/Features/Features';
-import Testimonials from '@/components/Index/Testimonials';
-import Partners from '@/components/Index/Partners';
-import Teaching from '@/components/Index/Teaching';
-import Business from '@/components/Index/Business';
-import Footer from '@/components/_App/Footer';
-import baseUrl from '@/utils/baseUrl';
+import { Amplify, withSSRContext } from 'aws-amplify';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+
+import CoursesList from '@/components/Courses/CoursesList';
+import Features from '@/components/Features/Features';
+import Banner from '@/components/Index/Banner';
+import Categories from '@/components/Index/Categories';
+import Testimonials from '@/components/Index/Testimonials';
+import Footer from '@/components/_App/Footer';
+import Navbar from '@/components/_App/Navbar';
+import baseUrl from '@/utils/baseUrl';
+
+import awsExports from './aws-exports';
+
+Amplify.configure({ ...awsExports, ssr: true });
 
 const Index = ({ courses, categories, user }) => {
   const variants = {
@@ -58,7 +59,9 @@ const Index = ({ courses, categories, user }) => {
 };
 
 // This gets called on every request
-export async function getServerSideProps() {
+export async function getServerSideProps(req) {
+  // const SSR = withSSRContext({ req });
+
   // Fetch data from external API
   const res = await fetch(`${baseUrl}/api/home-courses`);
   const { courses, categories } = await res.json();

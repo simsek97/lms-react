@@ -46,14 +46,11 @@ const userSignin = async (req, res) => {
       });
     }
 
-    const passwordsMatch = await bcrypt.compare(password, user.password);
-    if (passwordsMatch) {
-      try {
-        // Auth with Amplify
-        try {
-          const { user: cognitoUser } = await Auth.signIn(email, password);
-          console.log('cognitoUser:', cognitoUser);
+    try {
+      const passwordsMatch = await bcrypt.compare(password, user.password);
 
+      if (passwordsMatch) {
+        try {
           const lms_react_users_token = jwt.sign(
             {
               userId: user.id,
@@ -74,11 +71,11 @@ const userSignin = async (req, res) => {
         } catch (error) {
           res.status(401).json({ message: error.message });
         }
-      } catch (error) {
-        res.status(401).json({ message: error.message });
+      } else {
+        res.status(401).json({ message: 'Password is not correct' });
       }
-    } else {
-      res.status(401).json({ message: 'Password is not correct' });
+    } catch (error) {
+      res.status(401).json({ message: error.message });
     }
   } catch (e) {
     // console.error(error)

@@ -64,6 +64,15 @@ const userSignup = async (req, res) => {
         }
       });
 
+      console.log('cognitoUser', cognitoUser);
+    } catch (e) {
+      res.status(400).json({
+        error_code: 'cognito_create_user',
+        message: e.message
+      });
+    }
+
+    try {
       // Encrypt password with bcrypt
       const passwordHash = await bcrypt.hash(password, 10);
 

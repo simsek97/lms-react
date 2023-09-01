@@ -115,9 +115,10 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   };
 
   const handleImageUpload = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    console.log(user);
+
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
       let imageUrl: string = '';
       const courseImage = course.image;
       const randomSuffix = genId();
@@ -140,10 +141,9 @@ const CourseCreateForm = ({ btnText, is_class }: ICourseCreateForm) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(e);
     try {
       setLoading(true);
-      let photo;
+      let photo = '';
 
       if (course.image) {
         const uploadedPhoto = await handleImageUpload();

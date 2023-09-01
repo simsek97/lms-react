@@ -37,7 +37,7 @@
       "email_verified"
     ],
     "userpoolClientLambdaRole": "lmsaut80e74bd0_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
+    "userpoolClientSetAttributes": false,
     "sharedId": "80e74bd0",
     "resourceName": "lmsauth",
     "authSelections": "identityPoolAndUserPool",

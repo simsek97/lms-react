@@ -103,7 +103,7 @@ const Navbar = ({ user }: INavbar) => {
                         }}
                         whileTap={{ scale: 0.9 }}>
                         <Link href='/auth/register'>
-                          <a>Register</a>
+                          <a className='nav-link'>Register</a>
                         </Link>
                       </motion.li>
                       <motion.li
@@ -114,7 +114,7 @@ const Navbar = ({ user }: INavbar) => {
                         }}
                         whileTap={{ scale: 0.9 }}>
                         <Link href='/auth/login'>
-                          <a>Login</a>
+                          <a className='nav-link'>Login</a>
                         </Link>
                       </motion.li>
                     </>
