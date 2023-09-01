@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import PageBanner from '@/components/Common/PageBanner';
 import Navbar from '@/components/_App/Navbar';

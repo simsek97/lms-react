@@ -1,5 +1,8 @@
 import fs from 'fs';
-let siteSettings = require('../../public/settings.json');
+const siteSettings = {
+  siteModalImage: '/images/avatar.jpg',
+  siteModal: null
+};
 
 export default async function handler(req, res) {
   const { site, image_url } = req.body;

@@ -1,7 +1,7 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { IAction } from 'store-old/index';
+import { IAction } from '@/store/index';
 import { UserSubscription } from '@/src/API';
 
 export interface IExtendedUserSubscription extends UserSubscription {

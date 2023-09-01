@@ -36,7 +36,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Scrollbar from '@/components/_App/ScrollBar';
 import CardActions from '@mui/material/CardActions';
 import SubmitButton from '@/utils/SubmitButton';
-import { IReduxStore } from 'store-old/index';
+import { IReduxStore } from '@/store/index';
 import {
   addSubscriptionAction,
   updateImportDataAction,

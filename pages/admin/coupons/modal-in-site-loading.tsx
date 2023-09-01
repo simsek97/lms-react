@@ -8,7 +8,7 @@ import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
 import { useRouter } from 'next/router';
 
-const modalInSiteLoading = ({ user }) => {
+const ModalInSiteLoading = ({ user }) => {
   const [site, setSite] = useState('');
   const [siteImage, setSiteImage] = useState('');
   const [modalImage, setModalImage] = useState({ image_url: '' });
@@ -182,4 +182,4 @@ const modalInSiteLoading = ({ user }) => {
   );
 };
 
-export default modalInSiteLoading;
+export default ModalInSiteLoading;

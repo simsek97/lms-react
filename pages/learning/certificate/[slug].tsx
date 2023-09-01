@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import Navbar from '@/components/_App/Navbar';
 import Footer from '@/components/_App/Footer';
 
-const slug = ({ user }) => {
+const CertificateDetails = ({ user }) => {
   const [student, setStudent] = useState(user && `${user.first_name} ${user.last_name}`);
   const [course, setCourse] = useState({});
   const router = useRouter();
@@ -123,4 +123,4 @@ const slug = ({ user }) => {
   );
 };
 
-export default slug;
+export default CertificateDetails;

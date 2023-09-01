@@ -14,5 +14,14 @@
   "triggerEventPath": "PostConfirmation.event.json",
   "roleName": "lmsauthPostConfirmation",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "permissions": {
+    "api": {
+      "lmsreact": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  }
 }

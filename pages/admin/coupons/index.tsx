@@ -11,7 +11,7 @@ import { parseCookies } from 'nookies';
 import GeneralLoader from '@/utils/GeneralLoader';
 import { confirmAlert } from 'react-confirm-alert';
 
-const index = ({ user }) => {
+const Coupons = ({ user }) => {
   const { elarniv_users_token } = parseCookies();
   const [coupons, setCoupons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -207,4 +207,4 @@ const index = ({ user }) => {
   );
 };
 
-export default index;
+export default Coupons;

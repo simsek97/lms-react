@@ -11,7 +11,7 @@ import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import Button from '@/utils/Button';
 
-const create = ({ user }) => {
+const CreateCoupon = ({ user }) => {
   const router = useRouter();
   const { elarniv_users_token } = parseCookies();
   const [coupon, setCoupon] = useState({ coupon: '', discount: 0.1 });
@@ -148,4 +148,4 @@ const create = ({ user }) => {
   );
 };
 
-export default create;
+export default CreateCoupon;

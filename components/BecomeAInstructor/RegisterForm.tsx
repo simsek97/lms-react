@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
@@ -94,7 +95,7 @@ const RegisterForm = ({ user: { first_name, last_name, email, phone, instructor_
               <div className='teacher-register-box'>
                 {!email_confirmed && (
                   <div className='alert alert-danger' role='alert'>
-                    Please confirm your email first. <a href='/send-confirmation-email'>Didn't receive a confirmation email?</a>
+                    Please confirm your email first. <a href='/send-confirmation-email'>Did not receive a confirmation email?</a>
                   </div>
                 )}
 

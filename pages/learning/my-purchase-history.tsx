@@ -8,7 +8,7 @@ import baseUrl from '@/utils/baseUrl';
 import axios from 'axios';
 import { formatDate } from '@/utils/helper';
 
-function myPurchases({ user }) {
+function Purchases({ user }) {
   const { lms_react_users_token } = parseCookies();
 
   const [enrolments, setEnrolments] = useState([]);
@@ -86,4 +86,4 @@ function myPurchases({ user }) {
   );
 }
 
-export default myPurchases;
+export default Purchases;

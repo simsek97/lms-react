@@ -2,7 +2,7 @@ import { Action, Store, configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
-import reducers, { rootSaga } from 'store-old/reducers';
+import reducers, { rootSaga } from '@/store/reducers';
 import { ICartStore } from '@/store/reducers/cartReducer';
 import { IUserStore } from '@/store/reducers/userReducer';
 import { IBannerStore } from '@/store/reducers/bannerReducer';

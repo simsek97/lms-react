@@ -13,5 +13,14 @@
   "triggerEventPath": "PostAuthentication.event.json",
   "roleName": "lmsauthPostAuthentication",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "permissions": {
+    "api": {
+      "lmsreact": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  }
 }

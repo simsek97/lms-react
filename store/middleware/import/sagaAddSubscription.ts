@@ -4,7 +4,7 @@ import { put } from 'redux-saga/effects';
 
 import { SubscriptionTier, User, UserByEmailQuery } from '@/src/API';
 import { userByEmail } from '@/src/graphql/queries';
-import { IAction } from 'store-old/index';
+import { IAction } from '@/store/index';
 import { IImportData, IImportSubscriptionData } from '@/store/reducers/importReducer';
 import getTiers from '@/utils/getTiers';
 import updateUserById from '@/utils/updateUserById';

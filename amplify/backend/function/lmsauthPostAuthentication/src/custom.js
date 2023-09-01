@@ -4,7 +4,7 @@ const { SignatureV4 } = require('@aws-sdk/signature-v4');
 const { HttpRequest } = require('@aws-sdk/protocol-http');
 const { default: fetch, Request } = require('node-fetch');
 
-const GRAPHQL_ENDPOINT = process.env.API_ISID_GRAPHQLAPIENDPOINTOUTPUT;
+const GRAPHQL_ENDPOINT = process.env.API_LMSREACT_GRAPHQLAPIENDPOINTOUTPUT;
 const AWS_REGION = process.env.REGION || 'us-east-1';
 
 const query = /* GraphQL */ `
