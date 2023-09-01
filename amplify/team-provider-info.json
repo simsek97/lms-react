@@ -28,5 +28,28 @@
         }
       }
     }
+  },
+  "qa": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lmsreact-qa-210214-authRole",
+      "UnauthRoleArn": "arn:aws:iam::650977715375:role/amplify-lmsreact-qa-210214-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::650977715375:role/amplify-lmsreact-qa-210214-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
+      "UnauthRoleName": "amplify-lmsreact-qa-210214-unauthRole",
+      "StackName": "amplify-lmsreact-qa-210214",
+      "StackId": "arn:aws:cloudformation:eu-central-1:650977715375:stack/amplify-lmsreact-qa-210214/31b287d0-4863-11ee-a797-0a7f3ae5ab80",
+      "AmplifyAppId": "d273a7e5stgy46"
+    },
+    "categories": {
+      "auth": {
+        "lmsauth": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "lmsauthPostAuthentication": {},
+        "lmsauthPostConfirmation": {}
+      }
+    }
   }
 }
