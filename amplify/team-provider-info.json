@@ -1,36 +1,4 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-lmsreact-dev-204208-authRole",
-      "UnauthRoleArn": "arn:aws:iam::427629858192:role/amplify-lmsreact-dev-204208-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::427629858192:role/amplify-lmsreact-dev-204208-authRole",
-      "Region": "us-west-1",
-      "DeploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
-      "UnauthRoleName": "amplify-lmsreact-dev-204208-unauthRole",
-      "StackName": "amplify-lmsreact-dev-204208",
-      "StackId": "arn:aws:cloudformation:us-west-1:427629858192:stack/amplify-lmsreact-dev-204208/295a0490-f6a7-11ed-b51b-022a00776dbd",
-      "AmplifyAppId": "d6pz6aici38mf",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-lmsreact-dev-204208-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    },
-    "categories": {
-      "auth": {
-        "lmsauth": {},
-        "userPoolGroups": {}
-      },
-      "function": {
-        "lmsauthPostAuthentication": {
-          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
-          "s3Key": "amplify-builds/lmsauthPostAuthentication-474a33516e41326e794f-build.zip"
-        },
-        "lmsauthPostConfirmation": {
-          "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
-          "s3Key": "amplify-builds/lmsauthPostConfirmation-4b75496a6765456e4d51-build.zip"
-        },
-        "AdminQueries22dea091": {},
-        "S3Triggerb4233f8f": {}
-      }
-    }
-  },
   "qa": {
     "awscloudformation": {
       "AuthRoleName": "amplify-lmsreact-qa-210214-authRole",
@@ -63,10 +31,7 @@
           "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
           "s3Key": "amplify-builds/AdminQueries22dea091-6950624b4f556f504c2b-build.zip"
         },
-        "S3Triggerb4233f8f": {
-          "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
-          "s3Key": "amplify-builds/S3Triggerb4233f8f-53797a487456792b696d-build.zip"
-        }
+        "S3Triggerb4233f8f": {}
       },
       "api": {
         "lmsreact": {},
