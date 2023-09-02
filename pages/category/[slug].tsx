@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import PageBanner from '@/components/Common/PageBanner';
-import CoursesList from '@/components/Courses/CoursesList';
-import Footer from '@/components/_App/Footer';
-import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+import CoursesList from '@/components/Courses/CoursesList';
+import PageContent from '@/components/_App/PageContent';
 import baseUrl from '@/utils/baseUrl';
 
 export default function CoursesPage({ user }) {
@@ -23,20 +22,16 @@ export default function CoursesPage({ user }) {
 
   useEffect(() => {
     fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
+
   return (
-    <>
-      <Navbar user={user} />
-
-      <PageBanner pageTitle='Category' homePageUrl='/' homePageText='Home' activePageText='Category' />
-
+    <PageContent pageTitle='Category'>
       <div className='pt-100 pb-70'>
         <div className='container'>
           <CoursesList courses={courses} user={user} />
         </div>
       </div>
-
-      <Footer />
-    </>
+    </PageContent>
   );
 }

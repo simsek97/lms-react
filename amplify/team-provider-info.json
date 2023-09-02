@@ -20,7 +20,7 @@
       "function": {
         "lmsauthPostAuthentication": {
           "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",
-          "s3Key": "amplify-builds/lmsauthPostAuthentication-66326b6f466d34754f41-build.zip"
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-474a33516e41326e794f-build.zip"
         },
         "lmsauthPostConfirmation": {
           "deploymentBucketName": "amplify-lmsreact-dev-204208-deployment",

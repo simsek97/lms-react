@@ -1,17 +1,11 @@
-import React from 'react';
 import CheckoutForm from '@/components/Checkout/CheckoutForm';
-import PageBanner from '@/components/Common/PageBanner';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
+import PageContent from '@/components/_App/PageContent';
 
 const Checkout = ({ user }) => {
   return (
-    <>
-      <Navbar user={user} />
-      <PageBanner pageTitle='Checkout' homePageUrl='/courses' homePageText='Courses' activePageText='Checkout' />
+    <PageContent pageTitle='Checkout'>
       <CheckoutForm user={user} />
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

@@ -1,26 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
-import PageBanner from '@/components/Common/PageBanner';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
+import Link from 'next/link';
+
 import Features from '@/components/Features/Features';
 import Testimonials from '@/components/Index/Testimonials';
-import Business from '@/components/Index/Business';
-import Link from 'next/link';
+import PageContent from '@/components/_App/PageContent';
 
 const AboutUs = ({ user }) => {
   return (
-    <>
-      <Navbar user={user} />
-      <PageBanner pageTitle='About Us' homePageUrl='/' homePageText='Home' activePageText='About Us' />
-
+    <PageContent pageTitle='About Us'>
       <div className='transform-area ptb-100'>
         <div className='container'>
           <div className='row align-items-center'>
             <div className='col-lg-6'>
               <div className='transform-conetnt'>
                 <h2>
-                  We Are <span>Edmy!</span> The Best Online Learning Platform
+                  We Are <span>SmartClass!</span> The Best Online Learning Platform
                 </h2>
                 <p>
                   Instructors from around the world teach millions of students on Edmy. We provide the tools and skills to teach what
@@ -68,10 +62,8 @@ const AboutUs = ({ user }) => {
 
       <Testimonials />
 
-      <Business />
-
-      <Footer />
-    </>
+      {/* <Business /> */}
+    </PageContent>
   );
 };
 

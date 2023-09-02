@@ -3,14 +3,15 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 
-import PageBanner from '@/components/Common/PageBanner';
-
 interface IPageContent {
   pageTitle?: string;
+  activePageText?: string;
+  parentPageUrl?: string;
+  parentPageText?: string;
 }
 
 const PageContent = (props: PropsWithChildren<IPageContent>) => {
-  const { pageTitle } = props;
+  const { pageTitle, activePageText, parentPageUrl, parentPageText } = props;
 
   const variants = {
     hidden: {
@@ -54,7 +55,14 @@ const PageContent = (props: PropsWithChildren<IPageContent>) => {
                     <a>Home</a>
                   </Link>
                 </li>
-                <li>{pageTitle}</li>
+                {parentPageText && (
+                  <li>
+                    <Link href={parentPageUrl}>
+                      <a>{parentPageText}</a>
+                    </Link>
+                  </li>
+                )}
+                {activePageText && <li>{activePageText}</li>}
               </motion.ul>
             </Box>
           </Box>

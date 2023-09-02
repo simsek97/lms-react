@@ -7,6 +7,7 @@ import Footer from '@/components/_App/Footer';
 import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
 import toast from 'react-hot-toast';
+import PageContent from '@/components/_App/PageContent';
 
 const CourseDeatails = ({ user }) => {
   const [course, setCourse] = useState({});
@@ -46,21 +47,15 @@ const CourseDeatails = ({ user }) => {
   }, [slug]);
 
   return (
-    <>
-      <Navbar user={user} />
-      <PageBanner
-        //@ts-ignore
-        pageTitle={course && course.title}
-        homePageUrl='/courses'
-        homePageText='Courses'
-        //@ts-ignore
-        activePageText={course && course.title}
-      />
-
+    <PageContent
+      //@ts-ignore
+      pageTitle={course?.title || ''}
+      parentPageUrl='/courses'
+      parentPageText='Courses'
+      //@ts-ignore
+      activePageText={course?.title || ''}>
       {course && <CoursesDetailsContent user={user} course={course} />}
-
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

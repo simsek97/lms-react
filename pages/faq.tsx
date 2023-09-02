@@ -1,17 +1,11 @@
-import React from 'react';
-import Navbar from '@/components/_App/Navbar';
-import PageBanner from '../components/Common/PageBanner';
-import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemPanel, AccordionItemButton } from 'react-accessible-accordion';
-import Footer from '@/components/_App/Footer';
+import { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
+
 import Business from '@/components/Index/Business';
+import PageContent from '@/components/_App/PageContent';
 
 export default function FaqPage({ user }) {
   return (
-    <>
-      <Navbar user={user} />
-
-      <PageBanner pageTitle='Frequently Asked Questions' homePageUrl='/' homePageText='Home' activePageText="FAQ's" />
-
+    <PageContent pageTitle='Frequently Asked Questions'>
       <div className='faq-area ptb-100'>
         <div className='container'>
           <div className='faq-accordion'>
@@ -81,8 +75,6 @@ export default function FaqPage({ user }) {
       </div>
 
       <Business />
-
-      <Footer />
-    </>
+    </PageContent>
   );
 }

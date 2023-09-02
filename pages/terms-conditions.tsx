@@ -1,13 +1,8 @@
-import React from 'react';
-import PageBanner from '@/components/Common/PageBanner';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
+import PageContent from '@/components/_App/PageContent';
 
 const TermsConditions = ({ user }) => {
   return (
-    <>
-      <Navbar user={user} />
-      <PageBanner pageTitle='Terms & Conditions' homePageUrl='/' homePageText='Home' activePageText='Terms & Conditions' />
+    <PageContent pageTitle='Terms & Conditions'>
       <section className='ptb-100'>
         <div className='container'>
           <div className='main-content-text'>
@@ -105,8 +100,7 @@ const TermsConditions = ({ user }) => {
           </div>
         </div>
       </section>
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

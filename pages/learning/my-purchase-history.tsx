@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import PageBanner from '@/components/Common/PageBanner';
-import Footer from '@/components/_App/Footer';
+import { formatDate } from '@/utils/helper';
+import axios from 'axios';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
+
+import PageContent from '@/components/_App/PageContent';
 import baseUrl from '@/utils/baseUrl';
-import axios from 'axios';
-import { formatDate } from '@/utils/helper';
 
 function Purchases({ user }) {
   const { lms_react_users_token } = parseCookies();
@@ -20,14 +19,13 @@ function Purchases({ user }) {
       const response = await axios.get(url, payload);
       setEnrolments(response.data.enrolments);
     };
+
     fetchEnrol();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
-    <>
-      <Navbar user={user} />
-
-      <PageBanner pageTitle='My Purchases' homePageUrl='/' homePageText='Home' activePageText='My Purchases' />
-
+    <PageContent pageTitle='My Purchases'>
       <div className='checkout-area ptb-100'>
         <div className='container'>
           <div className='row justify-content-center'>
@@ -40,6 +38,7 @@ function Purchases({ user }) {
                           <div className='col-lg-3'>
                             <Link href={`/learning/course/${enrol.course.slug}`}>
                               <a className='d-block image'>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={enrol.course.image} alt='image' />
                               </a>
                             </Link>
@@ -80,9 +79,7 @@ function Purchases({ user }) {
           </div>
         </div>
       </div>
-
-      <Footer />
-    </>
+    </PageContent>
   );
 }
 

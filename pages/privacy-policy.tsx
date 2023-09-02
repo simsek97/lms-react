@@ -1,14 +1,8 @@
-import React from 'react';
-import PageBanner from '@/components/Common/PageBanner';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
+import PageContent from '@/components/_App/PageContent';
 
 const PrivacyPolicy = ({ user }) => {
   return (
-    <>
-      <Navbar user={user} />
-      <PageBanner pageTitle='Privacy Policy' homePageUrl='/' homePageText='Home' activePageText='Privacy Policy' />
-
+    <PageContent pageTitle='Privacy Policy'>
       <section className='ptb-100'>
         <div className='container'>
           <div className='main-content-text'>
@@ -106,9 +100,7 @@ const PrivacyPolicy = ({ user }) => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

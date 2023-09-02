@@ -105,14 +105,14 @@
     "userPoolGroups": {
       "dependsOn": [
         {
+          "category": "auth",
+          "resourceName": "lmsauth",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "lmsauth"
+          ]
         }
       ],
       "providerPlugin": "awscloudformation",

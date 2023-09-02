@@ -51,9 +51,7 @@ export default function CoursesPage({ user }) {
   }, [page, size, short, cat, search]);
 
   return (
-    <PageContent>
-      <PageBanner pageTitle='Courses' homePageUrl='/' homePageText='Home' activePageText='Courses' />
-
+    <PageContent pageTitle='Courses'>
       <div className='courses-area ptb-100'>
         <div className='container'>
           <div className='section-title wow animate__animated animate__fadeInUp delay-0-2s'>
