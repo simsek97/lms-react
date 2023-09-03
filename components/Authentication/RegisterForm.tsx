@@ -68,11 +68,11 @@ const RegisterForm = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   const defaultValues: TFormValues = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    firstname: process?.env?.NEXT_PUBLIC_FIRSTNAME || '',
+    lastname: process?.env?.NEXT_PUBLIC_LASTNAME || '',
+    email: process?.env?.NEXT_PUBLIC_USERNAME || '',
+    password: process?.env?.NEXT_PUBLIC_PASSWORD || '',
+    confirmPassword: process?.env?.NEXT_PUBLIC_PASSWORD || ''
   };
 
   const { handleSubmit, handleChange, values, errors, touched }: FormikProps<TFormValues> = useFormik<TFormValues>({

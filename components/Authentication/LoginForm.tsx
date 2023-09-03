@@ -31,8 +31,8 @@ const LoginForm = () => {
   };
 
   const defaultValues: TFormValues = {
-    email: '',
-    password: ''
+    email: process?.env?.NEXT_PUBLIC_USERNAME || '',
+    password: process?.env?.NEXT_PUBLIC_PASSWORD || ''
   };
 
   // Form validation rules

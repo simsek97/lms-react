@@ -40,15 +40,18 @@
               "userPoolConfig": {
                 "userPoolId": "authlmsauth"
               }
+            },
+            {
+              "authenticationType": "AWS_IAM"
             }
           ],
           "defaultAuthentication": {
+            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2023-10-01T01:07:47.379Z",
               "apiKeyExpirationDays": 30,
+              "apiKeyExpirationDate": "2023-10-03T16:55:24.817Z",
               "description": "Key for Api"
-            },
-            "authenticationType": "API_KEY"
+            }
           }
         }
       },

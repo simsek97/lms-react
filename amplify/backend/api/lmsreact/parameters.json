@@ -7,5 +7,6 @@
       "authlmsauth",
       "Outputs.UserPoolId"
     ]
-  }
+  },
+  "AuthModeLastUpdated": "2023-09-03T16:55:34.808Z"
 }
