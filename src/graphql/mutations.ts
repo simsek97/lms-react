@@ -72,15 +72,10 @@ export const createUser = /* GraphQL */ `
       email
       role
       owner
-      avatarUrl
-      avatarKey
-      address
-      city
-      state
-      zipCode
-      country
-      occupation
-      institution
+      avatar {
+        key
+        url
+      }
       stripeCustomerId
       subscription {
         tier
@@ -110,15 +105,10 @@ export const updateUser = /* GraphQL */ `
       email
       role
       owner
-      avatarUrl
-      avatarKey
-      address
-      city
-      state
-      zipCode
-      country
-      occupation
-      institution
+      avatar {
+        key
+        url
+      }
       stripeCustomerId
       subscription {
         tier
@@ -148,15 +138,10 @@ export const deleteUser = /* GraphQL */ `
       email
       role
       owner
-      avatarUrl
-      avatarKey
-      address
-      city
-      state
-      zipCode
-      country
-      occupation
-      institution
+      avatar {
+        key
+        url
+      }
       stripeCustomerId
       subscription {
         tier

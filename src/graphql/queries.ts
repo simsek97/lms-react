@@ -55,15 +55,10 @@ export const getUser = /* GraphQL */ `
       email
       role
       owner
-      avatarUrl
-      avatarKey
-      address
-      city
-      state
-      zipCode
-      country
-      occupation
-      institution
+      avatar {
+        key
+        url
+      }
       stripeCustomerId
       subscription {
         tier
@@ -95,15 +90,10 @@ export const listUsers = /* GraphQL */ `
         email
         role
         owner
-        avatarUrl
-        avatarKey
-        address
-        city
-        state
-        zipCode
-        country
-        occupation
-        institution
+        avatar {
+          key
+          url
+        }
         stripeCustomerId
         subscription {
           tier
@@ -145,15 +135,10 @@ export const userByEmail = /* GraphQL */ `
         email
         role
         owner
-        avatarUrl
-        avatarKey
-        address
-        city
-        state
-        zipCode
-        country
-        occupation
-        institution
+        avatar {
+          key
+          url
+        }
         stripeCustomerId
         subscription {
           tier
@@ -195,15 +180,10 @@ export const userByCustomerId = /* GraphQL */ `
         email
         role
         owner
-        avatarUrl
-        avatarKey
-        address
-        city
-        state
-        zipCode
-        country
-        occupation
-        institution
+        avatar {
+          key
+          url
+        }
         stripeCustomerId
         subscription {
           tier

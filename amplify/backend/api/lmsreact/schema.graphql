@@ -36,15 +36,7 @@ type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: pu
   email: String! @index(name: "byEmail", queryField: "userByEmail")
   role: String
   owner: String!
-  avatarUrl: String
-  avatarKey: String
-  address: String
-  city: String
-  state: String
-  zipCode: String
-  country: String
-  occupation: String
-  institution: String
+  avatar: S3Object
   stripeCustomerId: String @index(name: "byCustomerId", queryField: "userByCustomerId")
   subscription: UserSubscription
 }
