@@ -134,11 +134,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "S3Triggerb4233f8f": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "lmsauthPostAuthentication": {
       "build": true,
       "dependsOn": [
@@ -186,22 +181,6 @@
         {
           "category": "function",
           "resourceName": "AdminQueries22dea091"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Triggerb4233f8f_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerb4233f8f"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Triggerb4233f8f_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerb4233f8f"
         }
       ]
     },

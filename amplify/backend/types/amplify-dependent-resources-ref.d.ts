@@ -1,9 +1,17 @@
 export type AmplifyDependentResourcesAttributes = {
-    "auth": {
-        "userPoolGroups": {
-            "AdminGroupRole": "string",
-            "UserGroupRole": "string"
+    "api": {
+        "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         },
+        "lmsreact": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "auth": {
         "lmsauth": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
@@ -12,10 +20,28 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
+        },
+        "userPoolGroups": {
+            "AdminGroupRole": "string",
+            "UserGroupRole": "string"
         }
     },
     "function": {
+        "AdminQueries22dea091": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
         "lmsauthPostAuthentication": {
+            "Name": "string",
+            "Arn": "string",
+            "LambdaExecutionRole": "string",
+            "Region": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
+        "lmsauthPostConfirmation": {
             "Name": "string",
             "Arn": "string",
             "LambdaExecutionRole": "string",
@@ -24,7 +50,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "storage": {
-        "lms": {
+        "lmscontent": {
             "BucketName": "string",
             "Region": "string"
         }

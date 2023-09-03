@@ -18,7 +18,6 @@ export const createSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -38,7 +37,6 @@ export const updateSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -58,7 +56,6 @@ export const deleteSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -94,11 +91,9 @@ export const createUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -134,11 +129,9 @@ export const updateUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -174,11 +167,108 @@ export const deleteUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
+    }
+  }
+`;
+export const createCourse = /* GraphQL */ `
+  mutation CreateCourse(
+    $input: CreateCourseInput!
+    $condition: ModelCourseConditionInput
+  ) {
+    createCourse(input: $input, condition: $condition) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateCourse = /* GraphQL */ `
+  mutation UpdateCourse(
+    $input: UpdateCourseInput!
+    $condition: ModelCourseConditionInput
+  ) {
+    updateCourse(input: $input, condition: $condition) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteCourse = /* GraphQL */ `
+  mutation DeleteCourse(
+    $input: DeleteCourseInput!
+    $condition: ModelCourseConditionInput
+  ) {
+    deleteCourse(input: $input, condition: $condition) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
@@ -195,7 +285,6 @@ export const createWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -212,7 +301,6 @@ export const updateWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -229,7 +317,6 @@ export const deleteWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -244,7 +331,6 @@ export const createAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -259,7 +345,6 @@ export const updateAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -274,7 +359,6 @@ export const deleteAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -291,7 +375,6 @@ export const createFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -308,7 +391,6 @@ export const updateFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -325,7 +407,6 @@ export const deleteFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;

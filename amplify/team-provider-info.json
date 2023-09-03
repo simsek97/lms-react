@@ -31,11 +31,56 @@
           "deploymentBucketName": "amplify-lmsreact-qa-210214-deployment",
           "s3Key": "amplify-builds/AdminQueries22dea091-6950624b4f556f504c2b-build.zip"
         },
-        "S3Triggerb4233f8f": {}
+        "lmsauth": {},
+        "lmsreact": {}
       },
       "api": {
         "lmsreact": {},
         "AdminQueries": {}
+      },
+      "storage": {
+        "lmscontent": {}
+      }
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lmsreact-dev-200027-authRole",
+      "UnauthRoleArn": "arn:aws:iam::427629858192:role/amplify-lmsreact-dev-200027-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::427629858192:role/amplify-lmsreact-dev-200027-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
+      "UnauthRoleName": "amplify-lmsreact-dev-200027-unauthRole",
+      "StackName": "amplify-lmsreact-dev-200027",
+      "StackId": "arn:aws:cloudformation:us-east-1:427629858192:stack/amplify-lmsreact-dev-200027/e454db60-49ec-11ee-9a41-0ac04fe67535",
+      "AmplifyAppId": "dxjbhjb3pwjpo",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-lmsreact-dev-200027-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "lmsauth": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueries22dea091": {
+          "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
+          "s3Key": "amplify-builds/AdminQueries22dea091-6950624b4f556f504c2b-build.zip"
+        },
+        "lmsauthPostAuthentication": {
+          "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-474a33516e41326e794f-build.zip"
+        },
+        "lmsauthPostConfirmation": {
+          "GROUP": "User",
+          "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
+          "s3Key": "amplify-builds/lmsauthPostConfirmation-623335413075532b5243-build.zip"
+        },
+        "lmsauth": {},
+        "lmsreact": {}
+      },
+      "api": {
+        "AdminQueries": {},
+        "lmsreact": {}
       },
       "storage": {
         "lmscontent": {}

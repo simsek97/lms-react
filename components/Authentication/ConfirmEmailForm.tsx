@@ -34,7 +34,7 @@ const ConfirmEmail = () => {
       if (response === 'SUCCESS') {
         setStatus('success');
         setTimeout(() => {
-          router.push('/login');
+          router.push('/auth/login');
         }, 5000);
       } else {
         setStatus('error');

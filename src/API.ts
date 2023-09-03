@@ -219,6 +219,110 @@ export type DeleteUserInput = {
   id: string,
 };
 
+export type CreateCourseInput = {
+  id?: string | null,
+  title?: string | null,
+  slug?: string | null,
+  shortDesc?: string | null,
+  overview?: string | null,
+  latestPrice?: number | null,
+  beforePrice?: number | null,
+  lessons?: string | null,
+  duration?: string | null,
+  image?: S3ObjectInput | null,
+  requirements?: string | null,
+  whatYouWillLearn?: string | null,
+  whoIsThisCourseFor?: string | null,
+  catId?: string | null,
+  levelId?: string | null,
+  inHomePage?: string | null,
+  inHomePageSetAt?: string | null,
+  isClass?: string | null,
+};
+
+export type S3ObjectInput = {
+  key: string,
+  url: string,
+};
+
+export type ModelCourseConditionInput = {
+  title?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  shortDesc?: ModelStringInput | null,
+  overview?: ModelStringInput | null,
+  latestPrice?: ModelIntInput | null,
+  beforePrice?: ModelIntInput | null,
+  lessons?: ModelStringInput | null,
+  duration?: ModelStringInput | null,
+  requirements?: ModelStringInput | null,
+  whatYouWillLearn?: ModelStringInput | null,
+  whoIsThisCourseFor?: ModelStringInput | null,
+  catId?: ModelStringInput | null,
+  levelId?: ModelStringInput | null,
+  inHomePage?: ModelStringInput | null,
+  inHomePageSetAt?: ModelStringInput | null,
+  isClass?: ModelStringInput | null,
+  and?: Array< ModelCourseConditionInput | null > | null,
+  or?: Array< ModelCourseConditionInput | null > | null,
+  not?: ModelCourseConditionInput | null,
+};
+
+export type Course = {
+  __typename: "Course",
+  id: string,
+  title?: string | null,
+  slug?: string | null,
+  shortDesc?: string | null,
+  overview?: string | null,
+  latestPrice?: number | null,
+  beforePrice?: number | null,
+  lessons?: string | null,
+  duration?: string | null,
+  image?: S3Object | null,
+  requirements?: string | null,
+  whatYouWillLearn?: string | null,
+  whoIsThisCourseFor?: string | null,
+  catId?: string | null,
+  levelId?: string | null,
+  inHomePage?: string | null,
+  inHomePageSetAt?: string | null,
+  isClass?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type S3Object = {
+  __typename: "S3Object",
+  key: string,
+  url: string,
+};
+
+export type UpdateCourseInput = {
+  id: string,
+  title?: string | null,
+  slug?: string | null,
+  shortDesc?: string | null,
+  overview?: string | null,
+  latestPrice?: number | null,
+  beforePrice?: number | null,
+  lessons?: string | null,
+  duration?: string | null,
+  image?: S3ObjectInput | null,
+  requirements?: string | null,
+  whatYouWillLearn?: string | null,
+  whoIsThisCourseFor?: string | null,
+  catId?: string | null,
+  levelId?: string | null,
+  inHomePage?: string | null,
+  inHomePageSetAt?: string | null,
+  isClass?: string | null,
+};
+
+export type DeleteCourseInput = {
+  id: string,
+};
+
 export type CreateWelcomeMessageInput = {
   id?: string | null,
   title?: string | null,
@@ -395,6 +499,35 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelCourseFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  shortDesc?: ModelStringInput | null,
+  overview?: ModelStringInput | null,
+  latestPrice?: ModelIntInput | null,
+  beforePrice?: ModelIntInput | null,
+  lessons?: ModelStringInput | null,
+  duration?: ModelStringInput | null,
+  requirements?: ModelStringInput | null,
+  whatYouWillLearn?: ModelStringInput | null,
+  whoIsThisCourseFor?: ModelStringInput | null,
+  catId?: ModelStringInput | null,
+  levelId?: ModelStringInput | null,
+  inHomePage?: ModelStringInput | null,
+  inHomePageSetAt?: ModelStringInput | null,
+  isClass?: ModelStringInput | null,
+  and?: Array< ModelCourseFilterInput | null > | null,
+  or?: Array< ModelCourseFilterInput | null > | null,
+  not?: ModelCourseFilterInput | null,
+};
+
+export type ModelCourseConnection = {
+  __typename: "ModelCourseConnection",
+  items:  Array<Course | null >,
+  nextToken?: string | null,
+};
+
 export type ModelWelcomeMessageFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -514,6 +647,28 @@ export type ModelSubscriptionUserFilterInput = {
   stripeCustomerId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+};
+
+export type ModelSubscriptionCourseFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  slug?: ModelSubscriptionStringInput | null,
+  shortDesc?: ModelSubscriptionStringInput | null,
+  overview?: ModelSubscriptionStringInput | null,
+  latestPrice?: ModelSubscriptionIntInput | null,
+  beforePrice?: ModelSubscriptionIntInput | null,
+  lessons?: ModelSubscriptionStringInput | null,
+  duration?: ModelSubscriptionStringInput | null,
+  requirements?: ModelSubscriptionStringInput | null,
+  whatYouWillLearn?: ModelSubscriptionStringInput | null,
+  whoIsThisCourseFor?: ModelSubscriptionStringInput | null,
+  catId?: ModelSubscriptionStringInput | null,
+  levelId?: ModelSubscriptionStringInput | null,
+  inHomePage?: ModelSubscriptionStringInput | null,
+  inHomePageSetAt?: ModelSubscriptionStringInput | null,
+  isClass?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionCourseFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCourseFilterInput | null > | null,
 };
 
 export type ModelSubscriptionWelcomeMessageFilterInput = {
@@ -724,6 +879,114 @@ export type DeleteUserMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateCourseMutationVariables = {
+  input: CreateCourseInput,
+  condition?: ModelCourseConditionInput | null,
+};
+
+export type CreateCourseMutation = {
+  createCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateCourseMutationVariables = {
+  input: UpdateCourseInput,
+  condition?: ModelCourseConditionInput | null,
+};
+
+export type UpdateCourseMutation = {
+  updateCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteCourseMutationVariables = {
+  input: DeleteCourseInput,
+  condition?: ModelCourseConditionInput | null,
+};
+
+export type DeleteCourseMutation = {
+  deleteCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -1111,6 +1374,82 @@ export type UserByCustomerIdQuery = {
   } | null,
 };
 
+export type GetCourseQueryVariables = {
+  id: string,
+};
+
+export type GetCourseQuery = {
+  getCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListCoursesQueryVariables = {
+  filter?: ModelCourseFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCoursesQuery = {
+  listCourses?:  {
+    __typename: "ModelCourseConnection",
+    items:  Array< {
+      __typename: "Course",
+      id: string,
+      title?: string | null,
+      slug?: string | null,
+      shortDesc?: string | null,
+      overview?: string | null,
+      latestPrice?: number | null,
+      beforePrice?: number | null,
+      lessons?: string | null,
+      duration?: string | null,
+      image?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      requirements?: string | null,
+      whatYouWillLearn?: string | null,
+      whoIsThisCourseFor?: string | null,
+      catId?: string | null,
+      levelId?: string | null,
+      inHomePage?: string | null,
+      inHomePageSetAt?: string | null,
+      isClass?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetWelcomeMessageQueryVariables = {
   id: string,
 };
@@ -1410,6 +1749,114 @@ export type OnDeleteUserSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCourseSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateCourseSubscription = {
+  onCreateCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateCourseSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateCourseSubscription = {
+  onUpdateCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteCourseSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteCourseSubscription = {
+  onDeleteCourse?:  {
+    __typename: "Course",
+    id: string,
+    title?: string | null,
+    slug?: string | null,
+    shortDesc?: string | null,
+    overview?: string | null,
+    latestPrice?: number | null,
+    beforePrice?: number | null,
+    lessons?: string | null,
+    duration?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      key: string,
+      url: string,
+    } | null,
+    requirements?: string | null,
+    whatYouWillLearn?: string | null,
+    whoIsThisCourseFor?: string | null,
+    catId?: string | null,
+    levelId?: string | null,
+    inHomePage?: string | null,
+    inHomePageSetAt?: string | null,
+    isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 

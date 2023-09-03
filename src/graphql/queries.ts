@@ -15,7 +15,6 @@ export const getSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -41,10 +40,8 @@ export const listSubscriptionTiers = /* GraphQL */ `
         createdAt
         updatedAt
         owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
@@ -77,11 +74,9 @@ export const getUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -119,14 +114,11 @@ export const listUsers = /* GraphQL */ `
           expiresAt
           montlyPriceId
           yearlyPriceId
-          __typename
         }
         createdAt
         updatedAt
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
@@ -172,14 +164,11 @@ export const userByEmail = /* GraphQL */ `
           expiresAt
           montlyPriceId
           yearlyPriceId
-          __typename
         }
         createdAt
         updatedAt
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
@@ -225,14 +214,78 @@ export const userByCustomerId = /* GraphQL */ `
           expiresAt
           montlyPriceId
           yearlyPriceId
-          __typename
         }
         createdAt
         updatedAt
-        __typename
       }
       nextToken
-      __typename
+    }
+  }
+`;
+export const getCourse = /* GraphQL */ `
+  query GetCourse($id: ID!) {
+    getCourse(id: $id) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listCourses = /* GraphQL */ `
+  query ListCourses(
+    $filter: ModelCourseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        slug
+        shortDesc
+        overview
+        latestPrice
+        beforePrice
+        lessons
+        duration
+        image {
+          key
+          url
+        }
+        requirements
+        whatYouWillLearn
+        whoIsThisCourseFor
+        catId
+        levelId
+        inHomePage
+        inHomePageSetAt
+        isClass
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
     }
   }
 `;
@@ -246,7 +299,6 @@ export const getWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -265,10 +317,8 @@ export const listWelcomeMessages = /* GraphQL */ `
         createdAt
         updatedAt
         owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
@@ -280,7 +330,6 @@ export const getAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -297,10 +346,8 @@ export const listAdBanners = /* GraphQL */ `
         createdAt
         updatedAt
         owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
@@ -314,7 +361,6 @@ export const getFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -333,10 +379,8 @@ export const listFaqs = /* GraphQL */ `
         createdAt
         updatedAt
         owner
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;

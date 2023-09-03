@@ -18,7 +18,6 @@ export const onCreateSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -38,7 +37,6 @@ export const onUpdateSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -58,7 +56,6 @@ export const onDeleteSubscriptionTier = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -94,11 +91,9 @@ export const onCreateUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -134,11 +129,9 @@ export const onUpdateUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -174,11 +167,108 @@ export const onDeleteUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
-        __typename
       }
       createdAt
       updatedAt
-      __typename
+    }
+  }
+`;
+export const onCreateCourse = /* GraphQL */ `
+  subscription OnCreateCourse(
+    $filter: ModelSubscriptionCourseFilterInput
+    $owner: String
+  ) {
+    onCreateCourse(filter: $filter, owner: $owner) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateCourse = /* GraphQL */ `
+  subscription OnUpdateCourse(
+    $filter: ModelSubscriptionCourseFilterInput
+    $owner: String
+  ) {
+    onUpdateCourse(filter: $filter, owner: $owner) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteCourse = /* GraphQL */ `
+  subscription OnDeleteCourse(
+    $filter: ModelSubscriptionCourseFilterInput
+    $owner: String
+  ) {
+    onDeleteCourse(filter: $filter, owner: $owner) {
+      id
+      title
+      slug
+      shortDesc
+      overview
+      latestPrice
+      beforePrice
+      lessons
+      duration
+      image {
+        key
+        url
+      }
+      requirements
+      whatYouWillLearn
+      whoIsThisCourseFor
+      catId
+      levelId
+      inHomePage
+      inHomePageSetAt
+      isClass
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
@@ -195,7 +285,6 @@ export const onCreateWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -212,7 +301,6 @@ export const onUpdateWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -229,7 +317,6 @@ export const onDeleteWelcomeMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -244,7 +331,6 @@ export const onCreateAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -259,7 +345,6 @@ export const onUpdateAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -274,7 +359,6 @@ export const onDeleteAdBanner = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -291,7 +375,6 @@ export const onCreateFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -308,7 +391,6 @@ export const onUpdateFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;
@@ -325,7 +407,6 @@ export const onDeleteFaq = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-      __typename
     }
   }
 `;

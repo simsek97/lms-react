@@ -84,11 +84,11 @@ LmsApp.getInitialProps = async ({ Component, ctx }) => {
   } else {
     if (!isid_user_token) {
       if (isUserRoute || isAdminRoute) {
-        redirectUser(ctx, '/login');
+        redirectUser(ctx, '/auth/login');
       }
     } else {
       // if a user logged in then user can't access those pages
-      const ifLoggedIn = ctx.pathname === '/login' || ctx.pathname === '/reset-password';
+      const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/reset-password';
       if (ifLoggedIn) {
         redirectUser(ctx, '/');
       }

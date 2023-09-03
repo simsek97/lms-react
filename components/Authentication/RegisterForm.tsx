@@ -304,7 +304,7 @@ const RegisterForm = () => {
 
       <Grid container sx={{ mt: 3 }}>
         <Grid item xs={12}>
-          Already Have Account? <Link href='/login'>Login</Link>
+          Already Have Account? <Link href='/auth/login'>Login</Link>
         </Grid>
       </Grid>
     </Box>

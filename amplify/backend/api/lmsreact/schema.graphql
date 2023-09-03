@@ -65,7 +65,7 @@ type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: 
   catId: String
   levelId: String
   inHomePage: String
-  inHomePageSetAt: Date
+  inHomePageSetAt: String
   isClass: String
 }
 type WelcomeMessage @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
