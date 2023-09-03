@@ -73,7 +73,7 @@
         "lmsauthPostConfirmation": {
           "GROUP": "User",
           "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
-          "s3Key": "amplify-builds/lmsauthPostConfirmation-5a6c38644b4d41535073-build.zip"
+          "s3Key": "amplify-builds/lmsauthPostConfirmation-736979304a737358494c-build.zip"
         },
         "lmsauth": {},
         "lmsreact": {}

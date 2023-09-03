@@ -8,30 +8,8 @@ const GRAPHQL_ENDPOINT = process.env.API_LMSREACT_GRAPHQLAPIENDPOINTOUTPUT;
 const AWS_REGION = process.env.REGION || 'us-east-1';
 
 const query = /* GraphQL */ `
-  mutation createUser(
-    $email: String!
-    $firstname: String!
-    $lastname: String!
-    $owner: String!
-    $city: String
-    $role: String
-    $country: String
-    $occupation: String
-    $institution: String
-  ) {
-    createUser(
-      input: {
-        email: $email
-        firstname: $firstname
-        lastname: $lastname
-        owner: $owner
-        city: $city
-        role: $role
-        country: $country
-        occupation: $occupation
-        institution: $institution
-      }
-    ) {
+  mutation createUser($email: String!, $firstname: String!, $lastname: String!, $owner: String!, $role: String) {
+    createUser(input: { email: $email, firstname: $firstname, lastname: $lastname, owner: $owner, role: $role }) {
       id
       email
     }
@@ -49,11 +27,7 @@ exports.handler = async (event, context) => {
     firstname: event.request.userAttributes.given_name,
     lastname: event.request.userAttributes.family_name,
     owner: `${event.request.userAttributes.sub}::${event.userName}`,
-    city: event.request.userAttributes['custom:city'],
-    role: 'User',
-    country: event.request.userAttributes['custom:country'],
-    occupation: event.request.userAttributes['custom:occupation'],
-    institution: event.request.userAttributes['custom:institution']
+    role: 'User'
   };
 
   const endpoint = new URL(GRAPHQL_ENDPOINT);
