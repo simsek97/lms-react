@@ -222,6 +222,124 @@ export const userByCustomerId = /* GraphQL */ `
     }
   }
 `;
+export const getCategory = /* GraphQL */ `
+  query GetCategory($id: ID!) {
+    getCategory(id: $id) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listCategories = /* GraphQL */ `
+  query ListCategories(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getLevel = /* GraphQL */ `
+  query GetLevel($id: ID!) {
+    getLevel(id: $id) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listLevels = /* GraphQL */ `
+  query ListLevels(
+    $filter: ModelLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLevels(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getCourse = /* GraphQL */ `
   query GetCourse($id: ID!) {
     getCourse(id: $id) {
@@ -241,8 +359,30 @@ export const getCourse = /* GraphQL */ `
       requirements
       whatYouWillLearn
       whoIsThisCourseFor
-      catId
-      levelId
+      catID
+      category {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      levelID
+      level {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       inHomePage
       inHomePageSetAt
       isClass
@@ -276,8 +416,146 @@ export const listCourses = /* GraphQL */ `
         requirements
         whatYouWillLearn
         whoIsThisCourseFor
-        catId
-        levelId
+        catID
+        category {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
+        levelID
+        level {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
+        inHomePage
+        inHomePageSetAt
+        isClass
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const coursesByCatID = /* GraphQL */ `
+  query CoursesByCatID(
+    $catID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCourseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    coursesByCatID(
+      catID: $catID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        slug
+        shortDesc
+        overview
+        latestPrice
+        beforePrice
+        lessons
+        duration
+        image {
+          key
+          url
+        }
+        requirements
+        whatYouWillLearn
+        whoIsThisCourseFor
+        catID
+        category {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
+        levelID
+        level {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
+        inHomePage
+        inHomePageSetAt
+        isClass
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const coursesByLevelID = /* GraphQL */ `
+  query CoursesByLevelID(
+    $levelID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCourseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    coursesByLevelID(
+      levelID: $levelID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        slug
+        shortDesc
+        overview
+        latestPrice
+        beforePrice
+        lessons
+        duration
+        image {
+          key
+          url
+        }
+        requirements
+        whatYouWillLearn
+        whoIsThisCourseFor
+        catID
+        category {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
+        levelID
+        level {
+          id
+          name
+          slug
+          createdAt
+          updatedAt
+          owner
+        }
         inHomePage
         inHomePageSetAt
         isClass

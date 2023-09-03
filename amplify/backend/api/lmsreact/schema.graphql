@@ -48,6 +48,18 @@ type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: pu
   stripeCustomerId: String @index(name: "byCustomerId", queryField: "userByCustomerId")
   subscription: UserSubscription
 }
+type Category @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
+  id: ID!
+  name: String
+  slug: String
+  courses: [Course] @hasMany(indexName: "byCategory", fields: ["id"])
+}
+type Level @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
+  id: ID!
+  name: String
+  slug: String
+  courses: [Course] @hasMany(indexName: "byLevel", fields: ["id"])
+}
 type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   id: ID!
   title: String
@@ -62,8 +74,10 @@ type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: 
   requirements: String
   whatYouWillLearn: String
   whoIsThisCourseFor: String
-  catId: String
-  levelId: String
+  catID: ID! @index(name: "byCategory")
+  category: Category! @belongsTo(fields: ["catID"])
+  levelID: ID! @index(name: "byLevel")
+  level: Level! @belongsTo(fields: ["levelID"])
   inHomePage: String
   inHomePageSetAt: String
   isClass: String

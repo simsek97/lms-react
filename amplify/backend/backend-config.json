@@ -4,19 +4,19 @@
       "authorizationType": "AMAZON_COGNITO_USER_POOLS",
       "dependsOn": [
         {
+          "category": "auth",
+          "resourceName": "lmsauth",
           "attributes": [
             "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "lmsauth"
+          ]
         },
         {
+          "category": "function",
+          "resourceName": "AdminQueries22dea091",
           "attributes": [
             "Arn",
             "Name"
-          ],
-          "category": "function",
-          "resourceName": "AdminQueries22dea091"
+          ]
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -61,39 +61,39 @@
       "customAuth": false,
       "dependsOn": [
         {
-          "attributes": [
-            "Arn",
-            "Name"
-          ],
           "category": "function",
           "resourceName": "lmsauthPostAuthentication",
-          "triggerProvider": "Cognito"
-        },
-        {
+          "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
             "Name"
-          ],
+          ]
+        },
+        {
           "category": "function",
           "resourceName": "lmsauthPostConfirmation",
-          "triggerProvider": "Cognito"
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
         }
       ],
       "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL"
-        ],
         "socialProviders": [],
         "usernameAttributes": [
           "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
         ],
         "verificationMechanisms": [
           "EMAIL"
@@ -154,13 +154,13 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "lmsreact",
           "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "lmsreact"
+          ]
         }
       ],
       "providerPlugin": "awscloudformation",

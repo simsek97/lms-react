@@ -31,8 +31,7 @@ export type AmplifyDependentResourcesAttributes = {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
+            "LambdaExecutionRole": "string"
         },
         "lmsauthPostAuthentication": {
             "Name": "string",

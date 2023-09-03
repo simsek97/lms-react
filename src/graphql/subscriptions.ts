@@ -173,6 +173,246 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
+export const onCreateCategory = /* GraphQL */ `
+  subscription OnCreateCategory(
+    $filter: ModelSubscriptionCategoryFilterInput
+    $owner: String
+  ) {
+    onCreateCategory(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateCategory = /* GraphQL */ `
+  subscription OnUpdateCategory(
+    $filter: ModelSubscriptionCategoryFilterInput
+    $owner: String
+  ) {
+    onUpdateCategory(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteCategory = /* GraphQL */ `
+  subscription OnDeleteCategory(
+    $filter: ModelSubscriptionCategoryFilterInput
+    $owner: String
+  ) {
+    onDeleteCategory(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateLevel = /* GraphQL */ `
+  subscription OnCreateLevel(
+    $filter: ModelSubscriptionLevelFilterInput
+    $owner: String
+  ) {
+    onCreateLevel(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateLevel = /* GraphQL */ `
+  subscription OnUpdateLevel(
+    $filter: ModelSubscriptionLevelFilterInput
+    $owner: String
+  ) {
+    onUpdateLevel(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteLevel = /* GraphQL */ `
+  subscription OnDeleteLevel(
+    $filter: ModelSubscriptionLevelFilterInput
+    $owner: String
+  ) {
+    onDeleteLevel(filter: $filter, owner: $owner) {
+      id
+      name
+      slug
+      courses {
+        items {
+          id
+          title
+          slug
+          shortDesc
+          overview
+          latestPrice
+          beforePrice
+          lessons
+          duration
+          requirements
+          whatYouWillLearn
+          whoIsThisCourseFor
+          catID
+          levelID
+          inHomePage
+          inHomePageSetAt
+          isClass
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
 export const onCreateCourse = /* GraphQL */ `
   subscription OnCreateCourse(
     $filter: ModelSubscriptionCourseFilterInput
@@ -195,8 +435,30 @@ export const onCreateCourse = /* GraphQL */ `
       requirements
       whatYouWillLearn
       whoIsThisCourseFor
-      catId
-      levelId
+      catID
+      category {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      levelID
+      level {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       inHomePage
       inHomePageSetAt
       isClass
@@ -228,8 +490,30 @@ export const onUpdateCourse = /* GraphQL */ `
       requirements
       whatYouWillLearn
       whoIsThisCourseFor
-      catId
-      levelId
+      catID
+      category {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      levelID
+      level {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       inHomePage
       inHomePageSetAt
       isClass
@@ -261,8 +545,30 @@ export const onDeleteCourse = /* GraphQL */ `
       requirements
       whatYouWillLearn
       whoIsThisCourseFor
-      catId
-      levelId
+      catID
+      category {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      levelID
+      level {
+        id
+        name
+        slug
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       inHomePage
       inHomePageSetAt
       isClass

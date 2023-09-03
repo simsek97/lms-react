@@ -75,7 +75,6 @@
         "custom"
       ],
       "PostConfirmation": [
-        "add-to-group",
         "custom"
       ]
     },
@@ -120,9 +119,7 @@
         ]
       }
     ],
-    "permissions": [
-      "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
-    ],
+    "permissions": [],
     "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"lmsauthPostAuthentication\"\n  },\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"lmsauthPostConfirmation\"\n  }\n]",
     "adminQueryGroup": "Admin",
     "authProviders": [],
@@ -130,4 +127,4 @@
       "Ref": "AWS::StackId"
     }
   }
-}    
+}
