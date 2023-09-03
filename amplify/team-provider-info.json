@@ -68,12 +68,12 @@
         },
         "lmsauthPostAuthentication": {
           "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
-          "s3Key": "amplify-builds/lmsauthPostAuthentication-474a33516e41326e794f-build.zip"
+          "s3Key": "amplify-builds/lmsauthPostAuthentication-5833587a335453355070-build.zip"
         },
         "lmsauthPostConfirmation": {
           "GROUP": "User",
           "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
-          "s3Key": "amplify-builds/lmsauthPostConfirmation-623335413075532b5243-build.zip"
+          "s3Key": "amplify-builds/lmsauthPostConfirmation-387750634d573350712b-build.zip"
         },
         "lmsauth": {},
         "lmsreact": {}
