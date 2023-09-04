@@ -70,7 +70,7 @@ const LoginForm = () => {
         const response = await axios.post(`/api/users/login`, { email: values.email, cognitoUser: user });
 
         // Handle login for cookie
-        handleLogin(response.data.isid_user_token, router);
+        handleLogin(response.data.lms_react_users_token, router);
 
         // Check the user profile photo
         const userFromDb = response.data.user;
@@ -97,8 +97,9 @@ const LoginForm = () => {
 
         setStatus('success');
         setTimeout(() => {
+          console.log(router.query);
           if (router.query && router.query.next) {
-            Router.push(router.query.next as string);
+            Router.push({ pathname: router.query.next[0] });
           } else {
             Router.push('/');
           }

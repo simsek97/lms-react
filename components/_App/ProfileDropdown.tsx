@@ -1,17 +1,36 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+
 import Link from '@/utils/ActiveLink';
 import { handleLogout } from '@/utils/auth';
+import { Auth } from 'aws-amplify';
+import { resetUserAction } from '@/store/actions/userActions';
+import { useDispatch } from 'react-redux';
 
-const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => {
+const ProfileDropdown = ({ user }) => {
   const [isMouse, toggleMouse] = useState(false);
+  const dispatch = useDispatch();
+
+  const isAdmin = ((user?.role as string) || '').toLowerCase() === 'admin';
 
   const toggleMouseMenu = () => {
     toggleMouse(!isMouse);
   };
 
-  const isAdmin = role === 'admin';
-  const isInstructor = role === 'instructor';
+  const handleUserLogout = async () => {
+    try {
+      // Logout user
+      await Auth.signOut({ global: true });
+
+      // Clear the store
+      dispatch(resetUserAction());
+
+      // Remove cookies
+      handleLogout();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const subMenuAnimate = {
     enter: {
@@ -38,13 +57,8 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
   return (
     <motion.div className='dropdown profile-dropdown' onMouseEnter={toggleMouseMenu} onMouseLeave={toggleMouseMenu}>
       <div className='img ptb-15'>
-        {profile_photo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={profile_photo} alt={first_name} />
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src='/images/admin/admin-9.jpg' alt={first_name} />
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={user?.avatarUrl || '/images/avatar.jpg'} alt={`${user.firstname} ${user.lastname}`} width={36} height={36} />
       </div>
       <motion.ul className='dropdown-menu' initial='exit' animate={isMouse ? 'enter' : 'exit'} variants={subMenuAnimate}>
         <li>
@@ -52,58 +66,32 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
             <a className='dropdown-item author-dropdown-item'>
               <div className='d-flex align-items-center'>
                 <div className='img'>
-                  {profile_photo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={profile_photo} alt={first_name} />
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src='/images/admin/admin-9.jpg' alt={first_name} />
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={user?.avatarUrl || '/images/avatar.jpg'}
+                    alt={`${user.firstname} ${user.lastname}`}
+                    width={36}
+                    height={36}
+                  />
                 </div>
 
                 <span className='ps-3'>
-                  <span className='fw-semibold fs-16 mb-1 d-block'>{first_name}</span>
-                  <span className='d-block fs-13 mt-minus-2'>{email}</span>
+                  <span className='fw-semibold fs-16 d-block'>{`${user.firstname} ${user.lastname}`}</span>
+                  <span className='d-block fs-12 mt-minus-2'>{user.email}</span>
+                  {isAdmin && (
+                    <span className='d-block fs-12 mt-minus-2' style={{ color: 'red' }}>
+                      Admin
+                    </span>
+                  )}
                 </span>
               </div>
             </a>
           </Link>
         </li>
+
         <li>
           <hr className='dropdown-divider' />
         </li>
-
-        {isInstructor && (
-          <>
-            <li>
-              <Link href='/instructor/courses'>
-                <a className='dropdown-item'>
-                  <i className='bx bx-book'></i>
-                  My Courses
-                </a>
-              </Link>
-            </li>
-          </>
-        )}
-        {isAdmin && (
-          <>
-            <li>
-              <Link href='/admin'>
-                <a className='dropdown-item'>
-                  <i className='bx bxs-dashboard'></i> My Dashboard
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href='/instructor/courses'>
-                <a className='dropdown-item'>
-                  <i className='bx bx-book'></i>
-                  Courses
-                </a>
-              </Link>
-            </li>
-          </>
-        )}
 
         <li>
           <Link href='/learning/my-courses/'>
@@ -113,6 +101,7 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
             </a>
           </Link>
         </li>
+
         <li>
           <Link href='/learning/my-purchase-history/'>
             <a className='dropdown-item'>
@@ -121,6 +110,7 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
             </a>
           </Link>
         </li>
+
         <li>
           <Link href='/learning/wishlist/'>
             <a className='dropdown-item'>
@@ -137,11 +127,38 @@ const ProfileDropdown = ({ userId, first_name, email, role, profile_photo }) => 
             </a>
           </Link>
         </li>
+
         <li>
           <hr className='dropdown-divider' />
         </li>
+
+        {isAdmin && (
+          <>
+            <li>
+              <Link href='/admin/dashboard'>
+                <a className='dropdown-item'>
+                  <i className='bx bxs-dashboard'></i> Admin
+                </a>
+              </Link>
+            </li>
+
+            {/* <li>
+              <Link href='/instructor/courses'>
+                <a className='dropdown-item'>
+                  <i className='bx bx-book'></i>
+                  Courses
+                </a>
+              </Link>
+            </li> */}
+
+            <li>
+              <hr className='dropdown-divider' />
+            </li>
+          </>
+        )}
+
         <li>
-          <button type='submit' onClick={handleLogout} className='dropdown-item'>
+          <button type='submit' onClick={handleUserLogout} className='dropdown-item'>
             <i className='bx bx-log-out'></i> Log out
           </button>
         </li>

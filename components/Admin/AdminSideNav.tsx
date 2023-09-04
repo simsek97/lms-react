@@ -11,33 +11,58 @@ const adminMenus = [
   },
   {
     id: 2,
+    title: 'Courses',
+    url: '/admin/courses'
+  },
+  {
+    id: 3,
     title: 'Users',
     url: '/admin/users'
   },
   {
-    id: 3,
-    title: 'Admins',
-    url: '/admin/admins'
+    id: 4,
+    title: 'Testimonials',
+    url: '/admin/testimonials'
   },
   {
-    id: 4,
+    id: 5,
+    title: 'Levels',
+    url: '/admin/levels'
+  },
+  {
+    id: 6,
+    title: 'Categories',
+    url: '/admin/categories'
+  },
+  {
+    id: 7,
     title: 'Subscription Tiers',
     url: '/admin/subscription-tiers'
   },
   {
-    id: 5,
+    id: 8,
+    title: 'Coupons',
+    url: '/admin/coupons'
+  },
+  {
+    id: 9,
     title: 'Welcome Message',
     url: '/admin/welcome-message'
   },
   {
-    id: 6,
+    id: 10,
     title: 'Banner Ads',
     url: '/admin/banner-ads'
   },
   {
-    id: 7,
+    id: 11,
     title: 'FAQs',
     url: '/admin/faqs'
+  },
+  {
+    id: 12,
+    title: 'Admins',
+    url: '/admin/admins'
   }
 ];
 
@@ -45,13 +70,6 @@ const AdminSideNav = ({ user }) => {
   const router = useRouter();
   const currentRoute = router.pathname;
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
-
-  //@TODO Check users role
-  // useEffect(() => {
-  //   if (user.role != 'admin') {
-  //     router.replace('/');
-  //   }
-  // }, [router, user]);
 
   const changeAdminMenu = (url: string) => {
     setShowSidebar(false);
@@ -77,7 +95,7 @@ const AdminSideNav = ({ user }) => {
           {/* Nav */}
           <div className='side-nav' style={{ padding: '70px 10px 20px 10px' }}>
             <ul>
-              {adminMenus.map((menu) => {
+              {adminMenus?.map((menu) => {
                 return (
                   <motion.li
                     key={menu.id}

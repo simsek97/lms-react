@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import AdminSideNav from '@/components/_App/AdminSideNav';
-import toast from 'react-hot-toast';
 import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
+import toast from 'react-hot-toast';
+
+import AdminLayout from '@/components/Admin/AdminLayout';
+import baseUrl from '@/utils/baseUrl';
 
 const ModalInSiteLoading = ({ user }) => {
-  const [site, setSite] = useState('');
-  const [siteImage, setSiteImage] = useState('');
-  const [modalImage, setModalImage] = useState({ image_url: '' });
+  const [site, setSite] = React.useState('');
+  const [siteImage, setSiteImage] = React.useState('');
+  const [modalImage, setModalImage] = React.useState({ image_url: '' });
   const router = useRouter();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchSetting = async () => {
       const resp = await axios.get(`${baseUrl}/settings.json`);
       setSite(resp.data.siteModal);
@@ -110,75 +109,60 @@ const ModalInSiteLoading = ({ user }) => {
   };
 
   return (
-    <>
-      <Navbar user={user} />
-
-      <div className='main-content'>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-lg-3 col-md-4'>
-              <AdminSideNav user={user} />
-            </div>
-
-            <div className='col-lg-9 col-md-8'>
-              <div className='main-content-box'>
-                {/* Nav */}
-                <ul className='nav-style1'>
-                  <li>
-                    <Link href='/admin/coupons/'>
-                      <a>Coupons</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/coupons/create/'>
-                      <a>Create</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/coupons/modal-in-site-loading/'>
-                      <a className='active'>Site Modal</a>
-                    </Link>
-                  </li>
-                </ul>
-                {site ? 'Disable' : 'Enable'} modal after site loading
-                <button
-                  className='default-btn ms-4'
-                  onClick={handleSiteSettings}
-                  style={{
-                    paddingLeft: '30px',
-                    paddingRight: '30px'
-                  }}>
-                  {site ? 'Disable' : 'Enable'} <span></span>
-                </button>
-                <form onSubmit={handleSiteSettings}>
-                  <label className='form-label fw-semibold'>Image</label>
-                  <input
-                    type='file'
-                    className='form-control file-control'
-                    id='clientImage'
-                    name='image_url'
-                    onChange={handleChange}
-                    required={true}
-                  />
-                  <div className='form-text'>Upload image size 700x500!</div>
-                  <button
-                    className='default-btn mt-3'
-                    style={{
-                      paddingLeft: '30px',
-                      paddingRight: '30px'
-                    }}>
-                    Upload <span></span>
-                  </button>
-                </form>
-                <img className='mt-4' src={siteImage && siteImage} />
-              </div>
-            </div>
-          </div>
-        </div>
+    <AdminLayout title='Modal InSite Loading' user={user}>
+      <div className='main-content-box'>
+        {/* Nav */}
+        <ul className='nav-style1'>
+          <li>
+            <Link href='/admin/coupons/'>
+              <a>Coupons</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/coupons/create/'>
+              <a>Create</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/coupons/modal-in-site-loading/'>
+              <a className='active'>Site Modal</a>
+            </Link>
+          </li>
+        </ul>
+        {site ? 'Disable' : 'Enable'} modal after site loading
+        <button
+          className='default-btn ms-4'
+          onClick={handleSiteSettings}
+          style={{
+            paddingLeft: '30px',
+            paddingRight: '30px'
+          }}>
+          {site ? 'Disable' : 'Enable'} <span></span>
+        </button>
+        <form onSubmit={handleSiteSettings}>
+          <label className='form-label fw-semibold'>Image</label>
+          <input
+            type='file'
+            className='form-control file-control'
+            id='clientImage'
+            name='image_url'
+            onChange={handleChange}
+            required={true}
+          />
+          <div className='form-text'>Upload image size 700x500!</div>
+          <button
+            className='default-btn mt-3'
+            style={{
+              paddingLeft: '30px',
+              paddingRight: '30px'
+            }}>
+            Upload <span></span>
+          </button>
+        </form>
+        {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
+        <img className='mt-4' src={siteImage && siteImage} />
       </div>
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 };
 

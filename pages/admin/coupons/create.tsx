@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import AdminSideNav from '@/components/_App/AdminSideNav';
 import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import LoadingSpinner from '@/utils/LoadingSpinner';
-import toast from 'react-hot-toast';
-import { parseCookies } from 'nookies';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
+import React from 'react';
+import toast from 'react-hot-toast';
+
+import AdminLayout from '@/components/Admin/AdminLayout';
 import Button from '@/utils/Button';
+import baseUrl from '@/utils/baseUrl';
 
 const CreateCoupon = ({ user }) => {
   const router = useRouter();
   const { elarniv_users_token } = parseCookies();
-  const [coupon, setCoupon] = useState({ coupon: '', discount: 0.1 });
+  const [coupon, setCoupon] = React.useState({ coupon: '', discount: 0.1 });
   const [loading, setLoading] = React.useState(false);
 
   const handleChange = (e) => {
@@ -71,80 +69,64 @@ const CreateCoupon = ({ user }) => {
   };
 
   return (
-    <>
-      <Navbar user={user} />
+    <AdminLayout title='Create Coupon' user={user}>
+      <div className='main-content-box'>
+        {/* Nav */}
+        <ul className='nav-style1'>
+          <li>
+            <Link href='/admin/coupons/'>
+              <a>Coupons</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/coupons/create/'>
+              <a className='active'>Create</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/coupons/modal-in-site-loading/'>
+              <a>Site Modal</a>
+            </Link>
+          </li>
+        </ul>
 
-      <div className='main-content'>
-        <div className='container-fluid'>
+        <form onSubmit={handleSubmit}>
           <div className='row'>
-            <div className='col-lg-3 col-md-4'>
-              <AdminSideNav user={user} />
-            </div>
-
-            <div className='col-lg-9 col-md-8'>
-              <div className='main-content-box'>
-                {/* Nav */}
-                <ul className='nav-style1'>
-                  <li>
-                    <Link href='/admin/coupons/'>
-                      <a>Coupons</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/coupons/create/'>
-                      <a className='active'>Create</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/coupons/modal-in-site-loading/'>
-                      <a>Site Modal</a>
-                    </Link>
-                  </li>
-                </ul>
-
-                <form onSubmit={handleSubmit}>
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <div className='form-group'>
-                        <label className='form-label fw-semibold'>Coupon Code</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='coupon'
-                          value={coupon.coupon}
-                          onChange={handleChange}
-                          placeholder='eg: BLACK22'
-                        />
-                      </div>
-                    </div>
-
-                    <div className='col-md-6'>
-                      <div className='form-group'>
-                        <label className='form-label fw-semibold'>Discount (ex: 9.9)</label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          name='discount'
-                          value={coupon.discount}
-                          onChange={handleChange}
-                          placeholder='eg: 9.9'
-                        />
-                      </div>
-                    </div>
-
-                    <div className='col-12'>
-                      <Button disabled={false} loading={loading} btnText='Save' btnClass='default-btn' />
-                    </div>
-                  </div>
-                </form>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label className='form-label fw-semibold'>Coupon Code</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  name='coupon'
+                  value={coupon.coupon}
+                  onChange={handleChange}
+                  placeholder='eg: BLACK22'
+                />
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <Footer />
-    </>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label className='form-label fw-semibold'>Discount (ex: 9.9)</label>
+                <input
+                  type='number'
+                  className='form-control'
+                  name='discount'
+                  value={coupon.discount}
+                  onChange={handleChange}
+                  placeholder='eg: 9.9'
+                />
+              </div>
+            </div>
+
+            <div className='col-12'>
+              <Button disabled={false} loading={loading} btnText='Save' btnClass='default-btn' />
+            </div>
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
   );
 };
 

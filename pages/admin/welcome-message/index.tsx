@@ -7,10 +7,10 @@ import React from 'react';
 import * as Yup from 'yup';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import { ListWelcomeMessagesQuery, UpdateWelcomeMessageMutation, WelcomeMessage } from '@/src/API';
+import { CreateWelcomeMessageMutation, ListWelcomeMessagesQuery, UpdateWelcomeMessageMutation, WelcomeMessage } from '@/src/API';
 import { listWelcomeMessages } from '@/src/graphql/queries';
 import SubmitButton from '@/utils/SubmitButton';
-import { updateWelcomeMessage } from '@/src/graphql/mutations';
+import { createWelcomeMessage, updateWelcomeMessage } from '@/src/graphql/mutations';
 
 type TFormValues = {
   id?: string;
@@ -41,7 +41,7 @@ const Index = ({ user }) => {
     useFormik<TFormValues>({
       initialValues: defaultValues,
       validate: (values: TFormValues) => validateForm(values),
-      onSubmit: (values: TFormValues) => submitForm(values)
+      onSubmit: (values: TFormValues) => submitForm()
     });
 
   const validateForm = (values: TFormValues) => {
@@ -57,7 +57,7 @@ const Index = ({ user }) => {
       }
     );
   };
-  const submitForm = async (data: any) => {
+  const submitForm = async () => {
     window.scrollTo({
       top: 0,
       left: 0,
@@ -67,19 +67,37 @@ const Index = ({ user }) => {
     try {
       setStatus('submitting');
 
-      const { data } = await API.graphql<GraphQLQuery<UpdateWelcomeMessageMutation>>({
-        query: updateWelcomeMessage,
-        variables: {
-          input: values
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      });
+      if (values.id) {
+        const { data } = await API.graphql<GraphQLQuery<UpdateWelcomeMessageMutation>>({
+          query: updateWelcomeMessage,
+          variables: {
+            input: values
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
 
-      if (data) {
-        setStatus('success');
+        if (data) {
+          setStatus('success');
+        } else {
+          setStatus('error');
+          setStatusError('An error occurred!');
+        }
       } else {
-        setStatus('error');
-        setStatusError('An error occurred!');
+        const { data } = await API.graphql<GraphQLQuery<CreateWelcomeMessageMutation>>({
+          query: createWelcomeMessage,
+          variables: {
+            input: { ...values, id: '1' }
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
+
+        if (data) {
+          setValues({ ...values, id: '1' });
+          setStatus('success');
+        } else {
+          setStatus('error');
+          setStatusError('An error occurred!');
+        }
       }
     } catch (e) {
       setStatus('error');
@@ -94,12 +112,15 @@ const Index = ({ user }) => {
         const { data } = await API.graphql<GraphQLQuery<ListWelcomeMessagesQuery>>(graphqlOperation(listWelcomeMessages, { limit }));
 
         const welcomeMessage: WelcomeMessage = data.listWelcomeMessages.items[0];
-        setValues({
-          id: welcomeMessage.id,
-          title: welcomeMessage.title,
-          content: welcomeMessage.content,
-          footer: welcomeMessage.footer
-        });
+
+        if (welcomeMessage) {
+          setValues({
+            id: welcomeMessage.id,
+            title: welcomeMessage.title,
+            content: welcomeMessage.content,
+            footer: welcomeMessage.footer
+          });
+        }
       } catch (e) {
         console.log(e);
       } finally {

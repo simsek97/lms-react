@@ -36,21 +36,10 @@ import awsExports from '@/src/aws-exports';
 import { theme } from '@/styles/theme';
 
 const userRoutes = ['/profile', '/profile/userinfo', '/profile/subscription', '/profile/photo', '/checkout'];
-const adminRoutes = [
-  '/admin',
-  '/admin/admins',
-  '/admin/banner-ads',
-  '/admin/dashboard',
-  '/admin/faqs',
-  '/admin/subscription-tiers',
-  '/admin/subscriptions',
-  '/admin/users',
-  '/admin/welcome-message'
-];
 
 Amplify.configure({ ...awsExports, ssr: true });
 
-function LmsApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -64,8 +53,8 @@ function LmsApp({ Component, pageProps }: AppProps) {
   );
 }
 
-LmsApp.getInitialProps = async ({ Component, ctx }) => {
-  const { isid_user_token } = parseCookies(ctx);
+App.getInitialProps = async ({ Component, ctx }) => {
+  const { lms_react_users_token } = parseCookies(ctx);
   let pageProps = {};
 
   if (Component.getInitialProps) {
@@ -74,7 +63,7 @@ LmsApp.getInitialProps = async ({ Component, ctx }) => {
 
   // if a user not logged in then user can't access those pages
   const isUserRoute = userRoutes.includes(ctx.pathname);
-  const isAdminRoute = adminRoutes.includes(ctx.pathname) || ctx?.pathname.includes('/admin/');
+  const isAdminRoute = ctx?.pathname.includes('/admin/');
   const isApiRoute = ctx?.pathname.includes('/api/');
 
   if (isApiRoute) {
@@ -82,29 +71,30 @@ LmsApp.getInitialProps = async ({ Component, ctx }) => {
       pageProps
     };
   } else {
-    if (!isid_user_token) {
+    if (!lms_react_users_token) {
       if (isUserRoute || isAdminRoute) {
         redirectUser(ctx, '/auth/login');
       }
     } else {
       // if a user logged in then user can't access those pages
-      const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/reset-password';
+      const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register' || ctx.pathname === '/forgot-password';
       if (ifLoggedIn) {
         redirectUser(ctx, '/');
       }
 
       try {
-        const payload = { headers: { Authorization: isid_user_token } };
+        const payload = { headers: { Authorization: lms_react_users_token } };
         const response = await axios.get('/api/users/getuser', payload);
+
         const user = response && response.data.user;
 
         if (!user) {
-          destroyCookie(ctx, 'isid_user_token');
+          destroyCookie(ctx, 'lms_react_users_token');
           redirectUser(ctx, '/auth/login');
         }
       } catch (err) {
         console.log('error', err);
-        destroyCookie(ctx, 'isid_user_token');
+        destroyCookie(ctx, 'lms_react_users_token');
         // redirectUser(ctx, "/");
       }
     }
@@ -115,4 +105,4 @@ LmsApp.getInitialProps = async ({ Component, ctx }) => {
   };
 };
 
-export default LmsApp;
+export default App;

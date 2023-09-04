@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import AdminSideNav from '@/components/_App/AdminSideNav';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
 import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import TestimonialRow from '@/components/Admin/TestimonialRow';
+import Link from 'next/link';
 import { parseCookies } from 'nookies';
-import GeneralLoader from '@/utils/GeneralLoader';
+import React from 'react';
+import toast from 'react-hot-toast';
 
-const Index = ({ user }) => {
+import AdminLayout from '@/components/Admin/AdminLayout';
+import TestimonialRow from '@/components/Admin/TestimonialRow';
+import GeneralLoader from '@/utils/GeneralLoader';
+import baseUrl from '@/utils/baseUrl';
+
+const Testimonials = ({ user }) => {
   const { lms_react_users_token } = parseCookies();
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [testimonials, setTestimonials] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   const fetchData = async () => {
     setLoading(true);
+
     try {
       const payload = {
         headers: { Authorization: lms_react_users_token }
@@ -46,8 +46,9 @@ const Index = ({ user }) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDelete = async (testId) => {
@@ -92,69 +93,53 @@ const Index = ({ user }) => {
   };
 
   return (
-    <>
-      <Navbar user={user} />
+    <AdminLayout title='Testimonials' user={user}>
+      <div className='main-content-box'>
+        {/* Nav */}
+        <ul className='nav-style1'>
+          <li>
+            <Link href='/admin/testimonials/'>
+              <a className='active'>Testimonials</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/testimonials/create/'>
+              <a>Create</a>
+            </Link>
+          </li>
+        </ul>
 
-      <div className='main-content'>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-lg-3 col-md-4'>
-              <AdminSideNav user={user} />
-            </div>
-
-            <div className='col-lg-9 col-md-8'>
-              <div className='main-content-box'>
-                {/* Nav */}
-                <ul className='nav-style1'>
-                  <li>
-                    <Link href='/admin/testimonials/'>
-                      <a className='active'>Testimonials</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/testimonials/create/'>
-                      <a>Create</a>
-                    </Link>
-                  </li>
-                </ul>
-
-                {loading ? (
-                  <GeneralLoader />
+        {loading ? (
+          <GeneralLoader />
+        ) : (
+          <div className='table-responsive'>
+            <table className='table table-hover align-middle fs-14'>
+              <thead>
+                <tr>
+                  <th scope='col'>Image</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Designation</th>
+                  <th scope='col'>Text</th>
+                  <th scope='col'>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {testimonials.length > 0 ? (
+                  testimonials.map((test) => <TestimonialRow {...test} key={test.id} onDelete={() => handleDelete(test.id)} />)
                 ) : (
-                  <div className='table-responsive'>
-                    <table className='table table-hover align-middle fs-14'>
-                      <thead>
-                        <tr>
-                          <th scope='col'>Image</th>
-                          <th scope='col'>Name</th>
-                          <th scope='col'>Designation</th>
-                          <th scope='col'>Text</th>
-                          <th scope='col'>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {testimonials.length > 0 ? (
-                          testimonials.map((test) => <TestimonialRow {...test} key={test.id} onDelete={() => handleDelete(test.id)} />)
-                        ) : (
-                          <tr>
-                            <td colSpan={6} className='text-center py-3'>
-                              Empty!
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
+                  <tr>
+                    <td colSpan={6} className='text-center py-3'>
+                      Empty!
+                    </td>
+                  </tr>
                 )}
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
-        </div>
+        )}
       </div>
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 };
 
-export default Index;
+export default Testimonials;

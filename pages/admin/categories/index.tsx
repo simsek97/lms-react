@@ -1,67 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import AdminSideNav from '@/components/_App/AdminSideNav';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
-import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import CatRow from '@/components/Admin/CatRow';
-import { parseCookies } from 'nookies';
-import GeneralLoader from '@/utils/GeneralLoader';
+import { GraphQLQuery } from '@aws-amplify/api';
+import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
+import { DataGrid } from '@mui/x-data-grid';
+import { API, graphqlOperation } from 'aws-amplify';
+import { FormikProps, prepareDataForValidation, useFormik, validateYupSchema, yupToFormErrors } from 'formik';
+import { useRouter } from 'next/router';
+import React from 'react';
 import { confirmAlert } from 'react-confirm-alert';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
-const Index = ({ user }) => {
-  const { lms_react_users_token } = parseCookies();
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+import AdminLayout from '@/components/Admin/AdminLayout';
+import { CategoryForm } from '@/components/Category/CategoryForm';
+import { ICategory } from '@/data/category';
+import { DeleteCategoryMutation, ListCategoriesQuery, UpdateCategoryMutation } from '@/src/API';
+import { deleteCategory, updateCategory } from '@/src/graphql/mutations';
+import { listCategories } from '@/src/graphql/queries';
+import SubmitButton from '@/utils/SubmitButton';
+import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-  const fetchCategories = async () => {
-    setLoading(true);
+const initialValues: ICategory = {
+  id: '',
+  name: '',
+  slug: ''
+};
 
-    try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-      const response = await axios.get(`${baseUrl}/api/categories`, payload);
-      setCategories(response.data.categories);
-      setLoading(false);
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
+const Categories = ({ user }) => {
+  const router = useRouter();
+  const [categories, setCategories] = React.useState([]);
+  const [pageToken, setPageToken] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [updateRecord, setUpdateRecord] = React.useState(null);
+  const [isUpdating, setUpdating] = React.useState<boolean>(false);
+  const [isLoading, setLoading] = React.useState(true);
 
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-    } finally {
-      setLoading(false);
+  const pageSize = 10;
+
+  const columns = [
+    {
+      flex: 0.3,
+      minWidth: 200,
+      field: 'name',
+      headerName: 'Category'
+    },
+    {
+      flex: 0.4,
+      minWidth: 150,
+      field: 'slug',
+      headerName: 'Slug'
+    },
+    {
+      flex: 0.2,
+      minWidth: 60,
+      field: 'actions',
+      headerName: 'Remove',
+      renderCell: (params) => {
+        return (
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              size='small'
+              color='primary'
+              variant='text'
+              onClick={() => {
+                setUpdateRecord(params.row);
+                setValues({
+                  id: params.row.id,
+                  name: params.row.name,
+                  slug: params.row.slug
+                });
+              }}>
+              Update
+            </Button>
+            <Button size='small' color='secondary' variant='text' onClick={() => confirmDelete(params.row)}>
+              Remove
+            </Button>
+          </Box>
+        );
+      }
     }
-  };
+  ];
 
-  useEffect(() => {
-    fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const confirmDelete = (catId) => {
+  const confirmDelete = (category) => {
     confirmAlert({
       title: 'Confirm to delete',
-      message: 'Are you sure to delete this? This may effect on courses if any of course are under this category',
+      message: `Are you sure to delete ${category.name}? This may effect on courses if any of course are under this category`,
       buttons: [
         {
           label: 'Yes',
-          onClick: () => handleDelete(catId)
+          onClick: () => handleDelete(category)
         },
         {
           label: 'No'
@@ -70,151 +104,156 @@ const Index = ({ user }) => {
     });
   };
 
-  const handleDelete = async (catId) => {
+  const handleDelete = async (category) => {
     try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token },
-        params: { catId }
-      };
-      const response = await axios.delete(`${baseUrl}/api/categories`, payload);
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #4BB543',
-          padding: '16px',
-          color: '#4BB543'
-        },
-        iconTheme: {
-          primary: '#4BB543',
-          secondary: '#FFFAEE'
-        }
-      });
-      fetchCategories();
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-    } finally {
-      fetchCategories();
-    }
+      setLoading(true);
 
-    // router.reload(`/admin/categories/`);
+      await API.graphql<GraphQLQuery<DeleteCategoryMutation>>({
+        query: deleteCategory,
+        variables: {
+          input: { id: category.id }
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+
+      const updatedCategories = categories.filter((cat) => cat.id != category.id);
+      setCategories(updatedCategories);
+      toast.error('The record has been successfully deleted.', toastSuccessStyle);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message, toastErrorStyle);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleUpdate = async (values: ICategory) => {
+    setUpdating(true);
+
+    try {
+      const updatedCategory: Partial<ICategory> = {
+        id: values.id,
+        name: values.name,
+        slug: values.slug
+      };
+      // Update the subscription tier on Dynamodb
+      const { data } = await API.graphql<GraphQLQuery<UpdateCategoryMutation>>({
+        query: updateCategory,
+        variables: {
+          input: updatedCategory
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+
+      // Update the subscription on ui
+      const updatedCategories = categories.map((s: ICategory) => {
+        if (s.id === updatedCategory.id) {
+          return { ...s, ...data.updateCategory };
+        }
+
+        return s;
+      });
+
+      setCategories([...updatedCategories]);
+      toast.error('The record has been successfully updated.', toastSuccessStyle);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message, toastErrorStyle);
+    } finally {
+      setUpdating(false);
+      setUpdateRecord(null);
+    }
+  };
+
+  // Form validation rules
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    slug: Yup.string().required('Slug is required')
+  });
+
+  const validateForm = (values: ICategory) => {
+    const formValues = prepareDataForValidation(values);
+    const validate = validateYupSchema(formValues, validationSchema);
+
+    return validate.then(
+      (_response) => {
+        return {};
+      },
+      (error) => {
+        return yupToFormErrors(error);
+      }
+    );
+  };
+
+  const { handleSubmit, handleChange, setValues, values, errors, touched }: FormikProps<ICategory> = useFormik<ICategory>({
+    validate: (values: ICategory) => validateForm(values),
+    onSubmit: (values: ICategory) => handleUpdate(values),
+    initialValues: initialValues
+  });
+
+  const fetchCategories = async (limit: number) => {
+    setLoading(true);
+
+    try {
+      setLoading(true);
+      const { data } = await API.graphql<GraphQLQuery<ListCategoriesQuery>>(graphqlOperation(listCategories, { limit }));
+
+      setPageToken(data.listCategories.nextToken);
+
+      const updatedSubscriptions = [...categories, ...data.listCategories.items];
+      setCategories(updatedSubscriptions.sort((a, b) => Number(a.id) - Number(b.id)) as ICategory[]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchCategories(pageSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
-      <Navbar user={user} />
+    <AdminLayout
+      title='Categories'
+      user={user}
+      button={
+        <Button startIcon={<AddIcon />} onClick={() => router.push('/admin/categories/add')}>
+          Add Category
+        </Button>
+      }>
+      <DataGrid autoHeight loading={categories.length === 0} rows={categories} columns={columns} hideFooter={true} />
+      <Box sx={{ textAlign: 'center', p: 1, gap: 1 }}>
+        {pageToken && (
+          <Button
+            startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+            variant='contained'
+            onClick={() => setPage(page + 1)}>
+            Show More
+          </Button>
+        )}
 
-      <div className='main-content'>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-lg-3 col-md-4'>
-              <AdminSideNav user={user} />
-            </div>
+        <Dialog open={Boolean(updateRecord)} onClose={() => setUpdateRecord(null)}>
+          <form id='update-form' onSubmit={handleSubmit}>
+            <DialogTitle>Update Record</DialogTitle>
+            <Divider />
 
-            <div className='col-lg-9 col-md-8'>
-              <div className='main-content-box'>
-                {/* Nav */}
-                <ul className='nav-style1'>
-                  <li>
-                    <Link href='/admin/categories/'>
-                      <a className='active'>Categories</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/categories/create/'>
-                      <a>Create</a>
-                    </Link>
-                  </li>
-                </ul>
+            <DialogContent sx={{ width: 600 }}>
+              <TextField hidden name='id' value={values?.id || ''} />
+              <CategoryForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
+            </DialogContent>
 
-                {loading ? (
-                  <GeneralLoader />
-                ) : (
-                  <div className='table-responsive'>
-                    <table className='table table-hover align-middle fs-14'>
-                      <thead>
-                        <tr>
-                          <th scope='col'>Categories</th>
-                          <th scope='col'>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {categories.length > 0 ? (
-                          categories.map((cat) => <CatRow {...cat} key={cat.id} onDelete={() => confirmDelete(cat.id)} />)
-                        ) : (
-                          <tr>
-                            <td colSpan={3} className='text-center py-3'>
-                              Empty!
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-                {/* Pagination */}
-                {/* <div className="col-lg-12 col-md-12">
-										<div className="pagination-area text-center m-3">
-											<a
-												href="#"
-												className="prev page-numbers"
-											>
-												<i className="bx bx-chevrons-left"></i>
-											</a>
-											<span
-												className="page-numbers current"
-												aria-current="page"
-											>
-												1
-											</span>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												2
-											</a>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												3
-											</a>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												4
-											</a>
-											<a
-												href="#"
-												className="next page-numbers"
-											>
-												<i className="bx bx-chevrons-right"></i>
-											</a>
-										</div>
-									</div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Footer />
-    </>
+            <DialogActions>
+              <SubmitButton disabled={isUpdating} loading={isUpdating} btnText='Update' />
+              <Button onClick={() => setUpdateRecord(null)}>Cancel</Button>
+            </DialogActions>
+            <input type='submit' hidden />
+          </form>
+        </Dialog>
+      </Box>
+    </AdminLayout>
   );
 };
 
-export default Index;
+export default Categories;

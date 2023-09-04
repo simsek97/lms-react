@@ -32,13 +32,13 @@ const userSignin = async (req: any, res: any) => {
     if (data) {
       const user = data.userByEmail.items[0];
 
-      const isid_user_token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+      const lms_react_users_token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
         expiresIn: '7d'
       });
 
       res.status(200).json({
         message: 'Login Successful!',
-        isid_user_token,
+        lms_react_users_token,
         user
       });
     } else {

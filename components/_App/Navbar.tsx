@@ -1,25 +1,24 @@
-import React from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import Cart from '@/components/_App/Cart';
+import ProfileDropdown from '@/components/_App/ProfileDropdown';
+import SearchForm from '@/components/_App/SearchForm';
+import { IReduxStore } from '@/store/index';
 import Link from '@/utils/ActiveLink';
-import ProfileDropdown from './ProfileDropdown';
-import Cart from './Cart';
-import SearchForm from './SearchForm';
-import TopHeader from './TopHeader';
 import { motion } from 'framer-motion';
-import { handleLogout } from '@/utils/auth';
 
 // Router events
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-interface INavbar {
-  user?: any;
-}
-
-const Navbar = ({ user }: INavbar) => {
+const Navbar = () => {
   const [menu, setMenu] = React.useState(true);
+
+  const user = useSelector((state: IReduxStore) => state.user.profile);
 
   const toggleNavbar = () => {
     setMenu(!menu);
@@ -93,72 +92,7 @@ const Navbar = ({ user }: INavbar) => {
                     </Link>
                   </motion.li>
 
-                  {user ? (
-                    <motion.li
-                      className='nav-item'
-                      whileHover={{
-                        scale: 1.1,
-                        transition: {
-                          duration: 0.5
-                        }
-                      }}
-                      whileTap={{ scale: 0.9 }}>
-                      <Link href='#'>
-                        <a
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleLogout();
-                          }}>
-                          <i className='bx bx-log-out'></i> Sign out
-                        </a>
-                      </Link>
-                    </motion.li>
-                  ) : (
-                    <>
-                      <motion.li
-                        className='nav-item'
-                        whileHover={{
-                          scale: 1.1,
-                          transition: { duration: 0.5 }
-                        }}
-                        whileTap={{ scale: 0.9 }}>
-                        <Link href='/auth/register'>
-                          <a>Register</a>
-                        </Link>
-                      </motion.li>
-                      <motion.li
-                        className='nav-item'
-                        whileHover={{
-                          scale: 1.1,
-                          transition: { duration: 0.5 }
-                        }}
-                        whileTap={{ scale: 0.9 }}>
-                        <Link href='/auth/login'>
-                          <a>Login</a>
-                        </Link>
-                      </motion.li>
-                    </>
-                  )}
-
-                  {/* {user ? (
-                    !user.instructor_request && (
-                      <motion.li
-                        className='nav-item'
-                        whileHover={{
-                          scale: 1.1,
-                          transition: {
-                            duration: 0.5
-                          }
-                        }}
-                        whileTap={{ scale: 0.9 }}>
-                        <Link href='/become-an-instructor' activeClassName='active'>
-                          <a onClick={toggleNavbar} className='nav-link'>
-                            Become An Instructor
-                          </a>
-                        </Link>
-                      </motion.li>
-                    )
-                  ) : (
+                  {!user && (
                     <motion.li
                       className='nav-item'
                       whileHover={{
@@ -166,13 +100,25 @@ const Navbar = ({ user }: INavbar) => {
                         transition: { duration: 0.5 }
                       }}
                       whileTap={{ scale: 0.9 }}>
-                      <Link href='/become-an-instructor' activeClassName='active'>
-                        <a onClick={toggleNavbar} className='nav-link'>
-                          Become An Instructor
-                        </a>
+                      <Link href='/auth/register'>
+                        <a className='nav-link'>Register</a>
                       </Link>
                     </motion.li>
-                  )} */}
+                  )}
+
+                  {!user && (
+                    <motion.li
+                      className='nav-item'
+                      whileHover={{
+                        scale: 1.1,
+                        transition: { duration: 0.5 }
+                      }}
+                      whileTap={{ scale: 0.9 }}>
+                      <Link href='/auth/login'>
+                        <a className='nav-link'>Login</a>
+                      </Link>
+                    </motion.li>
+                  )}
                 </ul>
               </div>
 
@@ -181,7 +127,7 @@ const Navbar = ({ user }: INavbar) => {
                   <Cart />
                   {user && (
                     <li className='profile_li'>
-                      <ProfileDropdown {...user} />
+                      <ProfileDropdown user={user} />
                     </li>
                   )}
                 </ul>

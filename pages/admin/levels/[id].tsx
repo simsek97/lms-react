@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import AdminSideNav from '@/components/_App/AdminSideNav';
-import Link from 'next/link';
 import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import toast from 'react-hot-toast';
-import { parseCookies } from 'nookies';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Button from '@/utils/Button';
+import { parseCookies } from 'nookies';
+import React from 'react';
+import toast from 'react-hot-toast';
 
-const Create = ({ user }) => {
+import AdminLayout from '@/components/Admin/AdminLayout';
+import Button from '@/utils/Button';
+import baseUrl from '@/utils/baseUrl';
+
+const LevelDetails = ({ user }) => {
   const router = useRouter();
   const { lms_react_users_token } = parseCookies();
-  const [level, setLevel] = useState({ level: '' });
+  const [level, setLevel] = React.useState({ level: '' });
   const [loading, setLoading] = React.useState(false);
   const { id } = router.query;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchCat = async () => {
       try {
         const url = `${baseUrl}/api/levels/create`;
@@ -85,68 +84,45 @@ const Create = ({ user }) => {
   };
 
   return (
-    <>
-      <Navbar user={user} />
+    <AdminLayout title='Level Details' user={user}>
+      <div className='main-content-box'>
+        {/* Nav */}
+        <ul className='nav-style1'>
+          <li>
+            <Link href='/admin/levels/'>
+              <a>Levels</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/levels/create/'>
+              <a>Create</a>
+            </Link>
+          </li>
+          <li>
+            <Link href={`/admin/levels/${id}/`}>
+              <a className='active'>Update</a>
+            </Link>
+          </li>
+        </ul>
 
-      <div className='main-content'>
-        <div className='container-fluid'>
+        {/* Form */}
+        <form onSubmit={handleUpdate}>
           <div className='row'>
-            <div className='col-lg-3 col-md-4'>
-              <AdminSideNav user={user} />
-            </div>
-
-            <div className='col-lg-9 col-md-8'>
-              <div className='main-content-box'>
-                {/* Nav */}
-                <ul className='nav-style1'>
-                  <li>
-                    <Link href='/admin/levels/'>
-                      <a>Levels</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/admin/levels/create/'>
-                      <a>Create</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/admin/levels/${id}/`}>
-                      <a className='active'>Update</a>
-                    </Link>
-                  </li>
-                </ul>
-
-                {/* Form */}
-                <form onSubmit={handleUpdate}>
-                  <div className='row'>
-                    <div className='col-md-12'>
-                      <div className='form-group'>
-                        <label className='form-label fw-semibold'>Levels</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='level'
-                          value={level.level}
-                          onChange={handleChange}
-                          required={true}
-                        />
-                      </div>
-                    </div>
-
-                    <div className='col-12'>
-                      <Button disabled={false} loading={loading} btnText='Update' btnClass='default-btn' />
-                    </div>
-                  </div>
-                </form>
+            <div className='col-md-12'>
+              <div className='form-group'>
+                <label className='form-label fw-semibold'>Levels</label>
+                <input type='text' className='form-control' name='level' value={level.level} onChange={handleChange} required={true} />
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <Footer />
-    </>
+            <div className='col-12'>
+              <Button disabled={false} loading={loading} btnText='Update' btnClass='default-btn' />
+            </div>
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
   );
 };
 
-export default Create;
+export default LevelDetails;

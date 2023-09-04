@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
@@ -15,8 +14,7 @@ interface ISubmitButton {
 const SubmitButton = ({ loading, disabled, btnText, btnClass, btnOnClick, buttonType }: ISubmitButton) => {
   return (
     <Button
-      sx={{ p: 2, fontSize: 16, color: 'white' }}
-      variant='contained'
+      sx={{ color: 'white' }}
       type={buttonType || 'submit'}
       className={btnClass || 'default-btn'}
       disabled={disabled || false}
