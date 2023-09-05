@@ -35,9 +35,6 @@ yarn-error.log*
 # settings
 /public/settings.json
 
-# data
-/data
-
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*

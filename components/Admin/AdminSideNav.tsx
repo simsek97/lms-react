@@ -93,7 +93,7 @@ const AdminSideNav = ({ user }) => {
           </div>
 
           {/* Nav */}
-          <div className='side-nav' style={{ padding: '70px 10px 20px 10px' }}>
+          <div className='side-nav'>
             <ul>
               {adminMenus?.map((menu) => {
                 return (

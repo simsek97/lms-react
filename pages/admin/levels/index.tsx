@@ -1,64 +1,72 @@
-import axios from 'axios';
-import Link from 'next/link';
-import { parseCookies } from 'nookies';
+import { GraphQLQuery } from '@aws-amplify/api';
+import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import { DataGrid } from '@mui/x-data-grid';
+import { API, graphqlOperation } from 'aws-amplify';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import toast from 'react-hot-toast';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import CatRow from '@/components/Admin/CatRow';
-import GeneralLoader from '@/utils/GeneralLoader';
-import baseUrl from '@/utils/baseUrl';
+import { ILevel } from '@/data/level';
+import { DeleteLevelMutation, ListLevelsQuery } from '@/src/API';
+import { deleteLevel } from '@/src/graphql/mutations';
+import { listLevels } from '@/src/graphql/queries';
+import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-const Index = ({ user }) => {
-  const { lms_react_users_token } = parseCookies();
-  const [levels, setLevels] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+const Levels = ({ user }) => {
+  const router = useRouter();
+  const [levels, setLevels] = React.useState<ILevel[]>([]);
+  const [pageToken, setPageToken] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [isLoading, setLoading] = React.useState(true);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-      const response = await axios.get(`${baseUrl}/api/levels`, payload);
-      setLevels(response.data.levels);
-      setLoading(false);
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-    } finally {
-      setLoading(false);
+  const pageSize = 10;
+
+  const columns = [
+    {
+      flex: 0.3,
+      minWidth: 200,
+      field: 'name',
+      headerName: 'Level'
+    },
+    {
+      flex: 0.4,
+      minWidth: 150,
+      field: 'slug',
+      headerName: 'Slug'
+    },
+    {
+      flex: 0.2,
+      minWidth: 60,
+      field: 'actions',
+      headerName: 'Actions',
+      renderCell: (params) => {
+        return (
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button size='small' color='primary' variant='text' onClick={() => router.push(`/admin/levels/${params.row.id}`)}>
+              Update
+            </Button>
+            <Button size='small' color='secondary' variant='text' onClick={() => confirmDelete(params.row)}>
+              Remove
+            </Button>
+          </Box>
+        );
+      }
     }
-  };
+  ];
 
-  React.useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const confirmDelete = (catId) => {
+  const confirmDelete = (level: ILevel) => {
     confirmAlert({
       title: 'Confirm to delete',
-      message: 'Are you sure to delete this? This may effect on courses if any of course are under this level',
+      message: `Are you sure to delete ${level.name}? This may effect on courses if any of course are under this level`,
       buttons: [
         {
           label: 'Yes',
-          onClick: () => handleDelete(catId)
+          onClick: () => handleDelete(level)
         },
         {
           label: 'No'
@@ -67,136 +75,74 @@ const Index = ({ user }) => {
     });
   };
 
-  const handleDelete = async (catId) => {
+  const handleDelete = async (level: ILevel) => {
     try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token },
-        params: { catId }
-      };
-      const response = await axios.delete(`${baseUrl}/api/levels`, payload);
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #4BB543',
-          padding: '16px',
-          color: '#4BB543'
+      setLoading(true);
+
+      await API.graphql<GraphQLQuery<DeleteLevelMutation>>({
+        query: deleteLevel,
+        variables: {
+          input: { id: level.id }
         },
-        iconTheme: {
-          primary: '#4BB543',
-          secondary: '#FFFAEE'
-        }
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
 
-      fetchData();
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
+      const updatedLevels = levels.filter((cat) => cat.id != level.id);
+      setLevels(updatedLevels);
+      toast.error('The record has been successfully deleted.', toastSuccessStyle);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message, toastErrorStyle);
     } finally {
-      fetchData();
+      setLoading(false);
     }
-
-    // router.reload(`/admin/levels/`);
   };
 
-  return (
-    <AdminLayout title='Levels' user={user}>
-      <div className='main-content-box'>
-        {/* Nav */}
-        <ul className='nav-style1'>
-          <li>
-            <Link href='/admin/levels/'>
-              <a className='active'>Levels</a>
-            </Link>
-          </li>
-          <li>
-            <Link href='/admin/levels/create/'>
-              <a>Create</a>
-            </Link>
-          </li>
-        </ul>
+  const fetchLevels = async (limit: number) => {
+    setLoading(true);
 
-        {loading ? (
-          <GeneralLoader />
-        ) : (
-          <div className='table-responsive'>
-            <table className='table table-hover align-middle fs-14'>
-              <thead>
-                <tr>
-                  <th scope='col'>Levels</th>
-                  <th scope='col'>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {levels.length > 0 ? (
-                  levels.map((cat) => <CatRow {...cat} key={cat.id} onDelete={() => confirmDelete(cat.id)} />)
-                ) : (
-                  <tr>
-                    <td colSpan={3} className='text-center py-3'>
-                      Empty!
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+    try {
+      setLoading(true);
+      const { data } = await API.graphql<GraphQLQuery<ListLevelsQuery>>(graphqlOperation(listLevels, { limit }));
+
+      setPageToken(data.listLevels.nextToken);
+
+      const updatedLevels = [...levels, ...data.listLevels.items];
+      setLevels(updatedLevels.sort((a, b) => Number(a.id) - Number(b.id)) as ILevel[]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchLevels(pageSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <AdminLayout
+      title='Levels'
+      user={user}
+      button={
+        <Button startIcon={<AddIcon />} onClick={() => router.push('/admin/levels/add')}>
+          Add Level
+        </Button>
+      }>
+      <DataGrid autoHeight loading={levels.length === 0} rows={levels} columns={columns} hideFooter={true} />
+      <Box sx={{ textAlign: 'center', p: 1, gap: 1 }}>
+        {pageToken && (
+          <Button
+            startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+            variant='contained'
+            onClick={() => setPage(page + 1)}>
+            Show More
+          </Button>
         )}
-        {/* Pagination */}
-        {/* <div className="col-lg-12 col-md-12">
-										<div className="pagination-area text-center m-3">
-											<a
-												href="#"
-												className="prev page-numbers"
-											>
-												<i className="bx bx-chevrons-left"></i>
-											</a>
-											<span
-												className="page-numbers current"
-												aria-current="page"
-											>
-												1
-											</span>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												2
-											</a>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												3
-											</a>
-											<a
-												href="#"
-												className="page-numbers"
-											>
-												4
-											</a>
-											<a
-												href="#"
-												className="next page-numbers"
-											>
-												<i className="bx bx-chevrons-right"></i>
-											</a>
-										</div>
-									</div> */}
-      </div>
+      </Box>
     </AdminLayout>
   );
 };
 
-export default Index;
+export default Levels;

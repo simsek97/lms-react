@@ -10,34 +10,42 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import { LevelForm } from '@/components/Level/LevelForm';
-import { ILevel } from '@/data/level';
-import { ListLevelsQuery, UpdateLevelMutation } from '@/src/API';
-import { updateLevel } from '@/src/graphql/mutations';
-import { listLevels } from '@/src/graphql/queries';
+import { CourseForm } from '@/components/Course/CourseForm';
+import { ICourse } from '@/data/course';
+import { ListCoursesQuery, UpdateCourseMutation } from '@/src/API';
+import { updateCourse } from '@/src/graphql/mutations';
+import { listCourses } from '@/src/graphql/queries';
 import SubmitButton from '@/utils/SubmitButton';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-const UpdateLevel = ({ user }) => {
+const UpdateCourse = ({ user }) => {
   const router = useRouter();
   const [isLoading, setLoading] = React.useState(true);
   const [isUpdating, setUpdating] = React.useState<boolean>(false);
 
   const { id } = router.query;
 
-  const initialValues: ILevel = {
+  const initialValues: ICourse = {
     id: id as string,
-    name: '',
-    slug: ''
+    title: '',
+    slug: '',
+    shortDesc: '',
+    overview: '',
+    latestPrice: 0,
+    beforePrice: 0,
+    lessons: '',
+    duration: '',
+    catID: '',
+    levelID: ''
   };
 
-  const submitForm = async (values: ILevel) => {
+  const submitForm = async (values: ICourse) => {
     setUpdating(true);
 
     try {
       // Update the subscription tier on Dynamodb
-      const { data } = await API.graphql<GraphQLQuery<UpdateLevelMutation>>({
-        query: updateLevel,
+      const { data } = await API.graphql<GraphQLQuery<UpdateCourseMutation>>({
+        query: updateCourse,
         variables: {
           input: values
         },
@@ -46,7 +54,7 @@ const UpdateLevel = ({ user }) => {
 
       toast.error('The record has been successfully updated.', toastSuccessStyle);
       setTimeout(() => {
-        router.push('/admin/levels');
+        router.push('/admin/courses');
       }, 1000);
     } catch (e) {
       console.log(e);
@@ -58,11 +66,11 @@ const UpdateLevel = ({ user }) => {
 
   // Form validation rules
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    title: Yup.string().required('Title is required'),
     slug: Yup.string().required('Slug is required')
   });
 
-  const validateForm = (values: ILevel) => {
+  const validateForm = (values: ICourse) => {
     const formValues = prepareDataForValidation(values);
     const validate = validateYupSchema(formValues, validationSchema);
 
@@ -76,27 +84,39 @@ const UpdateLevel = ({ user }) => {
     );
   };
 
-  const { handleSubmit, handleChange, values, setValues, errors, touched }: FormikProps<ILevel> = useFormik<ILevel>({
-    validate: (values: ILevel) => validateForm(values),
-    onSubmit: (values: ILevel) => submitForm(values),
+  const { handleSubmit, handleChange, values, setValues, errors, touched }: FormikProps<ICourse> = useFormik<ICourse>({
+    validate: (values: ICourse) => validateForm(values),
+    onSubmit: (values: ICourse) => submitForm(values),
     initialValues: initialValues
   });
 
-  const fetchLevel = async (id: string) => {
+  const fetchCourse = async (id: string) => {
     setLoading(true);
 
     try {
       setLoading(true);
-      const { data } = await API.graphql<GraphQLQuery<ListLevelsQuery>>(
-        graphqlOperation(listLevels, {
+      const { data } = await API.graphql<GraphQLQuery<ListCoursesQuery>>(
+        graphqlOperation(listCourses, {
           filter: {
             id: { eq: id }
           }
         })
       );
 
-      const level = data.listLevels.items[0];
-      setValues({ id: id, name: level.name, slug: level.slug });
+      const course = data.listCourses.items[0];
+      setValues({
+        id: id,
+        title: course.title,
+        slug: course.slug,
+        shortDesc: course.shortDesc,
+        overview: course.overview,
+        latestPrice: course.latestPrice,
+        beforePrice: course.beforePrice,
+        lessons: course.lessons,
+        duration: course.duration,
+        catID: course.catID,
+        levelID: course.levelID
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -105,19 +125,19 @@ const UpdateLevel = ({ user }) => {
   };
 
   React.useEffect(() => {
-    fetchLevel(id as string);
+    fetchCourse(id as string);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AdminLayout title='Update Level' user={user}>
+    <AdminLayout title='Update Course' user={user}>
       {(isLoading && <LinearProgress />) || (
         <form id='update-form' onSubmit={handleSubmit}>
-          <LevelForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
+          <CourseForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
 
           <Box sx={{ mt: 2 }}>
             <SubmitButton disabled={isUpdating} loading={isUpdating} btnText='Save' />
-            <Button onClick={() => router.push('/admin/levels')}>Cancel</Button>
+            <Button onClick={() => router.push('/admin/courses')}>Cancel</Button>
             <input type='submit' hidden />
           </Box>
         </form>
@@ -126,4 +146,4 @@ const UpdateLevel = ({ user }) => {
   );
 };
 
-export default UpdateLevel;
+export default UpdateCourse;

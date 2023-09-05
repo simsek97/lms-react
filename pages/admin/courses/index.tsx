@@ -1,233 +1,148 @@
-import axios from 'axios';
-import Link from 'next/link';
-import { parseCookies } from 'nookies';
+import { GraphQLQuery } from '@aws-amplify/api';
+import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import { DataGrid } from '@mui/x-data-grid';
+import { API, graphqlOperation } from 'aws-amplify';
+import { useRouter } from 'next/router';
 import React from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import toast from 'react-hot-toast';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import CourseRow from '@/components/Admin/CourseRow';
-import GeneralLoader from '@/utils/GeneralLoader';
-import baseUrl from '@/utils/baseUrl';
+import { ICourse } from '@/data/course';
+import { DeleteCourseMutation, ListCoursesQuery } from '@/src/API';
+import { deleteCourse } from '@/src/graphql/mutations';
+import { listCourses } from '@/src/graphql/queries';
+import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-const Index = ({ user }) => {
-  const { lms_react_users_token } = parseCookies();
-  const [courses, setCourses] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+const Courses = ({ user }) => {
+  const router = useRouter();
+  const [courses, setCourses] = React.useState<ICourse[]>([]);
+  const [pageToken, setPageToken] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [isLoading, setLoading] = React.useState(true);
 
-  const fetchCourses = async () => {
+  const pageSize = 10;
+
+  const columns = [
+    {
+      flex: 0.3,
+      minWidth: 200,
+      field: 'title',
+      headerName: 'Title'
+    },
+    {
+      flex: 0.4,
+      minWidth: 150,
+      field: 'slug',
+      headerName: 'Slug'
+    },
+    {
+      flex: 0.2,
+      minWidth: 60,
+      field: 'actions',
+      headerName: 'Actions',
+      renderCell: (params) => {
+        return (
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button size='small' color='primary' variant='text' onClick={() => router.push(`/admin/courses/${params.row.id}`)}>
+              Update
+            </Button>
+            <Button size='small' color='secondary' variant='text' onClick={() => confirmDelete(params.row)}>
+              Remove
+            </Button>
+          </Box>
+        );
+      }
+    }
+  ];
+
+  const confirmDelete = (course: ICourse) => {
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: `Are you sure to delete ${course.title}?`,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handleDelete(course)
+        },
+        {
+          label: 'No'
+        }
+      ]
+    });
+  };
+
+  const handleDelete = async (course) => {
+    try {
+      setLoading(true);
+
+      await API.graphql<GraphQLQuery<DeleteCourseMutation>>({
+        query: deleteCourse,
+        variables: {
+          input: { id: course.id }
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+
+      const updatedCourses = courses.filter((cat) => cat.id != course.id);
+      setCourses(updatedCourses);
+      toast.error('The record has been successfully deleted.', toastSuccessStyle);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message, toastErrorStyle);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCourses = async (limit: number) => {
     setLoading(true);
 
     try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-      const response = await axios.get(`${baseUrl}/api/admin/courses`, payload);
-      // console.log(response.data.courses);
-      setCourses(response.data.courses);
-      setLoading(false);
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
+      setLoading(true);
+      const { data } = await API.graphql<GraphQLQuery<ListCoursesQuery>>(graphqlOperation(listCourses, { limit }));
 
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
+      setPageToken(data.listCourses.nextToken);
+
+      const updatedCourses = [...courses, ...data.listCourses.items];
+      setCourses(updatedCourses.sort((a, b) => Number(a.id) - Number(b.id)) as ICourse[]);
+    } catch (e) {
+      console.log(e);
     } finally {
       setLoading(false);
     }
   };
 
   React.useEffect(() => {
-    fetchCourses();
+    fetchCourses(pageSize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCourseHome = async (courseId: string) => {
-    try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-
-      const payloadData = { courseId, apply: true };
-      const response = await axios.put(`${baseUrl}/api/admin/courses`, payloadData, payload);
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #4BB543',
-          padding: '16px',
-          color: '#4BB543'
-        },
-        iconTheme: {
-          primary: '#4BB543',
-          secondary: '#FFFAEE'
-        }
-      });
-
-      fetchCourses();
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-    } finally {
-      setLoading(false);
-      fetchCourses();
-    }
-  };
-
-  const handleCourseRemoveHome = async (courseId: string) => {
-    try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-
-      const payloadData = { courseId, apply: false };
-      const response = await axios.put(`${baseUrl}/api/admin/courses`, payloadData, payload);
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #4BB543',
-          padding: '16px',
-          color: '#4BB543'
-        },
-        iconTheme: {
-          primary: '#4BB543',
-          secondary: '#FFFAEE'
-        }
-      });
-
-      fetchCourses();
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-    } finally {
-      setLoading(false);
-      fetchCourses();
-    }
-  };
-
   return (
-    <AdminLayout title='Courses' user={user}>
-      <div className='main-content-box'>
-        <ul className='nav-style1'>
-          <li>
-            <Link href='/admin/courses/'>
-              <a className='active'>Courses</a>
-            </Link>
-          </li>
-          <li>
-            <Link href='/admin/courses/new-arrival/'>
-              <a>New Arrival</a>
-            </Link>
-          </li>
-        </ul>
-        {loading ? (
-          <GeneralLoader />
-        ) : (
-          <div className='table-responsive'>
-            <table className='table align-middle table-hover fs-14'>
-              <thead>
-                <tr>
-                  <th scope='col'>Title</th>
-                  <th scope='col'>Price</th>
-                  <th scope='col'>Category</th>
-                  <th scope='col'>Instructor</th>
-                  <th scope='col'>Videos</th>
-                  <th scope='col'>Homepage</th>
-                  <th scope='col'>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {courses.length > 0 ? (
-                  courses.map((course) => (
-                    <CourseRow
-                      key={course.id}
-                      {...course}
-                      onHome={() => handleCourseHome(course.id)}
-                      onHomeRemove={() => handleCourseRemoveHome(course.id)}
-                    />
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={7} className='text-center py-3'>
-                      Empty!
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+    <AdminLayout
+      title='Courses'
+      user={user}
+      button={
+        <Button startIcon={<AddIcon />} onClick={() => router.push('/admin/courses/add')}>
+          Add Course
+        </Button>
+      }>
+      <DataGrid autoHeight loading={courses.length === 0} rows={courses} columns={columns} hideFooter={true} />
+      <Box sx={{ textAlign: 'center', p: 1, gap: 1 }}>
+        {pageToken && (
+          <Button
+            startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+            variant='contained'
+            onClick={() => setPage(page + 1)}>
+            Show More
+          </Button>
         )}
-        {/* Pagination */}
-        {/* <div className="col-lg-12 col-md-12">
-									<div className="pagination-area text-center m-3">
-										<a
-											href="#"
-											className="prev page-numbers"
-										>
-											<i className="bx bx-chevrons-left"></i>
-										</a>
-										<span
-											className="page-numbers current"
-											aria-current="page"
-										>
-											1
-										</span>
-										<a href="#" className="page-numbers">
-											2
-										</a>
-										<a href="#" className="page-numbers">
-											3
-										</a>
-										<a href="#" className="page-numbers">
-											4
-										</a>
-										<a
-											href="#"
-											className="next page-numbers"
-										>
-											<i className="bx bx-chevrons-right"></i>
-										</a>
-									</div>
-								</div> */}
-      </div>
+      </Box>
     </AdminLayout>
   );
 };
 
-export default Index;
+export default Courses;

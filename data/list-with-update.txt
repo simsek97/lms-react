@@ -3,25 +3,43 @@ import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 import { DataGrid } from '@mui/x-data-grid';
 import { API, graphqlOperation } from 'aws-amplify';
+import { FormikProps, prepareDataForValidation, useFormik, validateYupSchema, yupToFormErrors } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
+import { CategoryForm } from '@/components/Category/CategoryForm';
 import { ICategory } from '@/data/category';
-import { DeleteCategoryMutation, ListCategoriesQuery } from '@/src/API';
-import { deleteCategory } from '@/src/graphql/mutations';
+import { DeleteCategoryMutation, ListCategoriesQuery, UpdateCategoryMutation } from '@/src/API';
+import { deleteCategory, updateCategory } from '@/src/graphql/mutations';
 import { listCategories } from '@/src/graphql/queries';
+import SubmitButton from '@/utils/SubmitButton';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
+
+const initialValues: ICategory = {
+  id: '',
+  name: '',
+  slug: ''
+};
 
 const Categories = ({ user }) => {
   const router = useRouter();
-  const [categories, setCategories] = React.useState<ICategory[]>([]);
+  const [categories, setCategories] = React.useState([]);
   const [pageToken, setPageToken] = React.useState(null);
   const [page, setPage] = React.useState(0);
+  const [updateRecord, setUpdateRecord] = React.useState(null);
+  const [isUpdating, setUpdating] = React.useState<boolean>(false);
   const [isLoading, setLoading] = React.useState(true);
 
   const pageSize = 10;
@@ -43,7 +61,7 @@ const Categories = ({ user }) => {
       flex: 0.2,
       minWidth: 60,
       field: 'actions',
-      headerName: 'Actions',
+      headerName: 'Remove',
       renderCell: (params) => {
         return (
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -59,7 +77,7 @@ const Categories = ({ user }) => {
     }
   ];
 
-  const confirmDelete = (category: ICategory) => {
+  const confirmDelete = (category) => {
     confirmAlert({
       title: 'Confirm to delete',
       message: `Are you sure to delete ${category.name}? This may effect on courses if any of course are under this category`,
@@ -75,7 +93,7 @@ const Categories = ({ user }) => {
     });
   };
 
-  const handleDelete = async (category: ICategory) => {
+  const handleDelete = async (category) => {
     try {
       setLoading(true);
 
@@ -98,6 +116,70 @@ const Categories = ({ user }) => {
     }
   };
 
+  const handleUpdate = async (values: ICategory) => {
+    setUpdating(true);
+
+    try {
+      const updatedCategory: Partial<ICategory> = {
+        id: values.id,
+        name: values.name,
+        slug: values.slug
+      };
+      // Update the subscription tier on Dynamodb
+      const { data } = await API.graphql<GraphQLQuery<UpdateCategoryMutation>>({
+        query: updateCategory,
+        variables: {
+          input: updatedCategory
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+
+      // Update the subscription on ui
+      const updatedCategories = categories.map((s: ICategory) => {
+        if (s.id === updatedCategory.id) {
+          return { ...s, ...data.updateCategory };
+        }
+
+        return s;
+      });
+
+      setCategories([...updatedCategories]);
+      toast.error('The record has been successfully updated.', toastSuccessStyle);
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message, toastErrorStyle);
+    } finally {
+      setUpdating(false);
+      setUpdateRecord(null);
+    }
+  };
+
+  // Form validation rules
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    slug: Yup.string().required('Slug is required')
+  });
+
+  const validateForm = (values: ICategory) => {
+    const formValues = prepareDataForValidation(values);
+    const validate = validateYupSchema(formValues, validationSchema);
+
+    return validate.then(
+      (_response) => {
+        return {};
+      },
+      (error) => {
+        return yupToFormErrors(error);
+      }
+    );
+  };
+
+  const { handleSubmit, handleChange, setValues, values, errors, touched }: FormikProps<ICategory> = useFormik<ICategory>({
+    validate: (values: ICategory) => validateForm(values),
+    onSubmit: (values: ICategory) => handleUpdate(values),
+    initialValues: initialValues
+  });
+
   const fetchCategories = async (limit: number) => {
     setLoading(true);
 
@@ -107,8 +189,8 @@ const Categories = ({ user }) => {
 
       setPageToken(data.listCategories.nextToken);
 
-      const updatedCategories = [...categories, ...data.listCategories.items];
-      setCategories(updatedCategories.sort((a, b) => Number(a.id) - Number(b.id)) as ICategory[]);
+      const updatedSubscriptions = [...categories, ...data.listCategories.items];
+      setCategories(updatedSubscriptions.sort((a, b) => Number(a.id) - Number(b.id)) as ICategory[]);
     } catch (e) {
       console.log(e);
     } finally {
@@ -140,6 +222,24 @@ const Categories = ({ user }) => {
             Show More
           </Button>
         )}
+
+        <Dialog open={Boolean(updateRecord)} onClose={() => setUpdateRecord(null)}>
+          <form id='update-form' onSubmit={handleSubmit}>
+            <DialogTitle>Update Record</DialogTitle>
+            <Divider />
+
+            <DialogContent sx={{ width: 600 }}>
+              <TextField hidden name='id' value={values?.id || ''} />
+              <CategoryForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
+            </DialogContent>
+
+            <DialogActions>
+              <SubmitButton disabled={isUpdating} loading={isUpdating} btnText='Update' />
+              <Button onClick={() => setUpdateRecord(null)}>Cancel</Button>
+            </DialogActions>
+            <input type='submit' hidden />
+          </form>
+        </Dialog>
       </Box>
     </AdminLayout>
   );

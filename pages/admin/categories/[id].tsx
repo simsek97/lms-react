@@ -10,34 +10,34 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import { LevelForm } from '@/components/Level/LevelForm';
-import { ILevel } from '@/data/level';
-import { ListLevelsQuery, UpdateLevelMutation } from '@/src/API';
-import { updateLevel } from '@/src/graphql/mutations';
-import { listLevels } from '@/src/graphql/queries';
+import { CategoryForm } from '@/components/Category/CategoryForm';
+import { ICategory } from '@/data/category';
+import { ListCategoriesQuery, UpdateCategoryMutation } from '@/src/API';
+import { updateCategory } from '@/src/graphql/mutations';
+import { listCategories } from '@/src/graphql/queries';
 import SubmitButton from '@/utils/SubmitButton';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-const UpdateLevel = ({ user }) => {
+const UpdateCategory = ({ user }) => {
   const router = useRouter();
   const [isLoading, setLoading] = React.useState(true);
   const [isUpdating, setUpdating] = React.useState<boolean>(false);
 
   const { id } = router.query;
 
-  const initialValues: ILevel = {
+  const initialValues: ICategory = {
     id: id as string,
     name: '',
     slug: ''
   };
 
-  const submitForm = async (values: ILevel) => {
+  const submitForm = async (values: ICategory) => {
     setUpdating(true);
 
     try {
       // Update the subscription tier on Dynamodb
-      const { data } = await API.graphql<GraphQLQuery<UpdateLevelMutation>>({
-        query: updateLevel,
+      const { data } = await API.graphql<GraphQLQuery<UpdateCategoryMutation>>({
+        query: updateCategory,
         variables: {
           input: values
         },
@@ -46,7 +46,7 @@ const UpdateLevel = ({ user }) => {
 
       toast.error('The record has been successfully updated.', toastSuccessStyle);
       setTimeout(() => {
-        router.push('/admin/levels');
+        router.push('/admin/categories');
       }, 1000);
     } catch (e) {
       console.log(e);
@@ -62,7 +62,7 @@ const UpdateLevel = ({ user }) => {
     slug: Yup.string().required('Slug is required')
   });
 
-  const validateForm = (values: ILevel) => {
+  const validateForm = (values: ICategory) => {
     const formValues = prepareDataForValidation(values);
     const validate = validateYupSchema(formValues, validationSchema);
 
@@ -76,27 +76,27 @@ const UpdateLevel = ({ user }) => {
     );
   };
 
-  const { handleSubmit, handleChange, values, setValues, errors, touched }: FormikProps<ILevel> = useFormik<ILevel>({
-    validate: (values: ILevel) => validateForm(values),
-    onSubmit: (values: ILevel) => submitForm(values),
+  const { handleSubmit, handleChange, values, setValues, errors, touched }: FormikProps<ICategory> = useFormik<ICategory>({
+    validate: (values: ICategory) => validateForm(values),
+    onSubmit: (values: ICategory) => submitForm(values),
     initialValues: initialValues
   });
 
-  const fetchLevel = async (id: string) => {
+  const fetchCategory = async (id: string) => {
     setLoading(true);
 
     try {
       setLoading(true);
-      const { data } = await API.graphql<GraphQLQuery<ListLevelsQuery>>(
-        graphqlOperation(listLevels, {
+      const { data } = await API.graphql<GraphQLQuery<ListCategoriesQuery>>(
+        graphqlOperation(listCategories, {
           filter: {
             id: { eq: id }
           }
         })
       );
 
-      const level = data.listLevels.items[0];
-      setValues({ id: id, name: level.name, slug: level.slug });
+      const category = data.listCategories.items[0];
+      setValues({ id: id, name: category.name, slug: category.slug });
     } catch (e) {
       console.log(e);
     } finally {
@@ -105,19 +105,19 @@ const UpdateLevel = ({ user }) => {
   };
 
   React.useEffect(() => {
-    fetchLevel(id as string);
+    fetchCategory(id as string);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AdminLayout title='Update Level' user={user}>
+    <AdminLayout title='Update Category' user={user}>
       {(isLoading && <LinearProgress />) || (
         <form id='update-form' onSubmit={handleSubmit}>
-          <LevelForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
+          <CategoryForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
 
           <Box sx={{ mt: 2 }}>
             <SubmitButton disabled={isUpdating} loading={isUpdating} btnText='Save' />
-            <Button onClick={() => router.push('/admin/levels')}>Cancel</Button>
+            <Button onClick={() => router.push('/admin/categories')}>Cancel</Button>
             <input type='submit' hidden />
           </Box>
         </form>
@@ -126,4 +126,4 @@ const UpdateLevel = ({ user }) => {
   );
 };
 
-export default UpdateLevel;
+export default UpdateCategory;

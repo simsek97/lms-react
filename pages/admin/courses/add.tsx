@@ -9,29 +9,37 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
-import { CategoryForm } from '@/components/Category/CategoryForm';
-import { ICategory } from '@/data/category';
-import { CreateCategoryMutation } from '@/src/API';
-import { createCategory } from '@/src/graphql/mutations';
+import { CourseForm } from '@/components/Course/CourseForm';
+import { ICourse } from '@/data/course';
+import { CreateCourseMutation } from '@/src/API';
+import { createCourse } from '@/src/graphql/mutations';
 import SubmitButton from '@/utils/SubmitButton';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
-const initialValues: ICategory = {
-  name: '',
-  slug: ''
+const initialValues: ICourse = {
+  title: '',
+  slug: '',
+  shortDesc: '',
+  overview: '',
+  latestPrice: 0,
+  beforePrice: 0,
+  lessons: '',
+  duration: '',
+  catID: '',
+  levelID: ''
 };
 
-const AddCategory = ({ user }) => {
+const AddCourse = ({ user }) => {
   const router = useRouter();
   const [isAdding, setAdding] = React.useState<boolean>(false);
 
-  const submitForm = async (values: ICategory) => {
+  const submitForm = async (values: ICourse) => {
     setAdding(true);
 
     try {
       // Update the subscription tier on Dynamodb
-      const { data } = await API.graphql<GraphQLQuery<CreateCategoryMutation>>({
-        query: createCategory,
+      const { data } = await API.graphql<GraphQLQuery<CreateCourseMutation>>({
+        query: createCourse,
         variables: {
           input: values
         },
@@ -40,7 +48,7 @@ const AddCategory = ({ user }) => {
 
       toast.error('The record has been successfully added.', toastSuccessStyle);
       setTimeout(() => {
-        router.push('/admin/categories');
+        router.push('/admin/courses');
       }, 1000);
     } catch (e) {
       console.log(e);
@@ -52,11 +60,11 @@ const AddCategory = ({ user }) => {
 
   // Form validation rules
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    title: Yup.string().required('Title is required'),
     slug: Yup.string().required('Slug is required')
   });
 
-  const validateForm = (values: ICategory) => {
+  const validateForm = (values: ICourse) => {
     const formValues = prepareDataForValidation(values);
     const validate = validateYupSchema(formValues, validationSchema);
 
@@ -70,20 +78,20 @@ const AddCategory = ({ user }) => {
     );
   };
 
-  const { handleSubmit, handleChange, values, errors, touched }: FormikProps<ICategory> = useFormik<ICategory>({
-    validate: (values: ICategory) => validateForm(values),
-    onSubmit: (values: ICategory) => submitForm(values),
+  const { handleSubmit, handleChange, values, errors, touched }: FormikProps<ICourse> = useFormik<ICourse>({
+    validate: (values: ICourse) => validateForm(values),
+    onSubmit: (values: ICourse) => submitForm(values),
     initialValues: initialValues
   });
 
   return (
-    <AdminLayout title='Add Category' user={user}>
+    <AdminLayout title='Add Course' user={user}>
       <form id='add-form' onSubmit={handleSubmit}>
-        <CategoryForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
+        <CourseForm values={values} touched={touched} errors={errors} handleChange={handleChange} />
 
         <Box sx={{ mt: 2 }}>
           <SubmitButton disabled={isAdding} loading={isAdding} btnText='Save' />
-          <Button onClick={() => router.push('/admin/categories')}>Cancel</Button>
+          <Button onClick={() => router.push('/admin/courses')}>Cancel</Button>
           <input type='submit' hidden />
         </Box>
       </form>
@@ -91,4 +99,4 @@ const AddCategory = ({ user }) => {
   );
 };
 
-export default AddCategory;
+export default AddCourse;

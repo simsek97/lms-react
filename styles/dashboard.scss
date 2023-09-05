@@ -38,8 +38,8 @@ $transition: 0.5s;
 --------------------------------------*/
 .main-content {
   .container-fluid {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 .main-content-box {
@@ -50,7 +50,7 @@ $transition: 0.5s;
 
 /* Admin side nav */
 .side-nav-wrapper {
-  background-color: #f7f9fa;
+  background-color: #f6fafb;
   height: 100%;
 
   .close {
@@ -68,15 +68,15 @@ $transition: 0.5s;
   }
 }
 .side-nav {
-  padding: 40px 30px;
+  padding: 30px 30px 30px 10px;
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     li {
       a {
-        font-size: 17px;
-        padding: 5px 20px;
+        font-size: 14px;
+        padding: 5px 20px 5px 5px;
         display: block;
         cursor: pointer;
         &.active {

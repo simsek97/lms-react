@@ -36,12 +36,12 @@ const AdminLayout = (props: PropsWithChildren<IAdminLayout>) => {
           </Box>
 
           <Box className='col-md-9'>
-            <Box sx={{ pt: 2, pb: 1, display: 'flex' }}>
+            <Box sx={{ pt: 2, pb: 2, display: 'flex' }}>
               <Typography variant='h4'>{props?.title}</Typography>
               <Box sx={{ flexGrow: 1 }} />
               {props?.button && props.button}
             </Box>
-            <Box>{props?.children}</Box>
+            <Box sx={{ pt: 2, pb: 2 }}>{props?.children}</Box>
           </Box>
         </Box>
       </Box>
