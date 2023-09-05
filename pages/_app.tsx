@@ -1,39 +1,37 @@
-import { Amplify, Auth } from 'aws-amplify';
-import React from 'react';
-import { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import { parseCookies, destroyCookie } from 'nookies';
-import axios from 'axios';
-import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@mui/material';
+import { Amplify } from 'aws-amplify';
+import axios from 'axios';
+import { AppProps } from 'next/app';
+import { destroyCookie, parseCookies } from 'nookies';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
+import '@etchteam/next-pagination/dist/index.css';
 import 'react-accessible-accordion/dist/fancy-example.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-tabs/style/react-tabs.css';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import '@etchteam/next-pagination/dist/index.css';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 // Global Styles
-import '@/styles/bootstrap.min.css';
 import '@/styles/animate.min.css';
+import '@/styles/bootstrap.min.css';
 import '@/styles/boxicons.min.css';
 import '@/styles/flaticon.css';
-import '@/styles/remixicon.css';
 import '@/styles/nprogress.css';
-import '@/styles/style.scss';
+import '@/styles/remixicon.css';
 import '@/styles/responsive.scss';
+import '@/styles/style.scss';
 
 // Dashboard
 import '@/styles/dashboard.scss';
 
-import { redirectUser } from '@/utils/auth';
-import baseUrl from '@/utils/baseUrl';
-import store, { persistor } from '@/store/index';
 import Layout from '@/components/_App/Layout';
 import awsExports from '@/src/aws-exports';
+import store, { persistor } from '@/store/index';
 import { theme } from '@/styles/theme';
+import { redirectUser } from '@/utils/auth';
 
 const userRoutes = ['/profile', '/profile/userinfo', '/profile/subscription', '/profile/photo', '/checkout'];
 
@@ -60,6 +58,8 @@ App.getInitialProps = async ({ Component, ctx }) => {
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
+
+  console.log('pageProps', pageProps);
 
   // if a user not logged in then user can't access those pages
   const isUserRoute = userRoutes.includes(ctx.pathname);

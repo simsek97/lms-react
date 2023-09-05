@@ -3,20 +3,22 @@ import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
 import reducers, { rootSaga } from '@/store/reducers';
-import { ICartStore } from '@/store/reducers/cartReducer';
-import { IUserStore } from '@/store/reducers/userReducer';
 import { IBannerStore } from '@/store/reducers/bannerReducer';
+import { ICartStore } from '@/store/reducers/cartReducer';
+import { ICourseStore } from '@/store/reducers/courseReducer';
 import { IImportStore } from '@/store/reducers/importReducer';
+import { IUserStore } from '@/store/reducers/userReducer';
 
 export const appConfig = {
   appName: 'SmartKid Games'
 };
 
 export interface IReduxStore {
-  user: IUserStore;
   banner: IBannerStore;
   cart: ICartStore;
+  course: ICourseStore;
   import: IImportStore;
+  user: IUserStore;
 }
 
 const sagaMiddleware = createSagaMiddleware();

@@ -1,19 +1,16 @@
-import React from 'react';
-import Link from 'next/link';
-import CoursesList from '@/components/Courses/CoursesList';
-import Banner from '@/components/Index/Banner';
-import Navbar from '@/components/_App/Navbar';
-import Categories from '@/components/Index/Categories';
-import Transform from '@/components/Index/Transform';
-import Features from '@/components/Features/Features';
-import Testimonials from '@/components/Index/Testimonials';
-import Partners from '@/components/Index/Partners';
-import Teaching from '@/components/Index/Teaching';
-import Business from '@/components/Index/Business';
-import Footer from '@/components/_App/Footer';
-import baseUrl from '@/utils/baseUrl';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import React from 'react';
+
+import CoursesList from '@/components/Courses/CoursesList';
+import Features from '@/components/Features/Features';
+import Banner from '@/components/Index/Banner';
+import Categories from '@/components/Index/Categories';
+import Testimonials from '@/components/Index/Testimonials';
 import PageContent from '@/components/_App/PageContent';
+import { updateCoursesAction } from '@/store/actions/courseActions';
+import store from '@/store/index';
+import baseUrl from '@/utils/baseUrl';
 
 const Index = ({ courses, categories, user }) => {
   const variants = {
@@ -24,6 +21,11 @@ const Index = ({ courses, categories, user }) => {
     },
     hidden: { opacity: 0, scale: 0 }
   };
+
+  React.useEffect(() => {
+    store.dispatch(updateCoursesAction(courses));
+  }, []);
+
   return (
     <PageContent>
       <Banner user={user} />
@@ -56,11 +58,12 @@ const Index = ({ courses, categories, user }) => {
   );
 };
 
-// This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
   const res = await fetch(`${baseUrl}/api/home-courses`);
   const { courses, categories } = await res.json();
+
+  store.dispatch(updateCoursesAction(courses));
 
   // Pass data to the page via props
   return { props: { courses, categories } };

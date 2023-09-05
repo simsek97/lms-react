@@ -1,19 +1,20 @@
 import { combineReducers } from 'redux';
 import { all, spawn } from 'redux-saga/effects';
 
-import userReducer from '@/store/reducers/userReducer';
-import cartReducer from '@/store/reducers/cartReducer';
+import { importSagas } from '@/store/middleware/import';
 import bannerReducer from '@/store/reducers/bannerReducer';
+import cartReducer from '@/store/reducers/cartReducer';
+import courseReducer from '@/store/reducers/courseReducer';
 import importReducer from '@/store/reducers/importReducer';
-
-import { importSagas } from './middleware/import';
+import userReducer from '@/store/reducers/userReducer';
 
 // Combine reducers
 const reducers = {
-  user: userReducer,
   banner: bannerReducer,
   cart: cartReducer,
-  import: importReducer
+  course: courseReducer,
+  import: importReducer,
+  user: userReducer
 };
 
 export function* rootSaga() {

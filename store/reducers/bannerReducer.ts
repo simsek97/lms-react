@@ -1,13 +1,8 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { IAction } from '../index';
-
-export interface IBanner {
-  id: string;
-  bannerKey: string;
-  bannerUrl?: string;
-}
+import { IBanner } from '@/data/banner';
+import { IAction } from '@/store/index';
 
 export interface IBannerStore {
   banners: IBanner[];
