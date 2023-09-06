@@ -1,5 +1,10 @@
 import Sequelize from 'sequelize';
 import { Course, User, Enrolment, Category } from 'database/models';
+import { listCourses } from '@/src/graphql/queries';
+import axios from 'axios';
+
+const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
+const GRAPHQL_API_KEY = process.env.GRAPHQL_API_KEY;
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -15,32 +20,22 @@ export default async function handler(req, res) {
 
 const handleGetRequest = async (req, res) => {
   try {
-    const courses = await Course.findAll({
-      order: Sequelize.literal('rand()'),
-      limit: 4,
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['first_name', 'last_name', 'profile_photo']
-        },
-        {
-          model: Enrolment,
-          as: 'enrolments',
-          attributes: ['id']
-        }
-      ],
-      where: { in_home_page: true, approved: true }
-    });
+    const body = { query: listCourses, variables: { limit: 10 } };
+    const options = {
+      headers: {
+        'x-api-key': GRAPHQL_API_KEY,
+        'Content-Type': 'application/json'
+      }
+    };
 
-    const categories = await Category.findAll({
-      order: Sequelize.literal('rand()'),
-      limit: 12
-    });
+    const coursesRes = await axios.post(GRAPHQL_ENDPOINT, body, options);
 
+    console.log(coursesRes.data.data.listCourses.items);
+    console.log(coursesRes.data.data.listCourses.nextToken);
     res.status(200).json({
-      courses,
-      categories
+      courses: coursesRes.data.data.listCourses.items,
+      coursesToken: coursesRes.data.data.listCourses.nextToken,
+      categories: []
     });
   } catch (e) {
     res.status(400).json({

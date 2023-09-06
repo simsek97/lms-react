@@ -59,8 +59,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  console.log('pageProps', pageProps);
-
   // if a user not logged in then user can't access those pages
   const isUserRoute = userRoutes.includes(ctx.pathname);
   const isAdminRoute = ctx?.pathname.includes('/admin/');

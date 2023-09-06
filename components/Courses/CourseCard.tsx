@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Link from 'next/link';
-import baseUrl from '@/utils/baseUrl';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { IReduxStore } from '@/store/index';
+import baseUrl from '@/utils/baseUrl';
 
 const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
-  //@ts-ignore
-  const cartItems = useSelector((state) => state.cart.cartItems);
   const router = useRouter();
-  const { id, title, slug, short_desc, latest_price, before_price, lessons, image, user, enrollments = [] } = course;
-  const [fav, setfavs] = useState(false);
-  const [add, setAdd] = useState(false);
-  const [buy, setBuy] = useState(false);
+  const [fav, setfavs] = React.useState(false);
+  const [add, setAdd] = React.useState(false);
+  const [buy, setBuy] = React.useState(false);
 
-  useEffect(() => {
+  const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = course;
+  const cartItems = useSelector((state: IReduxStore) => state.cart.cartItems);
+
+  React.useEffect(() => {
     setAdd(cartItems.some((cart) => cart.id === id));
     if (userId && course && id) {
       const payload = {
@@ -29,7 +31,7 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [course, cartItems]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (userId) {
       const payload = {
         params: {
@@ -53,11 +55,11 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
       <div className='single-courses'>
         <div className='courses-main-img'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt='Image' />
+          <img src={image || '/images/courses/course-9.jpg'} alt='Course Image' />
         </div>
         <div className='courses-content'>
           <h3>{title}</h3>
-          <div className='courses-price'>${latest_price}</div>
+          <div className='courses-price'>${latestPrice}</div>
         </div>
 
         <div className='courses-hover-content'>
@@ -68,7 +70,7 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
                   <a>{title}</a>
                 </Link>
               </h3>
-              <p>{short_desc.slice(0, 108)}</p>
+              <p>{shortDesc?.slice(0, 108)}</p>
 
               <div className='courses-btn d-flex justify-content-between align-items-center'>
                 {buy ? (
@@ -88,6 +90,7 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
                     )}
                   </>
                 )}
+
                 {fav ? (
                   <motion.button
                     whileTap={{ scale: 3 }}
