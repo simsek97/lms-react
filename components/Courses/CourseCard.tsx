@@ -19,7 +19,6 @@ const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
 
   const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === level.slug);
 
-  console.log(subscriptionTier);
   React.useEffect(() => {
     setAdd(cartItems.some((cart) => cart.id === id));
 
