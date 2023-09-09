@@ -60,8 +60,10 @@ const Photo = () => {
         variables: {
           input: {
             id: userProfile.id,
-            avatarKey: upload.key,
-            avatarUrl: uploadUrl
+            avatar: {
+              key: upload.key,
+              url: uploadUrl
+            }
           }
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS'

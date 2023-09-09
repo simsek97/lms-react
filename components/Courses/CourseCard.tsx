@@ -8,14 +8,18 @@ import { useSelector } from 'react-redux';
 import { IReduxStore } from '@/store/index';
 import baseUrl from '@/utils/baseUrl';
 import { ISubscriptionTier } from '@/data/subscription-tier';
+import { ICourse } from '@/data/course';
 
 const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
   const router = useRouter();
   const [add, setAdd] = React.useState(false);
   const [buy, setBuy] = React.useState(false);
 
-  const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = course;
+  const courses = useSelector((state: IReduxStore) => state.course.courses);
   const cartItems = useSelector((state: IReduxStore) => state.cart.cartItems);
+
+  const courseInfo = courses.find((c: ICourse) => c.id === course.id);
+  const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = courseInfo;
 
   const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === level.slug);
 
@@ -39,7 +43,7 @@ const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
       <div className='single-courses'>
         <div className='courses-main-img'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image || '/images/courses/course-9.jpg'} alt='Course Image' />
+          <img src={image?.url || '/images/courses/course-9.jpg'} alt='Course Image' />
         </div>
         <div className='courses-content'>
           <h3>{title}</h3>

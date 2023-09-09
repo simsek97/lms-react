@@ -4,5 +4,8 @@ export interface ICategory {
   id?: string;
   name: string;
   slug: string;
-  courses?: ICourse[];
+  courses?: {
+    items: ICourse[];
+    nextToken?: string;
+  };
 }
