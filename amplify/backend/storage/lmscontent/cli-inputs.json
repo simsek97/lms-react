@@ -9,6 +9,17 @@
     "READ",
     "DELETE"
   ],
-  "triggerFunction": "NONE",
-  "groupAccess": {}
+  "groupAccess": {
+    "Admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ],
+    "User": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  },
+  "triggerFunction": "S3Trigger36af2e3c"
 }

@@ -97,16 +97,7 @@ const ProfileDropdown = ({ user }) => {
           <Link href='/learning/my-courses/'>
             <a className='dropdown-item'>
               <i className='bx bx-book'></i>
-              My learning
-            </a>
-          </Link>
-        </li>
-
-        <li>
-          <Link href='/learning/my-purchase-history/'>
-            <a className='dropdown-item'>
-              <i className='bx bx-credit-card-front'></i>
-              My Purchases
+              My Learning
             </a>
           </Link>
         </li>
@@ -121,9 +112,18 @@ const ProfileDropdown = ({ user }) => {
         </li>
 
         <li>
-          <Link href='/profile/basic-information/'>
+          <Link href='/profile/subscription/'>
             <a className='dropdown-item'>
-              <i className='bx bxs-user-account'></i> Account settings
+              <i className='bx bx-credit-card-front'></i>
+              My Subscription
+            </a>
+          </Link>
+        </li>
+
+        <li>
+          <Link href='/profile/userinfo/'>
+            <a className='dropdown-item'>
+              <i className='bx bxs-user-account'></i> My Account
             </a>
           </Link>
         </li>

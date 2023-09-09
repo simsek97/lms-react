@@ -97,7 +97,6 @@ const LoginForm = () => {
 
         setStatus('success');
         setTimeout(() => {
-          console.log(router.query);
           if (router.query && router.query.next) {
             Router.push({ pathname: router.query.next[0] });
           } else {

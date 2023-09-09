@@ -53,6 +53,11 @@ export const getUser = /* GraphQL */ `
       firstname
       lastname
       email
+      address
+      city
+      state
+      zipCode
+      country
       role
       owner
       avatar {
@@ -74,6 +79,23 @@ export const getUser = /* GraphQL */ `
         items {
           id
           userID
+          user {
+            id
+            sub
+            firstname
+            lastname
+            email
+            address
+            city
+            state
+            zipCode
+            country
+            role
+            owner
+            stripeCustomerId
+            createdAt
+            updatedAt
+          }
           courseID
           createdAt
           updatedAt
@@ -99,6 +121,11 @@ export const listUsers = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -117,6 +144,14 @@ export const listUsers = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -147,6 +182,11 @@ export const userByEmail = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -165,6 +205,14 @@ export const userByEmail = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -195,6 +243,11 @@ export const userByCustomerId = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -213,6 +266,14 @@ export const userByCustomerId = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -239,11 +300,31 @@ export const getCategory = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -271,6 +352,28 @@ export const listCategories = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -298,11 +401,31 @@ export const getLevel = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -330,6 +453,28 @@ export const listLevels = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -365,6 +510,28 @@ export const getCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -377,6 +544,28 @@ export const getCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -421,6 +610,9 @@ export const listCourses = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -430,6 +622,9 @@ export const listCourses = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -482,6 +677,9 @@ export const coursesByCatID = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -491,6 +689,9 @@ export const coursesByCatID = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -543,6 +744,9 @@ export const coursesByLevelID = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -552,6 +756,9 @@ export const coursesByLevelID = /* GraphQL */ `
           id
           name
           slug
+          courses {
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -578,6 +785,11 @@ export const getFavorite = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -596,6 +808,14 @@ export const getFavorite = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -624,9 +844,31 @@ export const listFavorites = /* GraphQL */ `
           firstname
           lastname
           email
+          address
+          city
+          state
+          zipCode
+          country
           role
           owner
+          avatar {
+            key
+            url
+          }
           stripeCustomerId
+          subscription {
+            tier
+            title
+            price
+            canceled
+            subscribedAt
+            expiresAt
+            montlyPriceId
+            yearlyPriceId
+          }
+          favorites {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -663,9 +905,31 @@ export const favoritesByUserID = /* GraphQL */ `
           firstname
           lastname
           email
+          address
+          city
+          state
+          zipCode
+          country
           role
           owner
+          avatar {
+            key
+            url
+          }
           stripeCustomerId
+          subscription {
+            tier
+            title
+            price
+            canceled
+            subscribedAt
+            expiresAt
+            montlyPriceId
+            yearlyPriceId
+          }
+          favorites {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -702,9 +966,31 @@ export const favoritesByCourseID = /* GraphQL */ `
           firstname
           lastname
           email
+          address
+          city
+          state
+          zipCode
+          country
           role
           owner
+          avatar {
+            key
+            url
+          }
           stripeCustomerId
+          subscription {
+            tier
+            title
+            price
+            canceled
+            subscribedAt
+            expiresAt
+            montlyPriceId
+            yearlyPriceId
+          }
+          favorites {
+            nextToken
+          }
           createdAt
           updatedAt
         }

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { Course, User, Enrolment, Category } from 'database/models';
-import { listCourses } from '@/src/graphql/queries';
+import { listCategories, listCourses } from '@/src/graphql/queries';
 import axios from 'axios';
 
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
@@ -20,7 +20,6 @@ export default async function handler(req, res) {
 
 const handleGetRequest = async (req, res) => {
   try {
-    const body = { query: listCourses, variables: { limit: 10 } };
     const options = {
       headers: {
         'x-api-key': GRAPHQL_API_KEY,
@@ -28,14 +27,17 @@ const handleGetRequest = async (req, res) => {
       }
     };
 
-    const coursesRes = await axios.post(GRAPHQL_ENDPOINT, body, options);
+    const coursesBody = { query: listCourses, variables: { limit: 12 } };
+    const coursesRes = await axios.post(GRAPHQL_ENDPOINT, coursesBody, options);
 
-    console.log(coursesRes.data.data.listCourses.items);
-    console.log(coursesRes.data.data.listCourses.nextToken);
+    const categoriesBody = { query: listCategories, variables: { limit: 20 } };
+    const categoriesRes = await axios.post(GRAPHQL_ENDPOINT, categoriesBody, options);
+
     res.status(200).json({
       courses: coursesRes.data.data.listCourses.items,
       coursesToken: coursesRes.data.data.listCourses.nextToken,
-      categories: []
+      categories: categoriesRes.data.data.listCategories.items,
+      categoriesToken: categoriesRes.data.data.listCategories.nextToken
     });
   } catch (e) {
     res.status(400).json({

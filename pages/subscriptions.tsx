@@ -10,6 +10,7 @@ import SubscriptionCard from '@/components/Subsciption/SubscriptionCard';
 import PageContent from '@/components/_App/PageContent';
 import { ListSubscriptionTiersQuery, SubscriptionTier } from '@/src/API';
 import { listSubscriptionTiers } from '@/src/graphql/queries';
+import { updateSubscriptionsAction } from '@/store/actions/subscriptionActions';
 import { IReduxStore } from '@/store/index';
 import { toastSuccessStyle } from '@/utils/toast';
 
@@ -60,7 +61,8 @@ const SubscriptionsPage = () => {
         );
 
         const updatedSubscriptions = [...subscriptions, ...data.listSubscriptionTiers.items];
-        setSubscriptions(updatedSubscriptions.sort((a, b) => a.id - b.id));
+        setSubscriptions(updatedSubscriptions);
+        dispatch(updateSubscriptionsAction(updatedSubscriptions));
       } catch (e) {
         console.log(e);
       }
@@ -79,7 +81,7 @@ const SubscriptionsPage = () => {
     <PageContent pageTitle='Subscription'>
       <Grid container spacing={3} sx={{ p: 2, mt: 3 }}>
         <Grid item xs={12} sx={{ fontSize: '1.1rem', mt: 3, mb: 3, textAlign: 'center', paddingTop: '0 !important' }}>
-          Select your subscription for your kid&apos;s grade in order to access all learning contents.
+          Select your subscription for your kid&apos;s grade in order to access all learning content.
         </Grid>
 
         <Grid item xs={12}>

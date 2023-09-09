@@ -1,16 +1,13 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import { v4 as uuidv4 } from 'uuid';
-import { Enrolment, Instructor_Earning, Course } from 'database/models';
-import { calculateCartTotal } from '@/utils/calculateCartTotal';
-// import { checkoutConfirmation } from "email-templates/checkout-confirmation";
 
 //@ts-ignore
-const stripeSecret = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
-      await handlePostRequest(req, res);
+      await createSubscription(req, res);
       break;
     default:
       res.status(405).json({
@@ -19,61 +16,54 @@ export default async function handler(req, res) {
   }
 }
 
-const handlePostRequest = async (req, res) => {
-  const { cartItems, userId, buyer_name, buyer_email, buyer_avatar } = req.body;
-
-  const { stripeTotal } = calculateCartTotal(cartItems);
+const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { cartItem, user, paymentMethodId } = req.body;
 
   try {
-    await stripeSecret.charges.create(
-      {
-        amount: stripeTotal,
-        currency: 'usd',
-        source: 'tok_mastercard',
-        receipt_email: buyer_email,
-        description: `Checkout | ${buyer_email} | ${userId}`
+    let customerId = user?.stripeCustomerId || null;
+    if (!customerId) {
+      // Create a stripe customer
+      const customer = await stripe.customers.create({
+        name: `${user.firstname} ${user.lastname}`,
+        email: user.email,
+        payment_method: paymentMethodId,
+        invoice_settings: {
+          default_payment_method: paymentMethodId
+        }
+      });
+
+      customerId = customer.id;
+    }
+
+    // get the price id from the front-end
+    const priceId = cartItem.montlyPriceId;
+
+    // create a stripe subscription
+    const subscription = await stripe.subscriptions.create({
+      customer: customerId,
+      items: [{ price: priceId }],
+      payment_settings: {
+        payment_method_options: {
+          card: {
+            request_three_d_secure: 'any'
+          }
+        },
+        payment_method_types: ['card'],
+        save_default_payment_method: 'on_subscription'
       },
-      {
-        idempotencyKey: uuidv4()
-      }
-    );
-
-    cartItems.forEach(async (cart) => {
-      Enrolment.create({
-        bought_price: cart.price,
-        payment_method: 'Card',
-        buyer_name: buyer_name,
-        buyer_email: buyer_email,
-        buyer_avatar: buyer_avatar,
-        userId: userId,
-        courseId: cart.id,
-        status: 'paid'
-      });
-
-      const courseInstractor = await Course.findOne({
-        attributes: ['userId'],
-        where: { id: cart.id }
-      });
-
-      await Instructor_Earning.create({
-        earnings: cart.price,
-        //@ts-ignore
-        userId: courseInstractor.userId,
-        courseId: cart.id
-      });
+      expand: ['latest_invoice.payment_intent']
     });
-
-    // console.log(cartItems);
-
-    // checkoutConfirmation(cartItems, buyer_name, buyer_email);
 
     res.status(200).json({
-      message: 'Enroled successfully.'
+      customerId: customerId,
+      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+      subscriptionId: subscription.id,
+      message: 'Payment has been completed successfully.'
     });
-  } catch (e) {
+  } catch (error) {
     res.status(400).json({
-      error_code: 'create_enroled',
-      message: e.message
+      error_code: 'create_subscription',
+      message: error.message
     });
   }
 };

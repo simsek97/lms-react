@@ -4,7 +4,7 @@ import Link from 'next/link';
 import CoursesList from '@/components/Courses/CoursesList';
 import { variants } from '@/styles/theme';
 
-const FeaturedCourses = ({ courses, user }) => {
+const FeaturedCourses = ({ courses, coursesToken, user }) => {
   return (
     <div className='feature-dcourses-area bg-color-f6fafb pt-100 pb-70'>
       <div className='container'>

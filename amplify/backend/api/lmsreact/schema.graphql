@@ -10,7 +10,7 @@ type S3Object {
 type UserSubscription {
   tier: String!
   title: String!
-  price: Int!
+  price: Float!
   canceled: String
   subscribedAt: String
   expiresAt: String
@@ -32,6 +32,11 @@ type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: pu
   firstname: String!
   lastname: String!
   email: String! @index(name: "byEmail", queryField: "userByEmail")
+  address: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
   role: String
   owner: String!
   avatar: S3Object
@@ -57,8 +62,8 @@ type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: 
   slug: String
   shortDesc: String
   overview: String
-  latestPrice: Int
-  beforePrice: Int
+  latestPrice: Float
+  beforePrice: Float
   lessons: String
   duration: String
   image: S3Object

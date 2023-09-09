@@ -1,162 +1,138 @@
-import React, { useState } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import Link from 'next/link';
-import { parseCookies } from 'nookies';
-import axios from 'axios';
+import { GraphQLQuery } from '@aws-amplify/api';
+import Grid from '@mui/material/Grid';
+import { API, Storage } from 'aws-amplify';
+import React from 'react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/router';
-import baseUrl from '@/utils/baseUrl';
-import Button from '@/utils/Button';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Photo = ({ user }) => {
-  const { lms_react_users_token } = parseCookies();
-  const router = useRouter();
-  const [avatar, setAvatar] = useState(user);
-  const [loading, setLoading] = React.useState(false);
+import PageContent from '@/components/_App/PageContent';
+import UserNavbar from '@/components/_App/UserNavbar';
+import { UpdateUserMutation } from '@/src/API';
+import { updateUser } from '@/src/graphql/mutations';
+import { updateUserAction } from '@/store/actions/userActions';
+import { IReduxStore } from '@/store/index';
+import SubmitButton from '@/utils/SubmitButton';
+import { getS3File } from '@/utils/getS3File';
+import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
+
+const Photo = () => {
+  const [avatar, setAvatar] = React.useState<File>();
   const [profilePreview, setProfilePreview] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
 
-  const handleChange = (e) => {
+  const dispatch = useDispatch();
+
+  const userProfile = useSelector((state: IReduxStore) => state.user.profile);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
     const profilePhotoSize = files[0].size / 1024 / 1024;
     if (profilePhotoSize > 2) {
-      toast.error('The profile photo size greater than 2 MB. Make sure less than 2 MB.', {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
+      toast.error('The profile photo size greater than 2 MB. Make sure less than 2 MB.', toastErrorStyle);
       e.target.value = null;
       return;
     }
 
-    setAvatar({
-      profile_photo: files[0]
-    });
+    setAvatar(files[0]);
+
     setProfilePreview(window.URL.createObjectURL(files[0]));
-  };
-
-  const handleProfilePhotoUpload = async () => {
-    // console.log(avatar);
-    const data = new FormData();
-    data.append('file', avatar.profile_photo);
-    data.append('upload_preset', process.env.UPLOAD_PRESETS);
-    data.append('cloud_name', process.env.CLOUD_NAME);
-
-    let response;
-    if (avatar) {
-      response = await axios.post(process.env.CLOUDINARY_URL, data);
-    }
-    const profilePhotoUrl = response.data.url;
-    return profilePhotoUrl;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      // console.log(avatar);
-      let profile = '';
-      if (avatar) {
-        profile = await handleProfilePhotoUpload();
-        profile = profile.replace(/^http:\/\//i, 'https://');
+      if (!avatar) {
+        return false;
       }
-      // console.log(profile);
-      const url = `${baseUrl}/api/users/profile-photo`;
-      const payload = {
-        profile_photo: profile
-      };
-      const response = await axios.put(url, payload, {
-        headers: { Authorization: lms_react_users_token }
+      console.log(avatar);
+      const upload = await Storage.put(avatar['name'], avatar, {
+        level: 'private'
       });
-      setLoading(false);
-      toast.success(response.data.message);
-      router.push('/');
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
+
+      // Get S3 signed url
+      const uploadUrl = await getS3File(upload.key, 'private');
+
+      // Update user on DynamoDB
+      const { data } = await API.graphql<GraphQLQuery<UpdateUserMutation>>({
+        query: updateUser,
+        variables: {
+          input: {
+            id: userProfile.id,
+            avatarKey: upload.key,
+            avatarUrl: uploadUrl
+          }
         },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
+
+      // Update the store
+      dispatch(updateUserAction({ ...userProfile, avatarKey: upload.key, avatarUrl: uploadUrl }));
+
+      setLoading(false);
+      toast.success('Profile Picture has been successfully saved.', toastSuccessStyle);
+    } catch (err) {
+      console.log(err);
+      toast.error('Profile Picture could not be saved.', toastErrorStyle);
     } finally {
       setLoading(false);
     }
   };
 
+  React.useEffect(() => {
+    const getProfilePhoto = async (filename: string) => {
+      const photo = await getS3File(filename, 'private');
+
+      return photo;
+    };
+
+    if (userProfile?.avatarKey) {
+      getProfilePhoto(userProfile.avatarKey).then((data) => setProfilePreview(data));
+    }
+  }, [userProfile?.avatarKey]);
+
   return (
-    <>
-      <Navbar user={user} />
+    <PageContent>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3} sx={{ p: 3 }}>
+          <Grid item xs={12}>
+            <UserNavbar active='/profile/photo' />
+          </Grid>
 
-      <div className='ptb-100'>
-        <div className='container'>
-          <h2 className='fw-bold mb-4'>Profile & Settings</h2>
+          <Grid container item spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <div className='form-group'>
+                <label className='form-label fw-semibold'>Profile Image</label>
+                <input
+                  type='file'
+                  className='form-control file-control'
+                  name='profilePhoto'
+                  accept='image/*'
+                  onChange={handleChange}
+                  required={true}
+                />
+                <div className='form-text mt-2'>Upload image size 200x200 pixels!</div>
 
-          <ul className='nav-style1'>
-            <li>
-              <Link href='/profile/basic-information'>
-                <a>Profile</a>
-              </Link>
-            </li>
-            <li>
-              <Link href='/profile/photo'>
-                <a className='active'>Profile Picture</a>
-              </Link>
-            </li>
-          </ul>
-
-          <div className='basic-profile-information-form'>
-            <form onSubmit={handleSubmit}>
-              <div className='row'>
-                <div className='col-md-6'>
-                  <div className='form-group'>
-                    <label className='form-label fw-semibold'>Profile Image</label>
-                    <input
-                      type='file'
-                      className='form-control file-control'
-                      name='profilePhoto'
-                      accept='image/*'
-                      onChange={handleChange}
-                      required={true}
-                    />
-                    <div className='form-text mt-2'>Upload image size 200x200 pixels!</div>
-
-                    <div className='mt-3'>
-                      {profilePreview ? (
-                        <img src={profilePreview} className='img-thumbnail mw-200px' />
-                      ) : (
-                        <img src='/images/avatar.jpg' alt='image' className='img-thumbnail mw-200px' />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className='col-12'>
-                  <Button disabled={false} loading={loading} btnText='Upload' btnClass='btn default-btn' />
+                <div className='mt-3'>
+                  {profilePreview ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={profilePreview} alt='image' className='img-thumbnail mw-200px' />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src='/images/avatar.jpg' alt='image' className='img-thumbnail mw-200px' />
+                  )}
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
 
-      <Footer />
-    </>
+          <Grid item xs={12}>
+            <SubmitButton disabled={false} loading={isLoading} btnText='Upload' btnClass='btn default-btn' />
+          </Grid>
+        </Grid>
+      </form>
+    </PageContent>
   );
 };
 

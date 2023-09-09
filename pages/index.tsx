@@ -1,21 +1,21 @@
-import { motion } from 'framer-motion';
-import Link from 'next/link';
 import React from 'react';
 
-import CoursesList from '@/components/Courses/CoursesList';
+import FeaturedCourses from '@/components/Courses/FeaturedCourses';
 import Features from '@/components/Features/Features';
 import Banner from '@/components/Index/Banner';
 import Categories from '@/components/Index/Categories';
 import Testimonials from '@/components/Index/Testimonials';
 import PageContent from '@/components/_App/PageContent';
-import { updateCoursesAction } from '@/store/actions/courseActions';
-import store from '@/store/index';
+import { updateCategoriesAction, updateCoursesAction } from '@/store/actions/courseActions';
 import baseUrl from '@/utils/baseUrl';
-import FeaturedCourses from '@/components/Courses/FeaturedCourses';
+import { useDispatch } from 'react-redux';
 
-const Index = ({ courses, categories, user }) => {
+const Index = ({ courses, coursesToken, categories, categoriesToken, user }) => {
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    store.dispatch(updateCoursesAction(courses));
+    dispatch(updateCoursesAction(courses));
+    dispatch(updateCategoriesAction(categories));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -23,8 +23,8 @@ const Index = ({ courses, categories, user }) => {
     <PageContent>
       <Banner user={user} />
       <Features />
-      <FeaturedCourses courses={courses} user={user} />
-      <Categories categories={categories} />
+      <FeaturedCourses courses={courses} coursesToken={coursesToken} user={user} />
+      <Categories categories={categories} categoriesToken={categoriesToken} />
       {/* <Transform /> */}
       <Testimonials />
       {/* <Partners /> */}
@@ -37,10 +37,10 @@ const Index = ({ courses, categories, user }) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const res = await fetch(`${baseUrl}/api/home-courses`);
-  const { courses, coursesToken, categories } = await res.json();
+  const { courses, coursesToken, categories, categoriesToken } = await res.json();
 
   // Pass data to the page via props
-  return { props: { courses, coursesToken, categories } };
+  return { props: { courses, coursesToken, categories, categoriesToken } };
 }
 
 export default Index;

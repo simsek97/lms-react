@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataGrid } from '@mui/x-data-grid';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { confirmAlert } from 'react-confirm-alert';
@@ -12,9 +12,9 @@ import toast from 'react-hot-toast';
 
 import AdminLayout from '@/components/Admin/AdminLayout';
 import { ICategory } from '@/data/category';
-import { DeleteCategoryMutation, ListCategoriesQuery } from '@/src/API';
+import { DeleteCategoryMutation } from '@/src/API';
 import { deleteCategory } from '@/src/graphql/mutations';
-import { listCategories } from '@/src/graphql/queries';
+import getCategories from '@/utils/getCategories';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
 const Categories = ({ user }) => {
@@ -103,11 +103,11 @@ const Categories = ({ user }) => {
 
     try {
       setLoading(true);
-      const { data } = await API.graphql<GraphQLQuery<ListCategoriesQuery>>(graphqlOperation(listCategories, { limit }));
+      const dbCategories = await getCategories(limit, null);
 
-      setPageToken(data.listCategories.nextToken);
+      setPageToken(dbCategories.nextToken);
 
-      const updatedCategories = [...categories, ...data.listCategories.items];
+      const updatedCategories = [...categories, ...dbCategories.items];
       setCategories(updatedCategories.sort((a, b) => Number(a.id) - Number(b.id)) as ICategory[]);
     } catch (e) {
       console.log(e);
@@ -119,7 +119,7 @@ const Categories = ({ user }) => {
   React.useEffect(() => {
     fetchCategories(pageSize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   return (
     <AdminLayout

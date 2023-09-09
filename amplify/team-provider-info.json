@@ -76,7 +76,11 @@
           "s3Key": "amplify-builds/lmsauthPostConfirmation-736979304a737358494c-build.zip"
         },
         "lmsauth": {},
-        "lmsreact": {}
+        "lmsreact": {},
+        "S3Trigger36af2e3c": {
+          "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
+          "s3Key": "amplify-builds/S3Trigger36af2e3c-464c7144553165423558-build.zip"
+        }
       },
       "api": {
         "AdminQueries": {},

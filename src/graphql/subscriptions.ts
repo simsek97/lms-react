@@ -70,6 +70,11 @@ export const onCreateUser = /* GraphQL */ `
       firstname
       lastname
       email
+      address
+      city
+      state
+      zipCode
+      country
       role
       owner
       avatar {
@@ -91,6 +96,23 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           userID
+          user {
+            id
+            sub
+            firstname
+            lastname
+            email
+            address
+            city
+            state
+            zipCode
+            country
+            role
+            owner
+            stripeCustomerId
+            createdAt
+            updatedAt
+          }
           courseID
           createdAt
           updatedAt
@@ -114,6 +136,11 @@ export const onUpdateUser = /* GraphQL */ `
       firstname
       lastname
       email
+      address
+      city
+      state
+      zipCode
+      country
       role
       owner
       avatar {
@@ -135,6 +162,23 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           userID
+          user {
+            id
+            sub
+            firstname
+            lastname
+            email
+            address
+            city
+            state
+            zipCode
+            country
+            role
+            owner
+            stripeCustomerId
+            createdAt
+            updatedAt
+          }
           courseID
           createdAt
           updatedAt
@@ -158,6 +202,11 @@ export const onDeleteUser = /* GraphQL */ `
       firstname
       lastname
       email
+      address
+      city
+      state
+      zipCode
+      country
       role
       owner
       avatar {
@@ -179,6 +228,23 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           userID
+          user {
+            id
+            sub
+            firstname
+            lastname
+            email
+            address
+            city
+            state
+            zipCode
+            country
+            role
+            owner
+            stripeCustomerId
+            createdAt
+            updatedAt
+          }
           courseID
           createdAt
           updatedAt
@@ -211,11 +277,31 @@ export const onCreateCategory = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -251,11 +337,31 @@ export const onUpdateCategory = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -291,11 +397,31 @@ export const onDeleteCategory = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -331,11 +457,31 @@ export const onCreateLevel = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -371,11 +517,31 @@ export const onUpdateLevel = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -411,11 +577,31 @@ export const onDeleteLevel = /* GraphQL */ `
           beforePrice
           lessons
           duration
+          image {
+            key
+            url
+          }
           requirements
           whatYouWillLearn
           whoIsThisCourseFor
           catID
+          category {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           levelID
+          level {
+            id
+            name
+            slug
+            createdAt
+            updatedAt
+            owner
+          }
           inHomePage
           inHomePageSetAt
           isClass
@@ -459,6 +645,28 @@ export const onCreateCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -471,6 +679,28 @@ export const onCreateCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -514,6 +744,28 @@ export const onUpdateCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -526,6 +778,28 @@ export const onUpdateCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -569,6 +843,28 @@ export const onDeleteCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -581,6 +877,28 @@ export const onDeleteCourse = /* GraphQL */ `
         name
         slug
         courses {
+          items {
+            id
+            title
+            slug
+            shortDesc
+            overview
+            latestPrice
+            beforePrice
+            lessons
+            duration
+            requirements
+            whatYouWillLearn
+            whoIsThisCourseFor
+            catID
+            levelID
+            inHomePage
+            inHomePageSetAt
+            isClass
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -610,6 +928,11 @@ export const onCreateFavorite = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -628,6 +951,14 @@ export const onCreateFavorite = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -654,6 +985,11 @@ export const onUpdateFavorite = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -672,6 +1008,14 @@ export const onUpdateFavorite = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -698,6 +1042,11 @@ export const onDeleteFavorite = /* GraphQL */ `
         firstname
         lastname
         email
+        address
+        city
+        state
+        zipCode
+        country
         role
         owner
         avatar {
@@ -716,6 +1065,14 @@ export const onDeleteFavorite = /* GraphQL */ `
           yearlyPriceId
         }
         favorites {
+          items {
+            id
+            userID
+            courseID
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt

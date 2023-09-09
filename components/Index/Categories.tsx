@@ -1,19 +1,53 @@
-import React from 'react';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import React from 'react';
 
-const Categories = ({ categories }) => {
+import { ICategory } from '@/data/category';
+import getCategories from '@/utils/getCategories';
+
+const Categories = ({ categories, categoriesToken }) => {
+  const [cats, setCats] = React.useState<ICategory[]>(categories);
+  const [pageToken, setPageToken] = React.useState(categoriesToken);
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [page, setPage] = React.useState(0);
+
+  const pageSize = 10;
+
+  const fetchCategories = async (limit: number, nextToken: string) => {
+    setLoading(true);
+
+    try {
+      setLoading(true);
+      const dbCategories = await getCategories(limit, nextToken);
+
+      setPageToken(dbCategories.nextToken);
+
+      const updatedCategories = [...categories, ...dbCategories.items];
+      setCats(updatedCategories.sort((a, b) => Number(a.id) - Number(b.id)) as ICategory[]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    // fetchCategories(pageSize, pageToken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
   return (
     <div className='categories-area ptb-100'>
       <div className='container'>
         <div className='section-title'>
-          <span className='top-title'>Top Categories</span>
-          <h2>Browse Top Categories</h2>
+          <span className='top-title'>Categories</span>
         </div>
 
         <div className='row'>
-          {categories.length > 0 &&
-            categories.map((cat) => (
+          {cats.length > 0 &&
+            cats.map((cat: ICategory) => (
               <motion.div
                 key={cat.id}
                 className='col-lg-3 col-sm-6'
@@ -42,16 +76,18 @@ const Categories = ({ categories }) => {
               </motion.div>
             ))}
 
-          <div className='col-lg-12 '>
-            <p className='text-center'>
-              Browse All{' '}
-              <Link href='/courses'>
-                <a className='read-more'>
-                  Courses <i className='ri-arrow-right-line'></i>
-                </a>
-              </Link>
-            </p>
-          </div>
+          {pageToken && (
+            <div className='col-lg-12 '>
+              <p className='text-center'>
+                <Button
+                  startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+                  variant='contained'
+                  onClick={() => setPage(page + 1)}>
+                  Show More Categories
+                </Button>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

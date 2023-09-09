@@ -1,35 +1,29 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import CoursesList from '@/components/Courses/CoursesList';
+import Categories from '@/components/Index/Categories';
 import PageContent from '@/components/_App/PageContent';
-import baseUrl from '@/utils/baseUrl';
+import { ICategory } from '@/data/category';
+import { IReduxStore } from '@/store/index';
 
-export default function CoursesPage({ user }) {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function CategoryPage({ user }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const fetchCourses = async () => {
-    setLoading(true);
-
-    const response = await axios.get(`${baseUrl}/api/categories/${slug}`);
-    setCourses(response.data.courses.courses);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCourses();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  const storeCats = useSelector((store: IReduxStore) => store.course.categories);
+  const storeCat: ICategory = storeCats.find((c) => c.slug === slug);
 
   return (
-    <PageContent pageTitle='Category'>
+    <PageContent pageTitle='Category' activePageText={storeCat.name}>
       <div className='pt-100 pb-70'>
         <div className='container'>
-          <CoursesList courses={courses} user={user} />
+          <CoursesList courses={storeCat.courses} user={user} />
+        </div>
+      </div>
+      <div className='pt-100 pb-70'>
+        <div className='container'>
+          <Categories categories={storeCats} categoriesToken={null} />
         </div>
       </div>
     </PageContent>

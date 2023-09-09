@@ -46,6 +46,12 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "Region": "string",
             "LambdaExecutionRoleArn": "string"
+        },
+        "S3Trigger36af2e3c": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     },
     "storage": {

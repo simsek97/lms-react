@@ -15,7 +15,7 @@ const PricingList = styled('ul')({
 
 const SubscriptionCard = ({ tier, adding, handleClick }) => {
   return (
-    <Card sx={{ maxWidth: '400px' }}>
+    <Card sx={{ maxWidth: '400px', pb: 2 }}>
       <CardHeader
         className='pages-banner-area'
         title={tier.title}

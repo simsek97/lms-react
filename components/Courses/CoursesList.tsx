@@ -41,12 +41,7 @@ const CoursesList = ({ courses, user }) => {
   };
 
   React.useEffect(() => {
-    if (storeSubscriptionTiers.length === 0) {
-      listTiers();
-    } else {
-      setSubscriptionTiers(storeSubscriptionTiers);
-    }
-
+    listTiers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
