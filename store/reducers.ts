@@ -1,11 +1,10 @@
 import { combineReducers } from 'redux';
 import { all, spawn } from 'redux-saga/effects';
 
-import { importSagas } from '@/store/middleware/import';
 import bannerReducer from '@/store/reducers/bannerReducer';
 import cartReducer from '@/store/reducers/cartReducer';
 import courseReducer from '@/store/reducers/courseReducer';
-import importReducer from '@/store/reducers/importReducer';
+import subscriptionReducer from '@/store/reducers/subscriptionReducer';
 import userReducer from '@/store/reducers/userReducer';
 
 // Combine reducers
@@ -13,12 +12,13 @@ const reducers = {
   banner: bannerReducer,
   cart: cartReducer,
   course: courseReducer,
-  import: importReducer,
+  subscription: subscriptionReducer,
   user: userReducer
 };
 
 export function* rootSaga() {
-  const allSagas = [].concat(importSagas());
+  // const allSagas = [].concat(importSagas());
+  const allSagas = [];
 
   yield all(
     allSagas.map((saga) =>

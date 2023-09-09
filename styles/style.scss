@@ -1334,7 +1334,7 @@ Courses Area Style
   border-radius: 25px;
   border: 1px solid #e0e0e0;
   .courses-main-img {
-    margin: -1px -1px 15px;
+    margin: 0 0 15px;
     display: block;
   }
   .courses-content {
@@ -1438,6 +1438,15 @@ Courses Area Style
           background-color: #939393;
         }
       }
+    }
+    .courses-tags {
+      display: flex;
+    }
+    .courses-level-tag {
+      margin-right: 4px;
+    }
+    .courses-category-tag {
+      margin-left: 4px;
     }
     .courses-price {
       margin-left: auto;

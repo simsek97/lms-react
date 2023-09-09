@@ -1,6 +1,6 @@
-export const calculateCartTotal = (courses) => {
-  const total = courses.reduce((acc, el) => {
-    acc += el.price * el.quantity;
+export const calculateCartTotal = (cartItems, term = 'monthly') => {
+  const total = cartItems.reduce((acc, el) => {
+    acc += term === 'yearly' ? el.price * 12 : el.price;
     return acc;
   }, 0);
 
@@ -8,15 +8,4 @@ export const calculateCartTotal = (courses) => {
   const stripeTotal = Number((total * 100).toFixed(2));
 
   return { cartTotal, stripeTotal };
-};
-
-export const calculateCartTotalMinus = (courses) => {
-  const total = courses.reduce((acc, el) => {
-    acc += el.regular_price * el.quantity;
-    return acc;
-  }, 0);
-
-  const cartTotalMinus = ((total * 100) / 100).toFixed(2);
-
-  return { cartTotalMinus };
 };

@@ -7,18 +7,22 @@ import { useSelector } from 'react-redux';
 
 import { IReduxStore } from '@/store/index';
 import baseUrl from '@/utils/baseUrl';
+import { ISubscriptionTier } from '@/data/subscription-tier';
 
-const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
+const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
   const router = useRouter();
-  const [fav, setfavs] = React.useState(false);
   const [add, setAdd] = React.useState(false);
   const [buy, setBuy] = React.useState(false);
 
   const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = course;
   const cartItems = useSelector((state: IReduxStore) => state.cart.cartItems);
 
+  const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === level.slug);
+
+  console.log(subscriptionTier);
   React.useEffect(() => {
     setAdd(cartItems.some((cart) => cart.id === id));
+
     if (userId && course && id) {
       const payload = {
         params: { userId: userId, courseId: id }
@@ -31,25 +35,6 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [course, cartItems]);
 
-  React.useEffect(() => {
-    if (userId) {
-      const payload = {
-        params: {
-          userId: userId,
-          courseId: id
-        }
-      };
-
-      const url = `${baseUrl}/api/favourites/new`;
-      axios.get(url, payload).then((result) => {
-        setfavs(result.data);
-      });
-    } else {
-      setfavs(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fav]);
-
   return (
     <div className='col-lg-3 col-md-6'>
       <div className='single-courses'>
@@ -59,7 +44,11 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
         </div>
         <div className='courses-content'>
           <h3>{title}</h3>
-          <div className='courses-price'>${latestPrice}</div>
+          <div className='courses-tags'>
+            <div className='badge bg-primary courses-level-tag'>{level.name}</div>
+            <div className='badge bg-success courses-category-tag'>{category.name}</div>
+            <div className='courses-price'>${latestPrice}</div>
+          </div>
         </div>
 
         <div className='courses-hover-content'>
@@ -84,37 +73,11 @@ const CourseCard = ({ course, onFav, onUnFav, userId, onAddCart }) => {
                         View Cart
                       </button>
                     ) : (
-                      <button className='default-btn' onClick={() => onAddCart(course)}>
-                        Add To Cart
+                      <button className='default-btn' onClick={() => onAddCart(subscriptionTier)}>
+                        {`Subscribe to ${subscriptionTier.title}`}
                       </button>
                     )}
                   </>
-                )}
-
-                {fav ? (
-                  <motion.button
-                    whileTap={{ scale: 3 }}
-                    transition={{ duration: 0.5 }}
-                    className='default-btn wish'
-                    onClick={() => {
-                      onUnFav(id);
-                      setfavs(!fav);
-                    }}>
-                    <i className='ri-heart-fill'></i>
-                    <i className='ri-heart-fill hover'></i>
-                  </motion.button>
-                ) : (
-                  <motion.button
-                    whileTap={{ scale: 3 }}
-                    transition={{ duration: 0.5 }}
-                    className='default-btn wish'
-                    onClick={() => {
-                      onFav(id);
-                      setfavs(!fav);
-                    }}>
-                    <i className='ri-heart-line'></i>
-                    <i className='ri-heart-fill hover'></i>
-                  </motion.button>
                 )}
               </div>
             </div>

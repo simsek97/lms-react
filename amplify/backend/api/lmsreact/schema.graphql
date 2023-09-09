@@ -17,17 +17,15 @@ type UserSubscription {
   montlyPriceId: String
   yearlyPriceId: String
 }
-
 type SubscriptionTier @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
   id: ID!
   tier: String!
   title: String!
-  price: Int!
+  price: Float!
   description: [String]
   montlyPriceId: String
   yearlyPriceId: String
 }
-
 type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   id: ID!
   sub: String
@@ -39,6 +37,7 @@ type User @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: pu
   avatar: S3Object
   stripeCustomerId: String @index(name: "byCustomerId", queryField: "userByCustomerId")
   subscription: UserSubscription
+  favorites: [Favorite] @hasMany(indexName: "byUser", fields: ["id"])
 }
 type Category @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   id: ID!
@@ -73,6 +72,12 @@ type Course @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: 
   inHomePage: String
   inHomePageSetAt: String
   isClass: String
+}
+type Favorite @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  user: User! @belongsTo(fields: ["userID"])
+  courseID: ID! @index(name: "byCourse")
 }
 type WelcomeMessage @model @auth(rules: [{ allow: owner }, { allow: private }, { allow: public, operations: [read] }]) {
   id: ID!

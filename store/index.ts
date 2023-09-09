@@ -6,8 +6,8 @@ import reducers, { rootSaga } from '@/store/reducers';
 import { IBannerStore } from '@/store/reducers/bannerReducer';
 import { ICartStore } from '@/store/reducers/cartReducer';
 import { ICourseStore } from '@/store/reducers/courseReducer';
-import { IImportStore } from '@/store/reducers/importReducer';
 import { IUserStore } from '@/store/reducers/userReducer';
+import { ISubscriptionStore } from './reducers/subscriptionReducer';
 
 export const appConfig = {
   appName: 'SmartKid Games'
@@ -17,7 +17,7 @@ export interface IReduxStore {
   banner: IBannerStore;
   cart: ICartStore;
   course: ICourseStore;
-  import: IImportStore;
+  subscription: ISubscriptionStore;
   user: IUserStore;
 }
 

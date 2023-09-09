@@ -70,6 +70,17 @@ export const getUser = /* GraphQL */ `
         montlyPriceId
         yearlyPriceId
       }
+      favorites {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -104,6 +115,9 @@ export const listUsers = /* GraphQL */ `
           expiresAt
           montlyPriceId
           yearlyPriceId
+        }
+        favorites {
+          nextToken
         }
         createdAt
         updatedAt
@@ -150,6 +164,9 @@ export const userByEmail = /* GraphQL */ `
           montlyPriceId
           yearlyPriceId
         }
+        favorites {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -194,6 +211,9 @@ export const userByCustomerId = /* GraphQL */ `
           expiresAt
           montlyPriceId
           yearlyPriceId
+        }
+        favorites {
+          nextToken
         }
         createdAt
         updatedAt
@@ -539,6 +559,156 @@ export const coursesByLevelID = /* GraphQL */ `
         inHomePage
         inHomePageSetAt
         isClass
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getFavorite = /* GraphQL */ `
+  query GetFavorite($id: ID!) {
+    getFavorite(id: $id) {
+      id
+      userID
+      user {
+        id
+        sub
+        firstname
+        lastname
+        email
+        role
+        owner
+        avatar {
+          key
+          url
+        }
+        stripeCustomerId
+        subscription {
+          tier
+          title
+          price
+          canceled
+          subscribedAt
+          expiresAt
+          montlyPriceId
+          yearlyPriceId
+        }
+        favorites {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      courseID
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listFavorites = /* GraphQL */ `
+  query ListFavorites(
+    $filter: ModelFavoriteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFavorites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        user {
+          id
+          sub
+          firstname
+          lastname
+          email
+          role
+          owner
+          stripeCustomerId
+          createdAt
+          updatedAt
+        }
+        courseID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const favoritesByUserID = /* GraphQL */ `
+  query FavoritesByUserID(
+    $userID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFavoriteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    favoritesByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        user {
+          id
+          sub
+          firstname
+          lastname
+          email
+          role
+          owner
+          stripeCustomerId
+          createdAt
+          updatedAt
+        }
+        courseID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const favoritesByCourseID = /* GraphQL */ `
+  query FavoritesByCourseID(
+    $courseID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFavoriteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    favoritesByCourseID(
+      courseID: $courseID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        user {
+          id
+          sub
+          firstname
+          lastname
+          email
+          role
+          owner
+          stripeCustomerId
+          createdAt
+          updatedAt
+        }
+        courseID
         createdAt
         updatedAt
         owner

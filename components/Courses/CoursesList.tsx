@@ -1,82 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CourseCard from '@/components/Courses/CourseCard';
+import { ICourse } from '@/data/course';
+import { ISubscriptionTier } from '@/data/subscription-tier';
+import { updateSubscriptionsAction } from '@/store/actions/subscriptionActions';
+import { IReduxStore } from '@/store/index';
 import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
-import baseUrl from '@/utils/baseUrl';
-import CourseCard from './CourseCard';
-import ICourse from 'types/course-types';
+import getTiers from '@/utils/getTiers';
+import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
+import { toastSuccessStyle } from '@/utils/toast';
 
 const CoursesList = ({ courses, user }) => {
-  const [loading, setLoading] = useState(true);
+  const [subscriptionTiers, setSubscriptionTiers] = React.useState<ISubscriptionTier[]>([]);
+  const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  useEffect(() => {
+  const storeSubscriptionTiers = useSelector((state: IReduxStore) => state.subscription.subscriptions);
+
+  const addToCart = (subscriptionTier: ISubscriptionTier) => {
+    dispatch({
+      type: 'ADD_TO_CART',
+      data: subscriptionTier
+    });
+
+    toast.success('Subscription added to your cart', toastSuccessStyle);
+
+    setTimeout(() => {
+      router.push('/checkout');
+    }, 1000);
+  };
+
+  const listTiers = async () => {
+    const tiers = await getTiers(20);
+
+    dispatch(updateSubscriptionsAction(tiers));
+    setSubscriptionTiers(tiers);
+  };
+
+  React.useEffect(() => {
+    if (storeSubscriptionTiers.length === 0) {
+      listTiers();
+    } else {
+      setSubscriptionTiers(storeSubscriptionTiers);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
-
-  const addToCart = (courseCart) => {
-    let courseObj = {};
-    courseObj['id'] = courseCart.id;
-    courseObj['title'] = courseCart.title;
-    courseObj['slug'] = courseCart.slug;
-    courseObj['price'] = courseCart.latest_price;
-    courseObj['regular_price'] = courseCart.before_price;
-    courseObj['image'] = courseCart.image;
-    courseObj['lessons'] = courseCart.lessons;
-    courseObj['duration'] = courseCart.duration;
-    courseObj['access_time'] = courseCart.access_time;
-    courseObj['quantity'] = 1;
-    courseObj['instructor'] = `${courseCart.user.first_name} ${courseCart.user.last_name}`;
-    dispatch({
-      type: 'ADD_TO_CART',
-      data: courseObj
-    });
-  };
-
-  const handleFav = async (courseId: string, fav) => {
-    if (!user) {
-      toast.error('Need to login first.', {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
-      return;
-    }
-
-    try {
-      const payload = {
-        userId: user.id,
-        courseId: courseId,
-        fav: fav
-      };
-      const url = `${baseUrl}/api/favourites/new`;
-      const response = await axios.post(url, payload);
-
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #42ba96',
-          padding: '16px',
-          color: '#42ba96'
-        },
-        iconTheme: {
-          primary: '#42ba96',
-          secondary: '#ffffff'
-        }
-      });
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
 
   return (
     <div className='row justify-content-center'>
@@ -89,10 +68,9 @@ const CoursesList = ({ courses, user }) => {
               <CourseCard
                 key={course.id}
                 course={course}
-                onFav={() => handleFav(course.id, true)}
-                onUnFav={() => handleFav(course.id, false)}
+                subscriptions={subscriptionTiers}
                 userId={user && user.id}
-                onAddCart={() => addToCart(course)}
+                onAddCart={addToCart}
               />
             ))
           ) : (

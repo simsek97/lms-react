@@ -15,7 +15,7 @@ export type CreateSubscriptionTierInput = {
 export type ModelSubscriptionTierConditionInput = {
   tier?: ModelStringInput | null,
   title?: ModelStringInput | null,
-  price?: ModelIntInput | null,
+  price?: ModelFloatInput | null,
   description?: ModelStringInput | null,
   montlyPriceId?: ModelStringInput | null,
   yearlyPriceId?: ModelStringInput | null,
@@ -64,7 +64,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIntInput = {
+export type ModelFloatInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -158,6 +158,7 @@ export type User = {
   avatar?: S3Object | null,
   stripeCustomerId?: string | null,
   subscription?: UserSubscription | null,
+  favorites?: ModelFavoriteConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -178,6 +179,23 @@ export type UserSubscription = {
   expiresAt?: string | null,
   montlyPriceId?: string | null,
   yearlyPriceId?: string | null,
+};
+
+export type ModelFavoriteConnection = {
+  __typename: "ModelFavoriteConnection",
+  items:  Array<Favorite | null >,
+  nextToken?: string | null,
+};
+
+export type Favorite = {
+  __typename: "Favorite",
+  id: string,
+  userID: string,
+  user: User,
+  courseID: string,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -343,6 +361,18 @@ export type ModelCourseConditionInput = {
   not?: ModelCourseConditionInput | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
@@ -381,6 +411,30 @@ export type UpdateCourseInput = {
 };
 
 export type DeleteCourseInput = {
+  id: string,
+};
+
+export type CreateFavoriteInput = {
+  id?: string | null,
+  userID: string,
+  courseID: string,
+};
+
+export type ModelFavoriteConditionInput = {
+  userID?: ModelIDInput | null,
+  courseID?: ModelIDInput | null,
+  and?: Array< ModelFavoriteConditionInput | null > | null,
+  or?: Array< ModelFavoriteConditionInput | null > | null,
+  not?: ModelFavoriteConditionInput | null,
+};
+
+export type UpdateFavoriteInput = {
+  id: string,
+  userID?: string | null,
+  courseID?: string | null,
+};
+
+export type DeleteFavoriteInput = {
   id: string,
 };
 
@@ -494,7 +548,7 @@ export type ModelSubscriptionTierFilterInput = {
   id?: ModelIDInput | null,
   tier?: ModelStringInput | null,
   title?: ModelStringInput | null,
-  price?: ModelIntInput | null,
+  price?: ModelFloatInput | null,
   description?: ModelStringInput | null,
   montlyPriceId?: ModelStringInput | null,
   yearlyPriceId?: ModelStringInput | null,
@@ -588,6 +642,15 @@ export type ModelCourseFilterInput = {
   not?: ModelCourseFilterInput | null,
 };
 
+export type ModelFavoriteFilterInput = {
+  id?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  courseID?: ModelIDInput | null,
+  and?: Array< ModelFavoriteFilterInput | null > | null,
+  or?: Array< ModelFavoriteFilterInput | null > | null,
+  not?: ModelFavoriteFilterInput | null,
+};
+
 export type ModelWelcomeMessageFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -638,7 +701,7 @@ export type ModelSubscriptionSubscriptionTierFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   tier?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
-  price?: ModelSubscriptionIntInput | null,
+  price?: ModelSubscriptionFloatInput | null,
   description?: ModelSubscriptionStringInput | null,
   montlyPriceId?: ModelSubscriptionStringInput | null,
   yearlyPriceId?: ModelSubscriptionStringInput | null,
@@ -676,7 +739,7 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionIntInput = {
+export type ModelSubscriptionFloatInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -736,6 +799,26 @@ export type ModelSubscriptionCourseFilterInput = {
   isClass?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCourseFilterInput | null > | null,
   or?: Array< ModelSubscriptionCourseFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
+};
+
+export type ModelSubscriptionFavoriteFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  userID?: ModelSubscriptionIDInput | null,
+  courseID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionFavoriteFilterInput | null > | null,
+  or?: Array< ModelSubscriptionFavoriteFilterInput | null > | null,
 };
 
 export type ModelSubscriptionWelcomeMessageFilterInput = {
@@ -858,6 +941,19 @@ export type CreateUserMutation = {
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
     } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -895,6 +991,19 @@ export type UpdateUserMutation = {
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
     } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -931,6 +1040,19 @@ export type DeleteUserMutation = {
       expiresAt?: string | null,
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
+    } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1387,6 +1509,156 @@ export type DeleteCourseMutation = {
   } | null,
 };
 
+export type CreateFavoriteMutationVariables = {
+  input: CreateFavoriteInput,
+  condition?: ModelFavoriteConditionInput | null,
+};
+
+export type CreateFavoriteMutation = {
+  createFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateFavoriteMutationVariables = {
+  input: UpdateFavoriteInput,
+  condition?: ModelFavoriteConditionInput | null,
+};
+
+export type UpdateFavoriteMutation = {
+  updateFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteFavoriteMutationVariables = {
+  input: DeleteFavoriteInput,
+  condition?: ModelFavoriteConditionInput | null,
+};
+
+export type DeleteFavoriteMutation = {
+  deleteFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
 export type CreateWelcomeMessageMutationVariables = {
   input: CreateWelcomeMessageInput,
   condition?: ModelWelcomeMessageConditionInput | null,
@@ -1620,6 +1892,19 @@ export type GetUserQuery = {
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
     } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1659,6 +1944,10 @@ export type ListUsersQuery = {
         expiresAt?: string | null,
         montlyPriceId?: string | null,
         yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1704,6 +1993,10 @@ export type UserByEmailQuery = {
         montlyPriceId?: string | null,
         yearlyPriceId?: string | null,
       } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1747,6 +2040,10 @@ export type UserByCustomerIdQuery = {
         expiresAt?: string | null,
         montlyPriceId?: string | null,
         yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -2135,6 +2432,164 @@ export type CoursesByLevelIDQuery = {
   } | null,
 };
 
+export type GetFavoriteQueryVariables = {
+  id: string,
+};
+
+export type GetFavoriteQuery = {
+  getFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListFavoritesQueryVariables = {
+  filter?: ModelFavoriteFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListFavoritesQuery = {
+  listFavorites?:  {
+    __typename: "ModelFavoriteConnection",
+    items:  Array< {
+      __typename: "Favorite",
+      id: string,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        sub?: string | null,
+        firstname: string,
+        lastname: string,
+        email: string,
+        role?: string | null,
+        owner: string,
+        stripeCustomerId?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      courseID: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type FavoritesByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelFavoriteFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type FavoritesByUserIDQuery = {
+  favoritesByUserID?:  {
+    __typename: "ModelFavoriteConnection",
+    items:  Array< {
+      __typename: "Favorite",
+      id: string,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        sub?: string | null,
+        firstname: string,
+        lastname: string,
+        email: string,
+        role?: string | null,
+        owner: string,
+        stripeCustomerId?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      courseID: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type FavoritesByCourseIDQueryVariables = {
+  courseID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelFavoriteFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type FavoritesByCourseIDQuery = {
+  favoritesByCourseID?:  {
+    __typename: "ModelFavoriteConnection",
+    items:  Array< {
+      __typename: "Favorite",
+      id: string,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        sub?: string | null,
+        firstname: string,
+        lastname: string,
+        email: string,
+        role?: string | null,
+        owner: string,
+        stripeCustomerId?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      courseID: string,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetWelcomeMessageQueryVariables = {
   id: string,
 };
@@ -2346,6 +2801,19 @@ export type OnCreateUserSubscription = {
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
     } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2383,6 +2851,19 @@ export type OnUpdateUserSubscription = {
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
     } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2419,6 +2900,19 @@ export type OnDeleteUserSubscription = {
       expiresAt?: string | null,
       montlyPriceId?: string | null,
       yearlyPriceId?: string | null,
+    } | null,
+    favorites?:  {
+      __typename: "ModelFavoriteConnection",
+      items:  Array< {
+        __typename: "Favorite",
+        id: string,
+        userID: string,
+        courseID: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2869,6 +3363,156 @@ export type OnDeleteCourseSubscription = {
     inHomePage?: string | null,
     inHomePageSetAt?: string | null,
     isClass?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateFavoriteSubscriptionVariables = {
+  filter?: ModelSubscriptionFavoriteFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateFavoriteSubscription = {
+  onCreateFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateFavoriteSubscriptionVariables = {
+  filter?: ModelSubscriptionFavoriteFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateFavoriteSubscription = {
+  onUpdateFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteFavoriteSubscriptionVariables = {
+  filter?: ModelSubscriptionFavoriteFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteFavoriteSubscription = {
+  onDeleteFavorite?:  {
+    __typename: "Favorite",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      sub?: string | null,
+      firstname: string,
+      lastname: string,
+      email: string,
+      role?: string | null,
+      owner: string,
+      avatar?:  {
+        __typename: "S3Object",
+        key: string,
+        url: string,
+      } | null,
+      stripeCustomerId?: string | null,
+      subscription?:  {
+        __typename: "UserSubscription",
+        tier: string,
+        title: string,
+        price: number,
+        canceled?: string | null,
+        subscribedAt?: string | null,
+        expiresAt?: string | null,
+        montlyPriceId?: string | null,
+        yearlyPriceId?: string | null,
+      } | null,
+      favorites?:  {
+        __typename: "ModelFavoriteConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    courseID: string,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,

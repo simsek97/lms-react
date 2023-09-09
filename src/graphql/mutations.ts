@@ -87,6 +87,17 @@ export const createUser = /* GraphQL */ `
         montlyPriceId
         yearlyPriceId
       }
+      favorites {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -120,6 +131,17 @@ export const updateUser = /* GraphQL */ `
         montlyPriceId
         yearlyPriceId
       }
+      favorites {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -152,6 +174,17 @@ export const deleteUser = /* GraphQL */ `
         expiresAt
         montlyPriceId
         yearlyPriceId
+      }
+      favorites {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -557,6 +590,138 @@ export const deleteCourse = /* GraphQL */ `
       inHomePage
       inHomePageSetAt
       isClass
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createFavorite = /* GraphQL */ `
+  mutation CreateFavorite(
+    $input: CreateFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    createFavorite(input: $input, condition: $condition) {
+      id
+      userID
+      user {
+        id
+        sub
+        firstname
+        lastname
+        email
+        role
+        owner
+        avatar {
+          key
+          url
+        }
+        stripeCustomerId
+        subscription {
+          tier
+          title
+          price
+          canceled
+          subscribedAt
+          expiresAt
+          montlyPriceId
+          yearlyPriceId
+        }
+        favorites {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      courseID
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateFavorite = /* GraphQL */ `
+  mutation UpdateFavorite(
+    $input: UpdateFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    updateFavorite(input: $input, condition: $condition) {
+      id
+      userID
+      user {
+        id
+        sub
+        firstname
+        lastname
+        email
+        role
+        owner
+        avatar {
+          key
+          url
+        }
+        stripeCustomerId
+        subscription {
+          tier
+          title
+          price
+          canceled
+          subscribedAt
+          expiresAt
+          montlyPriceId
+          yearlyPriceId
+        }
+        favorites {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      courseID
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteFavorite = /* GraphQL */ `
+  mutation DeleteFavorite(
+    $input: DeleteFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    deleteFavorite(input: $input, condition: $condition) {
+      id
+      userID
+      user {
+        id
+        sub
+        firstname
+        lastname
+        email
+        role
+        owner
+        avatar {
+          key
+          url
+        }
+        stripeCustomerId
+        subscription {
+          tier
+          title
+          price
+          canceled
+          subscribedAt
+          expiresAt
+          montlyPriceId
+          yearlyPriceId
+        }
+        favorites {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      courseID
       createdAt
       updatedAt
       owner
