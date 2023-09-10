@@ -29,7 +29,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
       const { data } = await API.graphql<GraphQLQuery<ListLevelsQuery>>(graphqlOperation(listLevels, { limit }));
 
       const updatedLevels = [...levels, ...data.listLevels.items];
-      setLevels(updatedLevels.sort((a, b) => Number(a.id) - Number(b.id)) as ILevel[]);
+      setLevels(updatedLevels as ILevel[]);
     } catch (e) {
       console.log(e);
     }

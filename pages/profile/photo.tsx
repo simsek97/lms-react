@@ -27,6 +27,7 @@ const Photo = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
+    console.log('files', files);
     const profilePhotoSize = files[0].size / 1024 / 1024;
     if (profilePhotoSize > 2) {
       toast.error('The profile photo size greater than 2 MB. Make sure less than 2 MB.', toastErrorStyle);

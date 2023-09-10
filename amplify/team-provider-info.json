@@ -79,7 +79,7 @@
         "lmsreact": {},
         "S3Trigger36af2e3c": {
           "deploymentBucketName": "amplify-lmsreact-dev-200027-deployment",
-          "s3Key": "amplify-builds/S3Trigger36af2e3c-4277524a364853346871-build.zip"
+          "s3Key": "amplify-builds/S3Trigger36af2e3c-7767456e39384472316f-build.zip"
         }
       },
       "api": {

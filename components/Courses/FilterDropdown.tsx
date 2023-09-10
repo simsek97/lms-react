@@ -4,48 +4,34 @@ import { parseCookies } from 'nookies';
 import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
 import { ICategory } from '@/database/models/category';
+import { useSelector } from 'react-redux';
 
-const FilterDropdown = () => {
-  const { lms_react_users_token } = parseCookies();
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [short, setShort] = useState<string>('');
-  const [cat, setCat] = useState<string>('');
-  const router = useRouter();
+import { IReduxStore } from '@/store/index';
+import { ILevel } from '@/data/level';
 
-  const fetchCategories = async () => {
-    try {
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-      const response = await axios.get(`${baseUrl}/api/categories`, payload);
-      setCategories(response.data.categories);
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-    }
-  };
+const FilterDropdown = ({ level, category, courseSort }) => {
+  const { selectedLevel, handleLevelChange } = level;
+  const { selectedCategory, handleCategoryChange } = category;
+  const { selectedSort, handleSortChange } = courseSort;
 
-  useEffect(() => {
-    fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const query = router.query;
-    router.push({
-      pathname: '/courses',
-      query: { ...query, short: short, cat: cat }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [short, cat]);
+  const categories = useSelector((state: IReduxStore) => state.course.categories);
+  const levels = useSelector((state: IReduxStore) => state.course.levels);
 
   return (
     <>
       <li>
-        <select className='form-select form-control' name='cat' value={cat} onChange={(e) => setCat(e.target.value)}>
+        <select className='form-select form-control' value={selectedLevel} onChange={(e) => handleLevelChange(e.target.value)}>
+          <option value=''>Filter By Grade</option>
+          {levels?.map((level: ILevel) => (
+            <option key={level.id} value={level.id}>
+              {level.name}
+            </option>
+          ))}
+        </select>
+      </li>
+
+      <li>
+        <select className='form-select form-control' value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
           <option value=''>Filter By Category</option>
           {categories?.map((cat) => (
             <option key={cat.id} value={cat.id}>
@@ -54,8 +40,9 @@ const FilterDropdown = () => {
           ))}
         </select>
       </li>
+
       <li>
-        <select className='form-select form-control' name='short' value={short} onChange={(e) => setShort(e.target.value)}>
+        <select className='form-select form-control' value={selectedSort} onChange={(e) => handleSortChange(e.target.value)}>
           <option value=''>Sort By</option>
           <option value='ASC'>Price: low to high</option>
           <option value='DESC'>Price: high to low</option>

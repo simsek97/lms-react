@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { Course, User, Enrolment, Category } from 'database/models';
-import { listCategories, listCourses } from '@/src/graphql/queries';
+import { listCategories, listCourses, listLevels } from '@/src/graphql/queries';
 import axios from 'axios';
 
 const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT;
@@ -33,11 +33,16 @@ const handleGetRequest = async (req, res) => {
     const categoriesBody = { query: listCategories, variables: { limit: 20 } };
     const categoriesRes = await axios.post(GRAPHQL_ENDPOINT, categoriesBody, options);
 
+    const levelsBody = { query: listLevels, variables: { limit: 20 } };
+    const levelsRes = await axios.post(GRAPHQL_ENDPOINT, levelsBody, options);
+
     res.status(200).json({
-      courses: coursesRes.data.data.listCourses.items,
-      coursesToken: coursesRes.data.data.listCourses.nextToken,
+      levels: levelsRes.data.data.listLevels.items,
+      levelsToken: levelsRes.data.data.listLevels.nextToken,
       categories: categoriesRes.data.data.listCategories.items,
-      categoriesToken: categoriesRes.data.data.listCategories.nextToken
+      categoriesToken: categoriesRes.data.data.listCategories.nextToken,
+      courses: coursesRes.data.data.listCourses.items,
+      coursesToken: coursesRes.data.data.listCourses.nextToken
     });
   } catch (e) {
     res.status(400).json({

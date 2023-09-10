@@ -6,16 +6,25 @@ import CoursesList from '@/components/Courses/CoursesList';
 import FilterDropdown from '@/components/Courses/FilterDropdown';
 import PageContent from '@/components/_App/PageContent';
 import SearchForm from '@/components/_App/SearchForm';
+import { ICategory } from '@/data/category';
 import { ICourse } from '@/data/course';
+import { ILevel } from '@/data/level';
+import { updateCoursesAction } from '@/store/actions/courseActions';
 import getCourses from '@/utils/getCourses';
+import { useDispatch } from 'react-redux';
 
 export default function CoursesPage({ user }) {
   const [courses, setCourses] = React.useState<ICourse[]>([]);
+  const [level, setLevel] = React.useState<ILevel>();
+  const [category, setCategory] = React.useState<ICategory>();
+  const [sortCourse, setSortCourse] = React.useState<string>();
   const [pageToken, setPageToken] = React.useState();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [page, setPage] = React.useState(0);
 
-  const pageSize = 10;
+  const dispatch = useDispatch();
+
+  const pageSize = 8;
 
   const fetchCourses = async (limit: number, nextToken: string) => {
     setLoading(true);
@@ -26,7 +35,10 @@ export default function CoursesPage({ user }) {
 
       setPageToken(dbCourses.nextToken);
 
-      setCourses([...courses, ...dbCourses.items]);
+      const updatedCourses = [...courses, ...dbCourses.items];
+      setCourses(updatedCourses);
+
+      dispatch(updateCoursesAction(updatedCourses));
     } catch (e) {
       console.log(e);
     } finally {
@@ -55,7 +67,11 @@ export default function CoursesPage({ user }) {
                   <li>
                     <SearchForm formClass='src-form' btnClass='src-btn' />
                   </li>
-                  <FilterDropdown />
+                  <FilterDropdown
+                    level={{ selectedLevel: level, handleLevelChange: setLevel }}
+                    category={{ selectedCategory: category, handleCategoryChange: setCategory }}
+                    courseSort={{ selectedSort: sortCourse, handleSortChange: setSortCourse }}
+                  />
                 </ul>
               </div>
             </div>
