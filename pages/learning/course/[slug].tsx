@@ -62,7 +62,7 @@ const Index = ({ user }) => {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       <div className='mt-5 pb-5 video-area'>
         <div className='container-fluid'>

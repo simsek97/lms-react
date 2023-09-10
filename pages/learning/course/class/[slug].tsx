@@ -30,7 +30,7 @@ const Index = ({ user }) => {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       <div className='ptb-100 video-area'>
         <div className='container'>

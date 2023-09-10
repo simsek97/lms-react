@@ -92,7 +92,7 @@ const Index = ({ user }) => {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       {/* Instructor header */}
       <InstructorHeader />

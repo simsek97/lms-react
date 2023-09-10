@@ -4,10 +4,10 @@ import Footer from '@/components/_App/Footer';
 import Link from 'next/link';
 import CourseCreateForm from '@/components/Instructor/CourseCreateForm';
 
-const Create = ({ user }) => {
+const Create = () => {
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       <div className='ptb-100'>
         <div className='container'>

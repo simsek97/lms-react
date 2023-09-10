@@ -13,7 +13,7 @@ import GeneralLoader from '@/utils/GeneralLoader';
 import UploadAssetForm from '../../../../components/Instructor/UploadAssetForm';
 import PageNavigation from '../../../../components/Instructor/PageNavigation';
 
-const Index = ({ user }) => {
+const Index = () => {
   const { lms_react_users_token } = parseCookies();
   const router = useRouter();
   const { id: courseId } = router.query;
@@ -99,7 +99,7 @@ const Index = ({ user }) => {
   };
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       <div className='ptb-100'>
         <div className='container'>

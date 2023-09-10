@@ -10,45 +10,40 @@ import Pagination from '@etchteam/next-pagination';
 import axios from 'axios';
 import baseUrl from '@/utils/baseUrl';
 import PageContent from '@/components/_App/PageContent';
+import { ICourse } from '@/data/course';
+import getCourses from '@/utils/getCourses';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CoursesPage({ user }) {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [pages, setPages] = useState(0);
-  const [coursesCount, setCoursesCount] = useState(0);
-  const router = useRouter();
+  const [courses, setCourses] = React.useState<ICourse[]>([]);
+  const [pageToken, setPageToken] = React.useState();
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [page, setPage] = React.useState(0);
 
-  const page = router.query.page ? router.query.page : '1';
-  const size = router.query.size ? router.query.size : '8';
-  const short = router.query.short ? router.query.short : '';
-  const cat = router.query.cat ? router.query.cat : '';
-  const search = router.query.search ? router.query.search : '';
+  const pageSize = 10;
 
-  const fetchCourses = async () => {
+  const fetchCourses = async (limit: number, nextToken: string) => {
     setLoading(true);
 
-    const payload = {
-      params: {
-        page,
-        limit: size,
-        short: short,
-        cat: cat,
-        search: search
-      }
-    };
+    try {
+      setLoading(true);
+      const dbCourses = await getCourses(limit, nextToken);
 
-    const response = await axios.get(`${baseUrl}/api/all-courses`, payload);
+      setPageToken(dbCourses.nextToken);
 
-    setCourses(response.data.courses);
-    setPages(response.data.totalPages);
-    setCoursesCount(response.data.coursesCount);
-    setLoading(false);
+      setCourses([...courses, ...dbCourses.items]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    fetchCourses();
+  React.useEffect(() => {
+    fetchCourses(pageSize, pageToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, size, short, cat, search]);
+  }, [page]);
 
   return (
     <PageContent pageTitle='Courses'>
@@ -73,11 +68,17 @@ export default function CoursesPage({ user }) {
           </div>
 
           {courses && <CoursesList courses={courses} user={user} />}
-          {coursesCount > 9 && (
-            <div className='col-lg-12 col-md-12'>
-              <div className='pagination-area text-center'>
-                <Pagination sizes={[1]} total={pages} />
-              </div>
+
+          {pageToken && (
+            <div className='col-lg-12 '>
+              <p className='text-center'>
+                <Button
+                  startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+                  variant='contained'
+                  onClick={() => setPage(page + 1)}>
+                  Show More
+                </Button>
+              </p>
             </div>
           )}
         </div>

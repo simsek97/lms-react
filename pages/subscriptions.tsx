@@ -28,7 +28,11 @@ const SubscriptionsPage = () => {
 
   const handleClickSubscribe = (tier: SubscriptionTier) => {
     if (user?.subscription) {
-      const subscriptionMessage = `You already have a subscription. You can manage your subscription from your profile.`;
+      const subscriptionMessage = `You already have a subscription. ${
+        user?.stripeCustomerId
+          ? 'You can manage your subscription from your profile.'
+          : 'Your subscription is managed by your organization.'
+      }`;
       toast.success(subscriptionMessage, toastSuccessStyle);
     } else {
       handleAddToCart(tier);

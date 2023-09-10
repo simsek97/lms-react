@@ -29,7 +29,7 @@ const Create = ({ user }) => {
 
   return (
     <>
-      <Navbar user={user} />
+      <Navbar />
 
       <div className='ptb-100'>
         <div className='container'>
