@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import PageBanner from '@/components/Common/PageBanner';
-import CoursesList from '@/components/Courses/CoursesList';
-import Footer from '@/components/_App/Footer';
-import SearchForm from '@/components/_App/SearchForm';
-import FilterDropdown from '@/components/Courses/FilterDropdown';
-import { useRouter } from 'next/router';
-import Pagination from '@etchteam/next-pagination';
-import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import PageContent from '@/components/_App/PageContent';
-import { ICourse } from '@/data/course';
-import getCourses from '@/utils/getCourses';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import React from 'react';
+
+import CoursesList from '@/components/Courses/CoursesList';
+import FilterDropdown from '@/components/Courses/FilterDropdown';
+import PageContent from '@/components/_App/PageContent';
+import SearchForm from '@/components/_App/SearchForm';
+import { ICourse } from '@/data/course';
+import getCourses from '@/utils/getCourses';
 
 export default function CoursesPage({ user }) {
   const [courses, setCourses] = React.useState<ICourse[]>([]);
