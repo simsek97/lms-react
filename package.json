@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "amplify:S3Trigger36af2e3c": "cd amplify/backend/function/S3Trigger36af2e3c/src && npm install && rm -rf node_modules/sharp && SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc=glibc sharp && cd -"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
