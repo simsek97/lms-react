@@ -16,7 +16,7 @@ import { getS3File } from '@/utils/getS3File';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
 
 const Photo = () => {
-  const [avatar, setAvatar] = React.useState<File>();
+  const [avatarFile, setAvatarFile] = React.useState<File>();
   const [profilePreview, setProfilePreview] = React.useState('');
   const [isLoading, setLoading] = React.useState(false);
 
@@ -27,7 +27,6 @@ const Photo = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
-    console.log('files', files);
     const profilePhotoSize = files[0].size / 1024 / 1024;
     if (profilePhotoSize > 2) {
       toast.error('The profile photo size greater than 2 MB. Make sure less than 2 MB.', toastErrorStyle);
@@ -35,7 +34,7 @@ const Photo = () => {
       return;
     }
 
-    setAvatar(files[0]);
+    setAvatarFile(files[0]);
 
     setProfilePreview(window.URL.createObjectURL(files[0]));
   };
@@ -44,11 +43,10 @@ const Photo = () => {
     e.preventDefault();
 
     try {
-      if (!avatar) {
+      if (!avatarFile) {
         return false;
       }
-      console.log(avatar);
-      const upload = await Storage.put(avatar['name'], avatar, {
+      const upload = await Storage.put(avatarFile['name'], avatarFile, {
         level: 'private'
       });
 
@@ -71,7 +69,7 @@ const Photo = () => {
       });
 
       // Update the store
-      dispatch(updateUserAction({ ...userProfile, avatarKey: upload.key, avatarUrl: uploadUrl }));
+      dispatch(updateUserAction({ ...userProfile, avatar: { key: upload.key, url: uploadUrl } }));
 
       setLoading(false);
       toast.success('Profile Picture has been successfully saved.', toastSuccessStyle);
@@ -90,10 +88,10 @@ const Photo = () => {
       return photo;
     };
 
-    if (userProfile?.avatarKey) {
-      getProfilePhoto(userProfile.avatarKey).then((data) => setProfilePreview(data));
+    if (userProfile?.avatar?.key) {
+      getProfilePhoto(userProfile.avatar?.key).then((data) => setProfilePreview(data));
     }
-  }, [userProfile?.avatarKey]);
+  }, [userProfile?.avatar]);
 
   return (
     <PageContent>

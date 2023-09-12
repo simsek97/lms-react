@@ -36,7 +36,7 @@ const Grades = ({ levels, levelsToken }) => {
                 <Link href={`/grade/${level.slug}`}>
                   <a className='single-categorie d-flex justify-content-between align-items-center align-items-center'>
                     <h3>{level.name}</h3>
-                    <i className='flaticon-developer'></i>
+                    <i className='flaticon-growth'></i>
                   </a>
                 </Link>
               </motion.div>

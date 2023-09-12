@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 interface ICourseAsset {
-  id?: number;
+  id?: string;
 }
 
 const CourseAsset = ({ id: courseId }: ICourseAsset) => {

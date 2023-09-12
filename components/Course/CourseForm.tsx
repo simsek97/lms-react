@@ -48,7 +48,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             autoFocus
             fullWidth
@@ -61,7 +61,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             name='slug'
@@ -73,9 +73,11 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
+            multiline
+            rows={3}
             name='shortDesc'
             label='Short Description'
             value={values?.shortDesc || ''}
@@ -85,9 +87,11 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
+            multiline
+            rows={3}
             name='overview'
             label='Overview'
             value={values?.overview || ''}
@@ -97,7 +101,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             name='latestPrice'
@@ -109,7 +113,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             name='beforePrice'
@@ -118,6 +122,18 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
             onChange={handleChange}
             error={Boolean((touched?.beforePrice && errors?.beforePrice) || false)}
             helperText={(Boolean(touched?.beforePrice && errors?.beforePrice) && errors?.beforePrice) || ''}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            name='duration'
+            label='Length'
+            value={values?.duration || ''}
+            onChange={handleChange}
+            error={Boolean((touched?.duration && errors?.duration) || false)}
+            helperText={(Boolean(touched?.duration && errors?.duration) && errors?.duration) || ''}
           />
         </Grid>
 
@@ -133,19 +149,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            name='duration'
-            label='Length'
-            value={values?.duration || ''}
-            onChange={handleChange}
-            error={Boolean((touched?.duration && errors?.duration) || false)}
-            helperText={(Boolean(touched?.duration && errors?.duration) && errors?.duration) || ''}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             select
@@ -163,7 +167,7 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           </TextField>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             select

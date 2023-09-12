@@ -9,41 +9,39 @@ import { IReduxStore } from '@/store/index';
 import baseUrl from '@/utils/baseUrl';
 import { ISubscriptionTier } from '@/data/subscription-tier';
 import { ICourse } from '@/data/course';
+import { IUser } from '@/data/user';
+import Image from 'next/image';
 
-const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
+interface ICourseCard {
+  course: ICourse;
+  user: IUser;
+  subscriptions: ISubscriptionTier[];
+  onAddCart: any;
+}
+
+const CourseCard = ({ course, user, subscriptions, onAddCart }: ICourseCard) => {
   const router = useRouter();
-  const [add, setAdd] = React.useState(false);
-  const [buy, setBuy] = React.useState(false);
 
   const courses = useSelector((state: IReduxStore) => state.course.courses);
-  const cartItems = useSelector((state: IReduxStore) => state.cart.cartItems);
 
   const courseInfo = courses.find((c: ICourse) => c.id === course.id);
   const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = courseInfo;
 
   const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === level.slug);
 
-  React.useEffect(() => {
-    setAdd(cartItems.some((cart) => cart.id === id));
-
-    if (userId && course && id) {
-      const payload = {
-        params: { userId: userId, courseId: id }
-      };
-      const url = `${baseUrl}/api/courses/course/exist`;
-      axios.get(url, payload).then((result) => {
-        if (result && result.data.enroll === true) setBuy(result.data.enroll);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [course, cartItems]);
+  const isUserSubscribedToCourse = user?.subscription?.tier === subscriptionTier.tier;
 
   return (
     <div className='col-lg-3 col-md-6'>
       <div className='single-courses'>
         <div className='courses-main-img'>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image?.url || '/images/courses/course-9.jpg'} alt='Course Image' />
+          {(image?.url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image?.url} alt='Course' width='100%' />
+          )) || (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src='/images/courses/course-9.jpg' alt='Course' width='100%' />
+          )}
         </div>
         <div className='courses-content'>
           <h3>{title}</h3>
@@ -65,22 +63,14 @@ const CourseCard = ({ course, userId, subscriptions, onAddCart }) => {
               <p>{shortDesc?.slice(0, 108)}</p>
 
               <div className='courses-btn d-flex justify-content-between align-items-center'>
-                {buy ? (
+                {isUserSubscribedToCourse ? (
                   <button className='default-btn' onClick={() => router.push(`/learning/course/${slug}`)}>
                     View My Course
                   </button>
                 ) : (
-                  <>
-                    {add ? (
-                      <button className='default-btn' onClick={() => router.push('/checkout')}>
-                        View Cart
-                      </button>
-                    ) : (
-                      <button className='default-btn' onClick={() => onAddCart(subscriptionTier)}>
-                        {`Subscribe to ${subscriptionTier.title}`}
-                      </button>
-                    )}
-                  </>
+                  <button className='default-btn' onClick={() => onAddCart(subscriptionTier)}>
+                    {`Subscribe to ${subscriptionTier.title}`}
+                  </button>
                 )}
               </div>
             </div>

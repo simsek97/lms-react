@@ -1,33 +1,15 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { IAction } from '../index';
-
-export interface IUserProfile {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  role: string;
-  owner: string;
-  avatarUrl: string;
-  avatarKey: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  occupation: string;
-  institution: string;
-  subscription: any;
-  stripeCustomerId: string;
-}
+import { IAction } from '@/store/index';
+import { IUser } from '@/data/user';
+import { ISubscriptionTier } from '@/data/subscription-tier';
 
 export interface IUserStore {
-  profile: IUserProfile;
+  profile: IUser;
 }
 
-interface IUserData extends IUserProfile {}
+interface IUserData extends IUser {}
 
 const userInitialState: IUserStore = {
   profile: null
@@ -38,7 +20,7 @@ const userReducer = persistReducer(
     storage,
     key: 'user'
   },
-  (state: IUserStore = userInitialState, action: IAction<IUserProfile>): IUserStore => {
+  (state: IUserStore = userInitialState, action: IAction<IUser & ISubscriptionTier>): IUserStore => {
     switch (action.type) {
       case 'UPDATE_USER':
         return {

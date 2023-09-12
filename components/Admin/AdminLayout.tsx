@@ -22,7 +22,7 @@ const AdminLayout = (props: PropsWithChildren<IAdminLayout>) => {
   const user = props?.user || storeUser;
 
   React.useEffect(() => {
-    if (user.role.toLowerCase() != 'admin') {
+    if (user?.role?.toLowerCase() != 'admin') {
       router.replace('/');
     }
   }, [router, user]);

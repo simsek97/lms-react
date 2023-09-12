@@ -60,13 +60,7 @@ const CoursesList = ({ courses, user }) => {
         <>
           {courses.length > 0 ? (
             courses.map((course: ICourse) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                subscriptions={subscriptionTiers}
-                userId={user && user.id}
-                onAddCart={addToCart}
-              />
+              <CourseCard key={course.id} course={course} subscriptions={subscriptionTiers} user={user} onAddCart={addToCart} />
             ))
           ) : (
             <h3>Empty</h3>

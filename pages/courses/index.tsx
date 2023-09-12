@@ -1,28 +1,30 @@
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CoursesList from '@/components/Courses/CoursesList';
 import FilterDropdown from '@/components/Courses/FilterDropdown';
 import PageContent from '@/components/_App/PageContent';
 import SearchForm from '@/components/_App/SearchForm';
-import { ICategory } from '@/data/category';
 import { ICourse } from '@/data/course';
-import { ILevel } from '@/data/level';
 import { updateCoursesAction } from '@/store/actions/courseActions';
+import { IReduxStore } from '@/store/index';
 import getCourses from '@/utils/getCourses';
-import { useDispatch } from 'react-redux';
 
-export default function CoursesPage({ user }) {
+export default function CoursesPage() {
   const [courses, setCourses] = React.useState<ICourse[]>([]);
-  const [level, setLevel] = React.useState<ILevel>();
-  const [category, setCategory] = React.useState<ICategory>();
+  const [levelId, setLevelId] = React.useState<string>();
+  const [categoryId, setCategoryId] = React.useState<string>();
   const [sortCourse, setSortCourse] = React.useState<string>();
   const [pageToken, setPageToken] = React.useState();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [page, setPage] = React.useState(0);
 
   const dispatch = useDispatch();
+
+  const user = useSelector((store: IReduxStore) => store.user.profile);
+  const storeCourses = useSelector((store: IReduxStore) => store.course.courses);
 
   const pageSize = 8;
 
@@ -47,6 +49,26 @@ export default function CoursesPage({ user }) {
   };
 
   React.useEffect(() => {
+    if (levelId || categoryId || sortCourse) {
+      setCourses(
+        storeCourses
+          .filter((course: ICourse) => (levelId ? course.levelID === levelId : course))
+          .filter((course: ICourse) => (categoryId ? course.catID === categoryId : course))
+          .sort((a: ICourse, b: ICourse) =>
+            sortCourse.toLowerCase() === 'asc'
+              ? a.latestPrice - b.latestPrice
+              : sortCourse.toLowerCase() === 'desc'
+              ? b.latestPrice - a.latestPrice
+              : 0
+          )
+      );
+    } else {
+      setCourses(storeCourses);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [levelId, categoryId, sortCourse]);
+
+  React.useEffect(() => {
     fetchCourses(pageSize, pageToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -68,8 +90,8 @@ export default function CoursesPage({ user }) {
                     <SearchForm formClass='src-form' btnClass='src-btn' />
                   </li>
                   <FilterDropdown
-                    level={{ selectedLevel: level, handleLevelChange: setLevel }}
-                    category={{ selectedCategory: category, handleCategoryChange: setCategory }}
+                    level={{ selectedLevel: levelId, handleLevelChange: setLevelId }}
+                    category={{ selectedCategory: categoryId, handleCategoryChange: setCategoryId }}
                     courseSort={{ selectedSort: sortCourse, handleSortChange: setSortCourse }}
                   />
                 </ul>

@@ -4,8 +4,8 @@ import { ICategory } from './category';
 
 export interface ICourse {
   id?: string;
-  title: string;
-  slug: string;
+  title?: string;
+  slug?: string;
   shortDesc?: string;
   overview?: string;
   latestPrice?: number;

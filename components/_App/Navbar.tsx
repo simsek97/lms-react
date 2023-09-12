@@ -9,6 +9,7 @@ import SearchForm from '@/components/_App/SearchForm';
 import { IReduxStore } from '@/store/index';
 import Link from '@/utils/ActiveLink';
 import { motion } from 'framer-motion';
+import { IUser } from '@/data/user';
 
 // Router events
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -18,7 +19,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 const Navbar = () => {
   const [menu, setMenu] = React.useState(true);
 
-  const user = useSelector((state: IReduxStore) => state.user.profile);
+  const user: IUser = useSelector((state: IReduxStore) => state.user.profile);
 
   const toggleNavbar = () => {
     setMenu(!menu);

@@ -1,75 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import StickyBox from 'react-sticky-box';
-import Player from '@/components/Learning/Player';
-import { useRouter } from 'next/router';
-import baseUrl from '@/utils/baseUrl';
 import axios from 'axios';
-import VideoList from '@/components/Learning/VideoList';
-import ProgressManager from '@/components/Learning/ProgressManager';
-import CourseOverview from '@/components/Learning/CourseOverview';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
+import StickyBox from 'react-sticky-box';
+
 import CourseAsset from '@/components/Learning/CourseAsset';
 import CourseDiscussion from '@/components/Learning/CourseDiscussion';
-import CourseRating from '@/components/Learning/CourseRating';
 import CourseFeedback from '@/components/Learning/CourseFeedback';
+import CourseOverview from '@/components/Learning/CourseOverview';
+import CourseRating from '@/components/Learning/CourseRating';
+import Player from '@/components/Learning/Player';
+import ProgressManager from '@/components/Learning/ProgressManager';
+import VideoList from '@/components/Learning/VideoList';
+import Footer from '@/components/_App/Footer';
+import Navbar from '@/components/_App/Navbar';
+import baseUrl from '@/utils/baseUrl';
+import PageContent from '@/components/_App/PageContent';
+import { useSelector } from 'react-redux';
+import { IReduxStore } from '@/store/index';
+import { ICourse } from '@/data/course';
 
 const Index = ({ user }) => {
-  const [videos, setVideos] = useState([]);
-  const [course, setCourse] = useState({});
-  const [selectedVideo, setSelectedVideo] = useState('');
-  const [active, setActive] = useState('');
-  const [tab, setTab] = useState('overview');
+  const [active, setActive] = React.useState('');
+  const [tab, setTab] = React.useState('overview');
   const {
     query: { slug }
   } = useRouter();
 
-  const fetchVideos = async () => {
-    const url = `${baseUrl}/api/learnings/videos/${slug}`;
-    const response = await axios.get(url);
-
-    // console.log(response.data.videos);
-    setVideos(response.data.videos);
-    setSelectedVideo(response.data.videos[0].video);
-    setActive(response.data.videos[0].id);
-    setCourse(response.data.course);
-  };
-
-  useEffect(() => {
-    fetchVideos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
-
-  const selectVideo = async (videoId: string) => {
-    try {
-      const payload = {
-        //@ts-ignore
-        params: { userId: user.id, courseId: course.id }
-      };
-      const url = `${baseUrl}/api/learnings/video/${videoId}`;
-      const response = await axios.get(url, payload);
-      const {
-        data: { video }
-      } = response;
-
-      setSelectedVideo(video.video);
-      setActive(video.id);
-    } catch (err) {
-      console.log(err.response.data);
-    }
-  };
+  const courses = useSelector((store: IReduxStore) => store.course.courses);
+  const course = courses.find((c: ICourse) => c.slug === slug);
 
   return (
-    <>
-      <Navbar />
-
+    <PageContent pageTitle='My Learning' activePageText={course.title} parentPageText='Courses' parentPageUrl='/courses'>
       <div className='mt-5 pb-5 video-area'>
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-lg-9 col-md-8'>
               <div className='video-content'>
-                {selectedVideo && <Player videoSrc={selectedVideo} />}
+                {/* {selectedVideo && <Player videoSrc={selectedVideo} />} */}
 
                 <br />
                 <ul className='nav-style1'>
@@ -135,34 +103,25 @@ const Index = ({ user }) => {
                   </li> */}
                 </ul>
 
-                {course && tab == 'asset' ? (
-                  <CourseAsset {...course} />
-                ) : tab == 'discussion' ? (
-                  <CourseDiscussion {...course} />
-                ) : tab == 'rating' ? (
-                  <CourseRating {...course} />
-                ) : tab == 'feedback' ? (
-                  <CourseFeedback {...course} />
-                ) : (
-                  <CourseOverview {...course} />
-                )}
+                {(course && tab == 'asset' && <CourseAsset {...course} />) ||
+                  (tab == 'discussion' && <CourseDiscussion />) ||
+                  (tab == 'rating' && <CourseRating />) ||
+                  (tab == 'feedback' && <CourseFeedback />) || <CourseOverview {...course} />}
               </div>
             </div>
 
             <div className='col-lg-3 col-md-4'>
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <div className='video-sidebar'>
-                  {/* @ts-ignore */}
-                  <ProgressManager videos_count={videos.length} userId={user.id} courseId={course.id} selectedVideo={selectedVideo} />
+                  <ProgressManager user={user} course={course} />
                   <div className='course-video-list'>
-                    {/* @ts-ignore */}
                     <h4 className='title mb-3'>{course && course.title}</h4>
-                    <ul>
+                    {/* <ul>
                       {videos.length > 0 &&
                         videos.map((video) => (
                           <VideoList key={video.id} {...video} onPlay={() => selectVideo(video.id)} activeClass={active} />
                         ))}
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </StickyBox>
@@ -170,9 +129,7 @@ const Index = ({ user }) => {
           </div>
         </div>
       </div>
-
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

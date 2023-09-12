@@ -36,7 +36,7 @@ const Categories = ({ categories, categoriesToken }) => {
                 <Link href={`/category/${cat.slug}`}>
                   <a className='single-categorie d-flex justify-content-between align-items-center align-items-center'>
                     <h3>{cat.name}</h3>
-                    <i className='flaticon-developer'></i>
+                    <i className='flaticon-puzzle'></i>
                   </a>
                 </Link>
               </motion.div>

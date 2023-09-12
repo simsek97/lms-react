@@ -42,9 +42,10 @@ const CheckoutForm = () => {
 
   React.useEffect(() => {
     if (activeSubscription && cartItems.length > 0 && !isWarningShown) {
-      toast.error('You already have a subscription. You can manage your subscription from your profile.', toastErrorStyle);
+      toast.error('You already have a subscription.', toastErrorStyle);
 
       setTimeout(() => {
+        dispatch(resetCartAction());
         router.push('/profile/subscription');
       }, 1500);
     }

@@ -48,7 +48,7 @@ const courseReducer = persistReducer(
       case 'RESET_CATEGORIES':
         return {
           ...state,
-          courses: null
+          categories: null
         };
 
       case 'UPDATE_LEVELS':

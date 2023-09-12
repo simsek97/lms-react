@@ -15,9 +15,7 @@ export default async function handler(req, res) {
 
 const handleGet = async (req, res) => {
   try {
-    const testimonials = await Testimonial.findAll({
-      order: [['created_at', 'DESC']]
-    });
+    const testimonials = [];
 
     res.status(200).json({ testimonials });
   } catch (e) {

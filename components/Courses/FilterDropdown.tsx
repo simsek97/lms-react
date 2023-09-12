@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
-import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
-import { ICategory } from '@/database/models/category';
 import { useSelector } from 'react-redux';
 
-import { IReduxStore } from '@/store/index';
 import { ILevel } from '@/data/level';
+import { IReduxStore } from '@/store/index';
 
 const FilterDropdown = ({ level, category, courseSort }) => {
   const { selectedLevel, handleLevelChange } = level;

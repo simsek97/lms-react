@@ -12,6 +12,9 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true
   },
+  images: {
+    domains: ['localhost', 'lmsreact64da822f761047479e756ffe4668e630200027-dev.s3.us-east-1.amazonaws.com']
+  },
   env: {
     PORTAL_URL: process.env.PORTAL_URL,
     DEPLOYMENT_REGION: process.env.DEPLOYMENT_REGION,

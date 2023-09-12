@@ -33,7 +33,7 @@ const userGetById = async (req: any, res: any) => {
     } else {
       res.status(400).json({
         error_code: 'get_user_by_id',
-        message: 'User could not be updated!'
+        message: 'User could not be found!'
       });
     }
   } catch (e) {

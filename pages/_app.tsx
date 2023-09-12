@@ -62,39 +62,32 @@ App.getInitialProps = async ({ Component, ctx }) => {
   // if a user not logged in then user can't access those pages
   const isUserRoute = userRoutes.includes(ctx.pathname);
   const isAdminRoute = ctx?.pathname.includes('/admin/');
-  const isApiRoute = ctx?.pathname.includes('/api/');
 
-  if (isApiRoute) {
-    return {
-      pageProps
-    };
+  if (!lms_react_users_token) {
+    if (isUserRoute || isAdminRoute) {
+      redirectUser(ctx, '/auth/login');
+    }
   } else {
-    if (!lms_react_users_token) {
-      if (isUserRoute || isAdminRoute) {
+    // if a user logged in then user can't access those pages
+    const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register' || ctx.pathname === '/forgot-password';
+    if (ifLoggedIn) {
+      redirectUser(ctx, '/');
+    }
+
+    try {
+      const payload = { headers: { Authorization: lms_react_users_token } };
+      const response = await axios.get('/api/users/getuser', payload);
+
+      const user = response && response.data.user;
+
+      if (!user) {
+        destroyCookie(ctx, 'lms_react_users_token');
         redirectUser(ctx, '/auth/login');
       }
-    } else {
-      // if a user logged in then user can't access those pages
-      const ifLoggedIn = ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register' || ctx.pathname === '/forgot-password';
-      if (ifLoggedIn) {
-        redirectUser(ctx, '/');
-      }
-
-      try {
-        const payload = { headers: { Authorization: lms_react_users_token } };
-        const response = await axios.get('/api/users/getuser', payload);
-
-        const user = response && response.data.user;
-
-        if (!user) {
-          destroyCookie(ctx, 'lms_react_users_token');
-          redirectUser(ctx, '/auth/login');
-        }
-      } catch (err) {
-        console.log('error', err);
-        destroyCookie(ctx, 'lms_react_users_token');
-        // redirectUser(ctx, "/");
-      }
+    } catch (err) {
+      console.log('error', err);
+      destroyCookie(ctx, 'lms_react_users_token');
+      // redirectUser(ctx, "/");
     }
   }
 
