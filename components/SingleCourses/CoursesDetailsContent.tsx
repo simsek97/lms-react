@@ -5,21 +5,16 @@ import WhatYouWillLearn from '../Course/WhatYouWillLearn';
 import InstructorProfile from '../Course/InstructorProfile';
 import { formatDate } from '@/utils/helper';
 import TabContent from './TabContent';
+import { IUser } from '@/data/user';
+import { ICourse } from '@/data/course';
 
-const CoursesDetailsContent = ({ user: current_user, course }) => {
-  const {
-    title,
-    slug,
-    overview,
-    what_you_will_learn,
-    who_is_this_course_for,
-    requirements,
-    is_class,
-    updated_at,
-    category,
-    user,
-    enrolments
-  } = course;
+interface ICoursesDetailsContent {
+  user: IUser;
+  course: ICourse;
+}
+
+const CoursesDetailsContent = ({ course }: ICoursesDetailsContent) => {
+  const { title, slug, overview, whatYouWillLearn, whoIsThisCourseFor, requirements, isClass, updatedAt, category, level } = course;
 
   return (
     <div className='course-details-area ptb-100'>
@@ -29,6 +24,13 @@ const CoursesDetailsContent = ({ user: current_user, course }) => {
             <div className='course-details-content'>
               <h2 className='title'>{title}</h2>
               <ul className='best-seller'>
+                {level && (
+                  <li>
+                    <Link href={`/grade/${level.slug}`}>
+                      <a>{level.name}</a>
+                    </Link>
+                  </li>
+                )}
                 {category && (
                   <li>
                     <Link href={`/category/${category.slug}`}>
@@ -36,36 +38,28 @@ const CoursesDetailsContent = ({ user: current_user, course }) => {
                     </Link>
                   </li>
                 )}
-                {/* <li>
-                  <span>{enrolments && enrolments.length}</span> Students
-                </li> */}
                 <li>
-                  Last Updated <span>{formatDate(updated_at)}</span>
+                  Last Updated <span>{formatDate(updatedAt)}</span>
                 </li>
               </ul>
 
               <div className='gap-mb-30'></div>
 
-              {/* {user && <InstructorProfile instructor={user} />} */}
-
-              <div className='gap-mb-30'></div>
-
-              <WhatYouWillLearn what_you_will_learn={what_you_will_learn} />
+              <WhatYouWillLearn whatYouWillLearn={whatYouWillLearn} />
 
               <div className='gap-mb-50'></div>
 
               <TabContent
                 overview={overview}
-                courseSlug={slug}
+                slug={slug}
                 requirements={requirements}
-                instructor={user}
-                who_is_this_course_for={who_is_this_course_for}
-                is_class={is_class}
+                whoIsThisCourseFor={whoIsThisCourseFor}
+                isClass={isClass}
               />
             </div>
           </div>
 
-          <CoursesDetailsSidebar current_user={current_user} course={course} />
+          <CoursesDetailsSidebar course={course} />
         </div>
       </div>
     </div>

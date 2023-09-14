@@ -1,58 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/_App/Navbar';
 import PageBanner from '@/components/Common/PageBanner';
-import CoursesDetailsContent from '@/components/SingleCourses/CoursesDetailsContent';
 import Footer from '@/components/_App/Footer';
 import axios from 'axios';
-import baseUrl from '@/utils/baseUrl';
 import toast from 'react-hot-toast';
+
+import baseUrl from '@/utils/baseUrl';
+import CoursesDetailsContent from '@/components/SingleCourses/CoursesDetailsContent';
 import PageContent from '@/components/_App/PageContent';
+import { ICourse } from '@/data/course';
+import getCourseBySlug from '@/utils/getCourseBySlug';
 
 const CourseDeatails = ({ user }) => {
-  const [course, setCourse] = useState({});
+  const [course, setCourse] = React.useState<ICourse>();
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+
   const router = useRouter();
   const { slug } = router.query;
 
-  useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        const payload = {
-          params: { slug: slug }
-        };
-        const url = `${baseUrl}/api/courses/course`;
-        const response = await axios.get(url, payload);
-        setCourse(response.data.course);
-      } catch (err) {
-        let {
-          response: {
-            data: { message }
-          }
-        } = err;
-        toast.error(message, {
-          style: {
-            border: '1px solid #ff0033',
-            padding: '16px',
-            color: '#ff0033'
-          },
-          iconTheme: {
-            primary: '#ff0033',
-            secondary: '#FFFAEE'
-          }
-        });
-      }
-    };
+  const fetchCourse = async (slug: string) => {
+    setLoading(true);
 
-    fetchCourse();
+    try {
+      setLoading(true);
+      const dbCourse = await getCourseBySlug(slug);
+
+      setCourse(dbCourse);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchCourse(slug as string);
   }, [slug]);
 
   return (
     <PageContent
-      //@ts-ignore
       pageTitle={course?.title || ''}
       parentPageUrl='/courses'
       parentPageText='Courses'
-      //@ts-ignore
       activePageText={course?.title || ''}>
       {course && <CoursesDetailsContent user={user} course={course} />}
     </PageContent>

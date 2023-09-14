@@ -90,7 +90,7 @@ export const CoursePhoto = ({ courses, setCourses, course, setCourse }: ICourseP
       });
 
       // Update the store
-      const updatedCourses = courses.map((c: ICourse) => (c.id === course.id ? (data.updateCourse as ICourse) : c));
+      const updatedCourses = courses.map((c: ICourse) => (c.id === course.id ? data.updateCourse : c));
       setCourses(updatedCourses);
 
       setLoading(false);

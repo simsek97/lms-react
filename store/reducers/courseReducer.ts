@@ -8,6 +8,7 @@ import { ILevel } from '@/data/level';
 
 export interface ICourseStore {
   courses: ICourse[];
+  myCourses: ICourse[];
   categories: ICategory[];
   levels: ILevel[];
 }
@@ -16,6 +17,7 @@ interface ICourseData extends ICourseStore {}
 
 const courseInitialState: ICourseStore = {
   courses: [],
+  myCourses: [],
   categories: [],
   levels: []
 };
@@ -33,10 +35,22 @@ const courseReducer = persistReducer(
           courses: action.data as ICourse[]
         };
 
+      case 'UPDATE_MY_COURSES':
+        return {
+          ...state,
+          myCourses: action.data as ICourse[]
+        };
+
       case 'RESET_COURSES':
         return {
           ...state,
           courses: null
+        };
+
+      case 'RESET_MY_COURSES':
+        return {
+          ...state,
+          myCourses: null
         };
 
       case 'UPDATE_CATEGORIES':

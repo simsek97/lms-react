@@ -23,4 +23,5 @@ export interface ICourse {
   inHomePage?: string;
   inHomePageSetAt?: string;
   isClass?: string;
+  updatedAt?: Date;
 }

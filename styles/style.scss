@@ -4039,18 +4039,8 @@ Course Details Area Style
     list-style-type: none;
     li {
       display: inline-block;
-      margin-right: 30px;
+      margin-right: 0;
       position: relative;
-      &::before {
-        content: '';
-        position: absolute;
-        top: 7px;
-        right: -24px;
-        width: 8px;
-        height: 8px;
-        background-color: $main-color;
-        border-radius: 50%;
-      }
       &:nth-child(1) {
         &::before {
           top: 12px;
@@ -4068,7 +4058,7 @@ Course Details Area Style
         display: inline-block;
         padding: 5px 15px;
         border-radius: $border-radius;
-        margin-right: 20px;
+        margin-right: 16px;
       }
       i {
         color: $optional-color;

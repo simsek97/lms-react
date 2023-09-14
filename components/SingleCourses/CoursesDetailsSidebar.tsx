@@ -1,103 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import baseUrl from '@/utils/baseUrl';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+
 import BuyCourseBtn from './BuyCourseBtn';
 import { calculateDiscount } from '@/utils/helper';
+import baseUrl from '@/utils/baseUrl';
+import { IReduxStore } from '@/store/index';
+import { ISubscriptionTier } from '@/data/subscription-tier';
+import { toastSuccessStyle } from '@/utils/toast';
+import { getS3File } from '@/utils/getS3File';
+import { ICourse } from '@/data/course';
+import { updateCoursesAction } from '@/store/actions/courseActions';
 
-const CoursesDetailsSidebar = ({ current_user, course }) => {
-  //@ts-ignore
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
-  const [add, setAdd] = useState(false);
-  const [alreadyBuy, setAlreadyBuy] = useState(false);
+const CoursesDetailsSidebar = ({ course }) => {
   const router = useRouter();
-  const [apply, setApplyCoupon] = useState(false);
-  const [coupon, setCoupon] = useState({ coupon: '' });
-  //@ts-ignore
-  const discount = useSelector((state) => state.cart.discount);
+  const dispatch = useDispatch();
+  const courses = useSelector((state: IReduxStore) => state.course.courses);
+  const subscriptions = useSelector((state: IReduxStore) => state.subscription.subscriptions);
+  const user = useSelector((state: IReduxStore) => state.user.profile);
 
-  useEffect(() => {
-    const courseExist = cartItems.find((cart) => {
-      return course.id === cart.id;
-    });
-    courseExist && setAdd(true);
-    if (current_user && course && course.id) {
-      const payload = {
-        params: { userId: current_user.id, courseId: course.id }
-      };
-      const url = `${baseUrl}/api/courses/course/exist`;
-      axios.get(url, payload).then((result) => {
-        if (result && result.data.enroll === true) setAlreadyBuy(result.data.enroll);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartItems, course]);
+  const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === course?.level?.slug);
+  const isUserSubscribedToCourse = user?.subscription?.tier === subscriptionTier.tier;
 
-  const addToCart = (courseCart) => {
-    let courseObj = {};
-    courseObj['id'] = courseCart.id;
-    courseObj['title'] = courseCart.title;
-    courseObj['slug'] = courseCart.slug;
-    courseObj['price'] = discount > 0 ? discount : courseCart.latest_price;
-    courseObj['regular_price'] = courseCart.before_price;
-    courseObj['image'] = courseCart.image;
-    courseObj['lessons'] = courseCart.lessons;
-    courseObj['duration'] = courseCart.duration;
-    courseObj['access_time'] = courseCart.access_time;
-    courseObj['quantity'] = 1;
-    courseObj['instructor'] = `${courseCart.user.first_name} ${courseCart.user.last_name}`;
+  const addToCart = (subscriptionTier: ISubscriptionTier) => {
     dispatch({
       type: 'ADD_TO_CART',
-      data: courseObj
+      data: subscriptionTier
     });
+
+    toast.success('Subscription added to your cart', toastSuccessStyle);
+
+    setTimeout(() => {
+      router.push('/checkout');
+    }, 1000);
   };
 
-  const handleCoupon = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = { coupon: coupon };
+  const handleImageError = async () => {
+    if (course?.image?.key) {
+      const imageUrl = await getS3File(course.image.key);
 
-      const response = await axios.post(`${baseUrl}/api/coupons/get-coupon`, payload);
-
-      // console.log(response.data.discount);
-
-      dispatch({
-        type: 'GET_DISCOUNT',
-        data: calculateDiscount(response.data.discount.discount, course.latest_price)
-      });
-
-      toast.success(response.data.message, {
-        style: {
-          border: '1px solid #4BB543',
-          padding: '16px',
-          color: '#4BB543'
-        },
-        iconTheme: {
-          primary: '#4BB543',
-          secondary: '#FFFAEE'
+      const updatedCourses = courses.map((c: ICourse) => {
+        if (c.id === course.id) {
+          c.image.url = imageUrl;
         }
+        return c;
       });
-    } catch (err) {
-      let {
-        response: {
-          data: { message }
-        }
-      } = err;
-
-      toast.error(message, {
-        style: {
-          border: '1px solid #ff0033',
-          padding: '16px',
-          color: '#ff0033'
-        },
-        iconTheme: {
-          primary: '#ff0033',
-          secondary: '#FFFAEE'
-        }
-      });
+      dispatch(updateCoursesAction(updatedCourses));
     }
   };
 
@@ -105,105 +55,53 @@ const CoursesDetailsSidebar = ({ current_user, course }) => {
     <div className='col-lg-4'>
       <div className='course-details-sidebar'>
         <div className='course-preview'>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={course.image} alt={course.title} />
+          {(course?.image?.url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={course.image.url} alt='Course' width='100%' onError={handleImageError} />
+          )) || (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src='/images/courses/course-9.jpg' alt='Course' width='100%' />
+          )}
         </div>
 
         <div className='sidebar-futcher'>
-          <div className='sidebar-title d-flex justify-content-between'>
-            <h2>
-              {discount > 0 ? discount : course.latest_price} {course.before_price > 0 && <del>${course.before_price}</del>}
-            </h2>
-            {course.before_price > 0 && <p>Offer for today</p>}
-          </div>
-
           <ul>
             <li>
               <i className='ri-bar-chart-fill'></i>
-              Category
-              <span>{course.category && course.category.name}</span>
+              Grade
+              <span>{course?.level && course.level.name}</span>
             </li>
             <li>
               <i className='ri-bar-chart-fill'></i>
-              Grade
-              <span>{course.category && course.category.name}</span>
+              Category
+              <span>{course?.category && course.category.name}</span>
             </li>
             <li>
               <i className='ri-time-line'></i>
               Duration
               <span>{course.duration}</span>
             </li>
-            <li>
-              <i className='ri-booklet-line'></i>
-              Lectures
-              <span>{course.lessons}</span>
-            </li>
-            {/* <li>
-              <i className='ri-store-line'></i>
-              Resources
-              <span>{course.assets && course.assets.length} downloadable</span>
-            </li> */}
-            {/* <li>
-              <i className='ri-group-line'></i>
-              Enrolled
-              <span>{course.enrolments && course.enrolments.length} Students</span>
-            </li> */}
-            {/* <li>
-              <i className='ri-key-2-fill'></i>
-              Access
-              <span>{course.access_time}</span>
-            </li> */}
           </ul>
 
-          <div className='coupon'>
-            <h4 onClick={() => setApplyCoupon(!apply)}>Apply Coupon</h4>
-            {apply && (
-              <form onSubmit={handleCoupon}>
-                <input
-                  type='text'
-                  className='input-search'
-                  placeholder='Enter Coupon'
-                  name='search'
-                  value={coupon.coupon}
-                  //@ts-ignore
-                  onChange={(e) => setCoupon(e.target.value)}
-                />
-                <button type='submit'>
-                  <b>Apply</b>
-                </button>
-              </form>
-            )}
-          </div>
-
-          {current_user?.role === 'admin' && (
+          {user?.role === 'admin' && (
             <div className='cart-wish d-flex justify-content-between'>
-              <button onClick={() => router.push(`/learning/course/${course.slug}`)} className='default-btn'>
+              <button onClick={() => router.push(`/course/${course.slug}`)} className='default-btn'>
                 View Course
               </button>
             </div>
           )}
 
           <div className='cart-wish d-flex justify-content-between'>
-            {alreadyBuy ? (
-              <button onClick={() => router.push('/learning/my-courses')} className='default-btn'>
-                View My Courses
+            {isUserSubscribedToCourse ? (
+              <button className='default-btn' onClick={() => router.push(`/learning/course/${course?.slug}`)}>
+                View My Course
               </button>
             ) : (
-              <>
-                {add ? (
-                  <button onClick={() => router.push('/checkout')} className='default-btn'>
-                    View Cart
-                  </button>
-                ) : (
-                  <button onClick={() => addToCart(course)} className='default-btn'>
-                    Add To Cart
-                  </button>
-                )}
-              </>
+              <button className='default-btn' onClick={() => addToCart(subscriptionTier)}>
+                {`Subscribe to ${subscriptionTier.title}`}
+              </button>
             )}
           </div>
-
-          {!alreadyBuy && !add && <BuyCourseBtn current_user={current_user} course={course} />}
         </div>
       </div>
     </div>

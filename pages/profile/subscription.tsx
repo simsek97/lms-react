@@ -78,7 +78,7 @@ const Subscription = () => {
       if (data) {
         const userInfo = data.getUser;
 
-        dispacth(updateUserSubscriptionAction(userInfo.subscription));
+        dispacth(updateUserSubscriptionAction(userInfo?.subscription));
       }
     };
 

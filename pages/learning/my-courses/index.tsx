@@ -1,74 +1,115 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '@/components/_App/Navbar';
-import Footer from '@/components/_App/Footer';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
-import axios from 'axios';
-import { parseCookies } from 'nookies';
-import baseUrl from '@/utils/baseUrl';
-import GeneralLoader from '@/utils/GeneralLoader';
-import CourseCard from '@/components/Learning/CourseCard';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Index = ({ user }) => {
-  const { lms_react_users_token } = parseCookies();
-  const [enrolments, setEnrolments] = useState([]);
-  const [loading, setLoading] = useState(true);
+import CourseCard from '@/components/Courses/CourseCard';
+import PageContent from '@/components/_App/PageContent';
+import { ICourse } from '@/data/course';
+import { ILevel } from '@/data/level';
+import { resetMyCoursesAction, updateMyCoursesAction } from '@/store/actions/courseActions';
+import { IReduxStore } from '@/store/index';
+import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
+import getCourses from '@/utils/getCourses';
+import { getS3File } from '@/utils/getS3File';
 
-  useEffect(() => {
-    const fetchEnrols = async () => {
+const Index = () => {
+  const [isLoading, setLoading] = React.useState(true);
+  const [pageToken, setPageToken] = React.useState();
+  const [page, setPage] = React.useState(0);
+
+  const dispatch = useDispatch();
+
+  const pageSize = 8;
+  const user = useSelector((store: IReduxStore) => store.user.profile);
+  const myCourses = useSelector((store: IReduxStore) => store.course.myCourses);
+  const subscriptions = useSelector((store: IReduxStore) => store.subscription.subscriptions);
+  const levels = useSelector((store: IReduxStore) => store.course.levels);
+
+  const userLevel = levels.find((level: ILevel) => level.slug === user?.subscription.tier);
+
+  const handleImageError = React.useMemo(
+    () => async (courses: ICourse[], course: ICourse) => {
+      if (course?.image?.key) {
+        const imageUrl = await getS3File(course.image.key);
+
+        const updatedCourses = courses.map((c: ICourse) => {
+          if (c.id === course.id) {
+            c.image.url = imageUrl;
+          }
+          return c;
+        });
+
+        dispatch(updateMyCoursesAction(updatedCourses));
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const fetchCourses = async (limit: number, nextToken: string, filter: any) => {
+    setLoading(true);
+
+    try {
       setLoading(true);
-      const payload = {
-        headers: { Authorization: lms_react_users_token }
-      };
-      const response = await axios.get(`${baseUrl}/api/learnings`, payload);
+      const dbCourses = await getCourses(limit, nextToken, filter);
 
-      setEnrolments(response.data.enrolments);
+      const updatedCourses = pageToken ? [...myCourses, ...dbCourses.items] : [...dbCourses.items];
+      // const updatedCourses = [...dbCourses.items];
+      dispatch(updateMyCoursesAction(updatedCourses));
+      setPageToken(dbCourses.nextToken);
+    } catch (e) {
+      console.log(e);
+    } finally {
       setLoading(false);
-    };
+    }
+  };
 
-    fetchEnrols();
-  }, []);
+  React.useEffect(() => {
+    fetchCourses(pageSize, pageToken, { levelID: { eq: userLevel.id } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
-    <>
-      <Navbar />
-
+    <PageContent pageTitle='My Learning'>
       <div className='ptb-100'>
         <div className='container'>
-          <h2 className='fw-bold mb-4'>My learning</h2>
-
-          <ul className='nav-style1'>
-            <li>
-              <Link href='/learning/my-courses/'>
-                <a className='active'>All Courses</a>
-              </Link>
-            </li>
-            <li>
-              <Link href='/learning/wishlist/'>
-                <a>Wishlist</a>
-              </Link>
-            </li>
-          </ul>
-
           <div className='row'>
-            {loading ? (
-              <GeneralLoader />
+            {myCourses?.length === 0 ? (
+              <CourseSkeletonLoader />
             ) : (
               <>
-                {enrolments && enrolments.map((enrol) => <CourseCard key={enrol.id} {...enrol} />)}
-                {/* <div className="col-lg-12 col-md-12">
-									<div className="pagination-area text-center">
-										<Pagination sizes={[1]} total={pages} />
-									</div>
-								</div> */}
+                {myCourses?.length > 0 &&
+                  myCourses?.map((course: ICourse) => (
+                    <CourseCard
+                      key={course.id}
+                      user={user}
+                      course={course}
+                      courses={myCourses}
+                      subscriptions={subscriptions}
+                      handleImageError={handleImageError}
+                    />
+                  ))}
               </>
+            )}
+          </div>
+          <div className='row'>
+            {pageToken && (
+              <div className='col-lg-12 '>
+                <p className='text-center'>
+                  <Button
+                    startIcon={isLoading && <CircularProgress size={14} color='inherit' />}
+                    variant='contained'
+                    onClick={() => setPage(page + 1)}>
+                    Show More
+                  </Button>
+                </p>
+              </div>
             )}
           </div>
         </div>
       </div>
-
-      <Footer />
-    </>
+    </PageContent>
   );
 };
 

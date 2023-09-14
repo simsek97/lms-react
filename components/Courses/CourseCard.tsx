@@ -1,43 +1,36 @@
-import axios from 'axios';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { IReduxStore } from '@/store/index';
-import baseUrl from '@/utils/baseUrl';
-import { ISubscriptionTier } from '@/data/subscription-tier';
 import { ICourse } from '@/data/course';
+import { ISubscriptionTier } from '@/data/subscription-tier';
 import { IUser } from '@/data/user';
-import Image from 'next/image';
 
 interface ICourseCard {
   course: ICourse;
+  courses: ICourse[];
   user: IUser;
   subscriptions: ISubscriptionTier[];
-  onAddCart: any;
+  onAddCart?: any;
+  handleImageError?: any;
 }
 
-const CourseCard = ({ course, user, subscriptions, onAddCart }: ICourseCard) => {
+const CourseCard = ({ courses, course, user, subscriptions, onAddCart, handleImageError }: ICourseCard) => {
   const router = useRouter();
 
-  const courses = useSelector((state: IReduxStore) => state.course.courses);
+  const { id, title, slug, shortDesc, latestPrice, image, category, level } = course;
 
-  const courseInfo = courses.find((c: ICourse) => c.id === course.id);
-  const { id, title, slug, shortDesc, latestPrice, beforePrice, lessons, image, category, level } = courseInfo;
+  const subscriptionTier: ISubscriptionTier = subscriptions?.find((s: ISubscriptionTier) => s.tier === level.slug);
 
-  const subscriptionTier: ISubscriptionTier = subscriptions.find((s: ISubscriptionTier) => s.tier === level.slug);
-
-  const isUserSubscribedToCourse = user?.subscription?.tier === subscriptionTier.tier;
+  const isUserSubscribedToCourse = user?.subscription?.tier === subscriptionTier?.tier;
 
   return (
     <div className='col-lg-3 col-md-6'>
       <div className='single-courses'>
         <div className='courses-main-img'>
-          {(image?.url && (
+          {(image?.key && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={image?.url} alt='Course' width='100%' />
+            <img src={image?.url} alt='Course' width='100%' onError={() => handleImageError(courses, course)} />
           )) || (
             // eslint-disable-next-line @next/next/no-img-element
             <img src='/images/courses/course-9.jpg' alt='Course' width='100%' />
@@ -69,7 +62,7 @@ const CourseCard = ({ course, user, subscriptions, onAddCart }: ICourseCard) => 
                   </button>
                 ) : (
                   <button className='default-btn' onClick={() => onAddCart(subscriptionTier)}>
-                    {`Subscribe to ${subscriptionTier.title}`}
+                    {`Subscribe to ${subscriptionTier?.title}`}
                   </button>
                 )}
               </div>

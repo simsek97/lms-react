@@ -5,4 +5,7 @@ export interface ISubscriptionTier {
   description: string[];
   montlyPriceId?: string;
   price?: number;
+  canceled?: string;
+  expiresAt?: string;
+  subscribedAt?: string;
 }
