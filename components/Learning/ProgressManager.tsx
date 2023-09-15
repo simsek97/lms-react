@@ -31,7 +31,25 @@ const ProgressManager = ({ user, course }) => {
   return (
     <div className='mb-3'>
       <p className='mb-2'>
-        Your progress <strong>{/* {pro} of {videos_count} complete */}</strong>.{' '}
+        Your progress <strong>{/* {pro} of {videos_count} complete */}</strong>
+      </p>
+      <div className='progress'>
+        {/* @ts-ignore */}
+        <div
+          className='progress-bar bg-1cab94'
+          role='progressbar'
+          aria-label='Example with label'
+          style={{
+            width: `${progress(pro, 20)}%`
+          }}
+          // eslint-disable-next-line jsx-a11y/aria-proptypes
+          aria-valuenow={`${progress(pro, 20)}`}
+          aria-valuemin='0'
+          aria-valuemax='100'>
+          {progress(pro, 20)}%
+        </div>
+      </div>
+      <div className='mt-2'>
         {progress(pro, 20) == 100 ? (
           <span
             onClick={() => router.push(`/learning/certificate/${slug}`)}
@@ -54,22 +72,6 @@ const ProgressManager = ({ user, course }) => {
             Get certificate after complete
           </span>
         )}
-      </p>
-      <div className='progress'>
-        {/* @ts-ignore */}
-        <div
-          className='progress-bar bg-1cab94'
-          role='progressbar'
-          aria-label='Example with label'
-          style={{
-            width: `${progress(pro, 20)}%`
-          }}
-          // eslint-disable-next-line jsx-a11y/aria-proptypes
-          aria-valuenow={`${progress(pro, 20)}`}
-          aria-valuemin='0'
-          aria-valuemax='100'>
-          {progress(pro, 20)}%
-        </div>
       </div>
     </div>
   );

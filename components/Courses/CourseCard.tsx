@@ -20,7 +20,7 @@ const CourseCard = ({ courses, course, user, subscriptions, onAddCart, handleIma
 
   const { id, title, slug, shortDesc, latestPrice, image, category, level } = course;
 
-  const subscriptionTier: ISubscriptionTier = subscriptions?.find((s: ISubscriptionTier) => s.tier === level.slug);
+  const subscriptionTier: ISubscriptionTier = subscriptions?.find((s: ISubscriptionTier) => s.tier === level?.slug);
 
   const isUserSubscribedToCourse = user?.subscription?.tier === subscriptionTier?.tier;
 
@@ -39,8 +39,8 @@ const CourseCard = ({ courses, course, user, subscriptions, onAddCart, handleIma
         <div className='courses-content'>
           <h3>{title}</h3>
           <div className='courses-tags'>
-            <div className='badge bg-primary courses-level-tag'>{level.name}</div>
-            <div className='badge bg-success courses-category-tag'>{category.name}</div>
+            <div className='badge bg-primary courses-level-tag'>{level?.name}</div>
+            <div className='badge bg-success courses-category-tag'>{category?.name}</div>
             <div className='courses-price'>${latestPrice}</div>
           </div>
         </div>

@@ -1,28 +1,38 @@
-import axios from 'axios';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import StickyBox from 'react-sticky-box';
 
 import CourseAsset from '@/components/Learning/CourseAsset';
 import CourseDiscussion from '@/components/Learning/CourseDiscussion';
 import CourseFeedback from '@/components/Learning/CourseFeedback';
+import CourseLearn from '@/components/Learning/CourseLearn';
 import CourseOverview from '@/components/Learning/CourseOverview';
 import CourseRating from '@/components/Learning/CourseRating';
-import Player from '@/components/Learning/Player';
 import ProgressManager from '@/components/Learning/ProgressManager';
-import VideoList from '@/components/Learning/VideoList';
-import Footer from '@/components/_App/Footer';
-import Navbar from '@/components/_App/Navbar';
-import baseUrl from '@/utils/baseUrl';
 import PageContent from '@/components/_App/PageContent';
-import { useSelector } from 'react-redux';
-import { IReduxStore } from '@/store/index';
 import { ICourse } from '@/data/course';
+import { IReduxStore } from '@/store/index';
+
+interface ILearningTab {
+  id: string;
+  title: string;
+}
+
+const learningTabs: ILearningTab[] = [
+  {
+    id: 'overview',
+    title: 'Overview'
+  },
+  { id: 'assets', title: 'Assets' },
+  { id: 'learn', title: 'Learn' }
+];
 
 const Index = ({ user }) => {
-  const [active, setActive] = React.useState('');
-  const [tab, setTab] = React.useState('overview');
+  const [activeTab, setActiveTab] = React.useState<string>('overview');
   const {
     query: { slug }
   } = useRouter();
@@ -41,72 +51,27 @@ const Index = ({ user }) => {
 
                 <br />
                 <ul className='nav-style1'>
-                  <li>
-                    <Link href={`/learning/course/${slug}`}>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTab('overview');
-                        }}
-                        className={tab == 'overview' ? 'active' : ''}>
-                        Overview
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/learning/course/${slug}`}>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTab('asset');
-                        }}
-                        className={tab == 'asset' ? 'active' : ''}>
-                        Assets
-                      </a>
-                    </Link>
-                  </li>
-                  {/* <li>
-                    <Link href={`/learning/course/${slug}`}>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTab('discussion');
-                        }}
-                        className={tab == 'discussion' ? 'active' : ''}>
-                        Discussion
-                      </a>
-                    </Link>
-                  </li> */}
-                  {/* <li>
-                    <Link href={`/learning/course/${slug}`}>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTab('rating');
-                        }}
-                        className={tab == 'rating' ? 'active' : ''}>
-                        Leave a rating
-                      </a>
-                    </Link>
-                  </li> */}
-                  {/* <li>
-                    <Link href={`/learning/course/${slug}`}>
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTab('feedback');
-                        }}
-                        className={tab == 'feedback' ? 'active' : ''}>
-                        Leave a feedback
-                      </a>
-                    </Link>
-                  </li> */}
+                  {learningTabs.map((tab: ILearningTab) => (
+                    <li key={tab.id}>
+                      <Link href={`/learning/course/${slug}`}>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setActiveTab(tab.id);
+                          }}
+                          className={activeTab === tab.id ? 'active' : ''}>
+                          {tab.title}
+                        </a>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
 
-                {(course && tab == 'asset' && <CourseAsset {...course} />) ||
-                  (tab == 'discussion' && <CourseDiscussion />) ||
-                  (tab == 'rating' && <CourseRating />) ||
-                  (tab == 'feedback' && <CourseFeedback />) || <CourseOverview {...course} />}
+                {(course && activeTab == 'asset' && <CourseAsset {...course} />) ||
+                  (activeTab === 'discussion' && <CourseDiscussion />) ||
+                  (activeTab === 'rating' && <CourseRating />) ||
+                  (activeTab === 'feedback' && <CourseFeedback />) ||
+                  (activeTab === 'learn' && <CourseLearn />) || <CourseOverview {...course} />}
               </div>
             </div>
 
@@ -114,14 +79,12 @@ const Index = ({ user }) => {
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <div className='video-sidebar'>
                   <ProgressManager user={user} course={course} />
-                  <div className='course-video-list'>
-                    <h4 className='title mb-3'>{course && course.title}</h4>
-                    {/* <ul>
-                      {videos.length > 0 &&
-                        videos.map((video) => (
-                          <VideoList key={video.id} {...video} onPlay={() => selectVideo(video.id)} activeClass={active} />
-                        ))}
-                    </ul> */}
+                  <Divider />
+                  <div className='course-video-list mt-3'>
+                    <h4 className='title mb-3'>{course?.title || ''}</h4>
+                    <Chip sx={{ mr: 1, mt: 1 }} label={course?.level?.name || ''} color='primary' />
+                    <Chip sx={{ mr: 1, mt: 1 }} label={course?.category?.name || ''} color='success' />
+                    <Chip sx={{ mr: 1, mt: 1 }} label={course?.duration || ''} color='warning' />
                   </div>
                 </div>
               </StickyBox>

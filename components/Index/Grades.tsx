@@ -33,7 +33,7 @@ const Grades = ({ levels, levelsToken }) => {
                   visible: { opacity: 1, scale: 1 },
                   hidden: { opacity: 0, scale: 0 }
                 }}>
-                <Link href={`/grade/${level.slug}`}>
+                <Link href={`/courses/?grade=${level.slug}`}>
                   <a className='single-categorie d-flex justify-content-between align-items-center align-items-center'>
                     <h3>{level.name}</h3>
                     <i className='flaticon-growth'></i>

@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +12,8 @@ import { ICourse } from '@/data/course';
 import { updateCoursesAction } from '@/store/actions/courseActions';
 import { IReduxStore } from '@/store/index';
 import getCourses from '@/utils/getCourses';
+import { ILevel } from '@/data/level';
+import { ICategory } from '@/data/category';
 
 export default function CoursesPage() {
   const [courses, setCourses] = React.useState<ICourse[]>([]);
@@ -22,8 +25,12 @@ export default function CoursesPage() {
   const [page, setPage] = React.useState(0);
 
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { grade, category } = router.query;
 
   const user = useSelector((store: IReduxStore) => store.user.profile);
+  const grades = useSelector((store: IReduxStore) => store.course.levels);
+  const categories = useSelector((store: IReduxStore) => store.course.categories);
   const storeCourses = useSelector((store: IReduxStore) => store.course.courses);
 
   const pageSize = 8;
@@ -71,6 +78,22 @@ export default function CoursesPage() {
     fetchCourses(pageSize, pageToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  React.useEffect(() => {
+    if (grade) {
+      const storeGrade = grades.find((g: ILevel) => g.slug === grade);
+      setLevelId(storeGrade?.id || null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grade]);
+
+  React.useEffect(() => {
+    if (category) {
+      const storeCategory = categories.find((c: ICategory) => c.slug === category);
+      setCategoryId(storeCategory?.id || null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
 
   return (
     <PageContent pageTitle='Courses'>
