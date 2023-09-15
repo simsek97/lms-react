@@ -5,8 +5,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import PhotoIcon from '@mui/icons-material/Photo';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { API, graphqlOperation } from 'aws-amplify';
 import Image from 'next/image';
@@ -23,7 +25,6 @@ import { deleteCourse } from '@/src/graphql/mutations';
 import { listCourses } from '@/src/graphql/queries';
 import { getS3File } from '@/utils/getS3File';
 import { toastErrorStyle, toastSuccessStyle } from '@/utils/toast';
-import Tooltip from '@mui/material/Tooltip';
 
 const Courses = ({ user }) => {
   const router = useRouter();
@@ -78,6 +79,13 @@ const Courses = ({ user }) => {
       field: 'category',
       headerName: 'Category',
       renderCell: (params) => params.row.category.name
+    },
+    {
+      flex: 0.1,
+      minWidth: 150,
+      field: 'inHomePage',
+      headerName: 'Featured',
+      renderCell: (params) => (params.row.inHomePage === 'true' ? <Chip label='Yes' color='success' /> : <Chip label='No' />)
     },
     {
       flex: 0.2,

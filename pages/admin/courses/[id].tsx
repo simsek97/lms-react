@@ -36,7 +36,8 @@ const UpdateCourse = ({ user }) => {
     lessons: '',
     duration: '',
     catID: '',
-    levelID: ''
+    levelID: '',
+    inHomePage: ''
   };
 
   const submitForm = async (values: ICourse) => {
@@ -115,7 +116,8 @@ const UpdateCourse = ({ user }) => {
         lessons: course.lessons,
         duration: course.duration,
         catID: course.catID,
-        levelID: course.levelID
+        levelID: course.levelID,
+        inHomePage: course.inHomePage
       });
     } catch (e) {
       console.log(e);

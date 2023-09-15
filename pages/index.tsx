@@ -9,7 +9,7 @@ import Grades from '@/components/Index/Grades';
 import Testimonials from '@/components/Index/Testimonials';
 import PageContent from '@/components/_App/PageContent';
 import { ILevel } from '@/data/level';
-import { updateCategoriesAction, updateCoursesAction, updateLevelsAction } from '@/store/actions/courseActions';
+import { updateCategoriesAction, updateLevelsAction } from '@/store/actions/courseActions';
 import { IReduxStore } from '@/store/index';
 import baseUrl from '@/utils/baseUrl';
 
@@ -22,7 +22,6 @@ const Index = ({ levels, levelsToken, categories, categoriesToken, courses, cour
   React.useEffect(() => {
     dispatch(updateLevelsAction(sortedLevels));
     dispatch(updateCategoriesAction(categories));
-    dispatch(updateCoursesAction(courses));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -30,7 +29,7 @@ const Index = ({ levels, levelsToken, categories, categoriesToken, courses, cour
     <PageContent>
       <Banner user={user} />
       <Features />
-      <FeaturedCourses courses={courses} coursesToken={coursesToken} user={user} />
+      <FeaturedCourses user={user} />
       <Grades levels={levels} levelsToken={levelsToken} />
       <Categories categories={categories} categoriesToken={categoriesToken} />
       {/* <Transform /> */}

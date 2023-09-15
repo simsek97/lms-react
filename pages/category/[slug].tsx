@@ -18,7 +18,7 @@ export default function CategoryPage({ user }) {
     <PageContent pageTitle='Category' activePageText={storeCat.name}>
       <div className='pt-100 pb-70'>
         <div className='container'>
-          <CoursesList courses={storeCat.courses.items} user={user} />
+          <CoursesList courseType='courses' isLoading={false} courses={storeCat.courses.items} user={user} />
         </div>
       </div>
       <div className='pt-100 pb-70'>

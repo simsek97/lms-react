@@ -13,6 +13,7 @@ export interface IUser {
   zipCode?: string;
   country?: string;
   role?: string;
+  owner?: string;
   avatar?: IS3Object;
   stripeCustomerId?: IS3Object;
   subscription?: ISubscriptionTier;

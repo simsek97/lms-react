@@ -12,6 +12,7 @@ import { IReduxStore } from '@/store/index';
 import CourseSkeletonLoader from '@/utils/CourseSkeletonLoader';
 import getCourses from '@/utils/getCourses';
 import { getS3File } from '@/utils/getS3File';
+import CoursesList from '@/components/Courses/CoursesList';
 
 const Index = () => {
   const [isLoading, setLoading] = React.useState(true);
@@ -23,7 +24,6 @@ const Index = () => {
   const pageSize = 8;
   const user = useSelector((store: IReduxStore) => store.user.profile);
   const myCourses = useSelector((store: IReduxStore) => store.course.myCourses);
-  const subscriptions = useSelector((store: IReduxStore) => store.subscription.subscriptions);
   const levels = useSelector((store: IReduxStore) => store.course.levels);
 
   const userLevel = levels.find((level: ILevel) => level.slug === user?.subscription.tier);
@@ -78,21 +78,10 @@ const Index = () => {
             {myCourses?.length === 0 ? (
               <CourseSkeletonLoader />
             ) : (
-              <>
-                {myCourses?.length > 0 &&
-                  myCourses?.map((course: ICourse) => (
-                    <CourseCard
-                      key={course.id}
-                      user={user}
-                      course={course}
-                      courses={myCourses}
-                      subscriptions={subscriptions}
-                      handleImageError={handleImageError}
-                    />
-                  ))}
-              </>
+              <CoursesList courseType='myCourses' isLoading={isLoading} courses={myCourses} user={user} />
             )}
           </div>
+
           <div className='row'>
             {pageToken && (
               <div className='col-lg-12 '>

@@ -26,7 +26,8 @@ const initialValues: ICourse = {
   lessons: '',
   duration: '',
   catID: '',
-  levelID: ''
+  levelID: '',
+  inHomePage: ''
 };
 
 const AddCourse = ({ user }) => {

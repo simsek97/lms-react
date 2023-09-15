@@ -38,7 +38,6 @@ export default function CoursesPage() {
       setPageToken(dbCourses.nextToken);
 
       const updatedCourses = [...courses, ...dbCourses.items];
-      setCourses(updatedCourses);
 
       dispatch(updateCoursesAction(updatedCourses));
     } catch (e) {
@@ -55,9 +54,9 @@ export default function CoursesPage() {
           .filter((course: ICourse) => (levelId ? course.levelID === levelId : course))
           .filter((course: ICourse) => (categoryId ? course.catID === categoryId : course))
           .sort((a: ICourse, b: ICourse) =>
-            sortCourse.toLowerCase() === 'asc'
+            sortCourse?.toLowerCase() === 'asc'
               ? a.latestPrice - b.latestPrice
-              : sortCourse.toLowerCase() === 'desc'
+              : sortCourse?.toLowerCase() === 'desc'
               ? b.latestPrice - a.latestPrice
               : 0
           )
@@ -66,7 +65,7 @@ export default function CoursesPage() {
       setCourses(storeCourses);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [levelId, categoryId, sortCourse]);
+  }, [levelId, categoryId, sortCourse, storeCourses]);
 
   React.useEffect(() => {
     fetchCourses(pageSize, pageToken);
@@ -99,7 +98,7 @@ export default function CoursesPage() {
             </div>
           </div>
 
-          {courses && <CoursesList courses={courses} user={user} />}
+          {courses && <CoursesList courseType='courses' isLoading={isLoading} courses={courses} user={user} />}
 
           {pageToken && (
             <div className='col-lg-12 '>

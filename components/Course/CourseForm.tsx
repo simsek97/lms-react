@@ -137,6 +137,21 @@ export const CourseForm = ({ values, touched, errors, handleChange }) => {
           />
         </Grid>
 
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            select
+            name='inHomePage'
+            label='Featured?'
+            value={values?.inHomePage || 'false'}
+            onChange={handleChange}
+            error={Boolean((touched?.duration && errors?.duration) || false)}
+            helperText={(Boolean(touched?.duration && errors?.duration) && errors?.duration) || ''}>
+            <MenuItem value='true'>Yes</MenuItem>
+            <MenuItem value='false'>No</MenuItem>
+          </TextField>
+        </Grid>
+
         <Grid item xs={12}>
           <TextField
             fullWidth

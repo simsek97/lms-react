@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 import Link from '@/utils/ActiveLink';
 import { handleLogout } from '@/utils/auth';
 import { Auth } from 'aws-amplify';
-import { resetUserAction } from '@/store/actions/userActions';
+import { resetUserAction, updateUserAction } from '@/store/actions/userActions';
 import { useDispatch } from 'react-redux';
 import { IUser } from '@/data/user';
+import { getS3File } from '@/utils/getS3File';
 
 interface IProfileDropdown {
   user: IUser;
@@ -37,6 +38,14 @@ const ProfileDropdown = ({ user }: IProfileDropdown) => {
     }
   };
 
+  const handleImageError = async () => {
+    if (user?.avatar?.key) {
+      const imageUrl = await getS3File(user.avatar.key, 'private');
+
+      dispatch(updateUserAction({ ...user, avatar: { key: user.avatar.key, url: imageUrl } }));
+    }
+  };
+
   const subMenuAnimate = {
     enter: {
       opacity: 1,
@@ -63,7 +72,13 @@ const ProfileDropdown = ({ user }: IProfileDropdown) => {
     <motion.div className='dropdown profile-dropdown' onMouseEnter={toggleMouseMenu} onMouseLeave={toggleMouseMenu}>
       <div className='img ptb-15'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={user?.avatar?.url || '/images/avatar.jpg'} alt={`${user.firstname} ${user.lastname}`} width={36} height={36} />
+        <img
+          src={user?.avatar?.url || '/images/avatar.jpg'}
+          alt={`${user.firstname} ${user.lastname}`}
+          width={36}
+          height={36}
+          onError={handleImageError}
+        />
       </div>
       <motion.ul className='dropdown-menu' initial='exit' animate={isMouse ? 'enter' : 'exit'} variants={subMenuAnimate}>
         <li>

@@ -1,3 +1,5 @@
+import { IUser } from '@/data/user';
+
 // Update user
 export const updateUserAction = (user: any) => ({ type: 'UPDATE_USER', data: user });
 
